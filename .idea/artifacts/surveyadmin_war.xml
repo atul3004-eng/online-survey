@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="surveyadmin:war">
+    <output-path>$PROJECT_DIR$/surveyadmin/target</output-path>
+    <root id="archive" name="surveyadmin-1.0.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="surveyadmin:war exploded" />
+    </root>
+  </artifact>
+</component>

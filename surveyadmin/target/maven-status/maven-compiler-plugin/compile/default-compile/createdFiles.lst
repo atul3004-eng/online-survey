@@ -1,0 +1,9 @@
+beans\LoginBean.class
+beans\Topic.class
+filters\AuthFilter.class
+beans\SurveyResult.class
+beans\Request.class
+dao\TopicDAO.class
+dao\UserDAO.class
+beans\Question.class
+dao\Database.class

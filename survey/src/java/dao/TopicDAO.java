@@ -1,10 +1,10 @@
 package dao;
 import beans.Question;
 import beans.Topic;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class TopicDAO {
@@ -50,15 +50,24 @@ public class TopicDAO {
         try {
             con = Database.getConnection();
             con.setAutoCommit(false);
-            ps = con.prepareStatement("insert into answers_master values( surveyid_sequence.nextval,?,sysdate)");
-            ps.setString(1, topicid);
+            ps = con.prepareStatement("insert into answers_master values (?, ?, now())", Statement.RETURN_GENERATED_KEYS);
+            ps.setObject(1, null);
+            ps.setString(2, topicid);
             ps.executeUpdate();
 
-            ps = con.prepareStatement("insert into answers_details values( surveyid_sequence.currval, ?,?)");
+            ResultSet keyResultSet = ps.getGeneratedKeys();
+            if (!keyResultSet.next()) {
+                throw new IllegalStateException("Unable to read generated survey id");
+            }
+            long surveyId = keyResultSet.getLong(1);
+            keyResultSet.close();
+
+            ps = con.prepareStatement("insert into answers_details values( ?, ?, ?)");
 
             for( Question q : questions) {
-                ps.setString(1, q.getId());
-                ps.setString(2, q.getAnswer());
+                ps.setLong(1, surveyId);
+                ps.setString(2, q.getId());
+                ps.setString(3, q.getAnswer());
                 ps.executeUpdate();
             }
             con.commit();

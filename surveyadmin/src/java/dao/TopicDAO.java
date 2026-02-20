@@ -16,9 +16,10 @@ public class TopicDAO {
         PreparedStatement ps = null;
         try {
             con = Database.getConnection();
-            ps = con.prepareStatement("insert into topics values(topicid_sequence.nextval,?,sysdate,?)");
-            ps.setString(1, title);
-            ps.setString(2, uname);
+            ps = con.prepareStatement("insert into topics values(?, ?, now(), ?)");
+            ps.setObject(1, null);
+            ps.setString(2, title);
+            ps.setString(3, uname);
             int count = ps.executeUpdate();
             return count == 1;
         } catch (Exception ex) {
@@ -78,12 +79,13 @@ public class TopicDAO {
         PreparedStatement ps = null;
         try {
             con = Database.getConnection();
-            ps = con.prepareStatement("insert into questions values(questionid_sequence.nextval,?,?,?,?,?)");
-            ps.setString(1, q.getText());
-            ps.setString(2, q.getOpt1());
-            ps.setString(3, q.getOpt2());
-            ps.setString(4, q.getOpt3());
-            ps.setString(5, q.getTopicid());
+            ps = con.prepareStatement("insert into questions values(?, ?, ?, ?, ?, ?)");
+            ps.setObject(1, null);
+            ps.setString(2, q.getText());
+            ps.setString(3, q.getOpt1());
+            ps.setString(4, q.getOpt2());
+            ps.setString(5, q.getOpt3());
+            ps.setString(6, q.getTopicid());
             int count = ps.executeUpdate();
             return count == 1;
         } catch (Exception ex) {
@@ -160,7 +162,11 @@ public class TopicDAO {
 
                 // sum answers for a question
                 PreparedStatement psa = con.prepareStatement(
-                        "select sum(decode(answer,1,1,0)) opt1count, sum(decode(answer,2,1,0)) opt2count, sum(decode(answer,3,1,0)) opt3count from answers_details where questionid = ?");
+                        "select " +
+                        "sum(case when answer = '1' then 1 else 0 end) opt1count, " +
+                        "sum(case when answer = '2' then 1 else 0 end) opt2count, " +
+                        "sum(case when answer = '3' then 1 else 0 end) opt3count " +
+                        "from answers_details where questionid = ?");
                 psa.setString(1, questions.getString("questionid"));
 
                 ResultSet answers = psa.executeQuery();

@@ -1,0 +1,308 @@
+20-Feb-2026 13:11:02.735 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.89
+20-Feb-2026 13:11:02.754 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          May 3 2024 20:22:11 UTC
+20-Feb-2026 13:11:02.755 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.89.0
+20-Feb-2026 13:11:02.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 11
+20-Feb-2026 13:11:02.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+20-Feb-2026 13:11:02.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+20-Feb-2026 13:11:02.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-17
+20-Feb-2026 13:11:02.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.12+8-LTS-286
+20-Feb-2026 13:11:02.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+20-Feb-2026 13:11:02.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:11:02.758 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:11:02.894 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+20-Feb-2026 13:11:02.897 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+20-Feb-2026 13:11:02.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+20-Feb-2026 13:11:02.899 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+20-Feb-2026 13:11:02.901 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+20-Feb-2026 13:11:02.901 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\conf\logging.properties
+20-Feb-2026 13:11:02.903 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+20-Feb-2026 13:11:02.907 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+20-Feb-2026 13:11:02.911 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+20-Feb-2026 13:11:02.912 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+20-Feb-2026 13:11:02.914 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:11:02.916 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:11:02.916 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\temp
+20-Feb-2026 13:11:02.938 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded Apache Tomcat Native library [1.3.0] using APR version [1.7.4].
+20-Feb-2026 13:11:02.942 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+20-Feb-2026 13:11:02.947 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+20-Feb-2026 13:11:02.975 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 3.0.13 30 Jan 2024]
+20-Feb-2026 13:11:03.622 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:11:03.702 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1467] milliseconds
+20-Feb-2026 13:11:03.839 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+20-Feb-2026 13:11:03.839 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.89]
+20-Feb-2026 13:11:03.887 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey.war]
+20-Feb-2026 13:11:06.630 INFO [main] com.sun.faces.config.ConfigureListener.contextInitialized Initializing Mojarra 2.2.20 ( 20190731-0756 59754ac80c05d61848a08939ddd11a324f2345ac) for context '/survey'
+20-Feb-2026 13:11:07.103 INFO [main] com.sun.faces.spi.InjectionProviderFactory.createInstance JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+20-Feb-2026 13:11:08.547 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey.war] has finished in [4,660] ms
+20-Feb-2026 13:11:08.560 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin.war]
+20-Feb-2026 13:11:08.561 WARNING [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match [Context] failed to set property [antiJARLocking] to [true]
+20-Feb-2026 13:11:10.166 INFO [main] com.sun.faces.config.ConfigureListener.contextInitialized Initializing Mojarra 2.2.20 ( 20190731-0756 59754ac80c05d61848a08939ddd11a324f2345ac) for context '/surveyadmin'
+20-Feb-2026 13:11:10.446 INFO [main] com.sun.faces.spi.InjectionProviderFactory.createInstance JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+20-Feb-2026 13:11:11.078 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin.war] has finished in [2,518] ms
+20-Feb-2026 13:11:11.088 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\docs]
+20-Feb-2026 13:11:11.174 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\docs] has finished in [86] ms
+20-Feb-2026 13:11:11.174 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\examples]
+20-Feb-2026 13:11:11.894 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\examples] has finished in [720] ms
+20-Feb-2026 13:11:11.894 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\host-manager]
+20-Feb-2026 13:11:11.983 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\host-manager] has finished in [89] ms
+20-Feb-2026 13:11:11.983 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\manager]
+20-Feb-2026 13:11:12.071 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\manager] has finished in [82] ms
+20-Feb-2026 13:11:12.072 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\ROOT]
+20-Feb-2026 13:11:12.155 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\ROOT] has finished in [83] ms
+20-Feb-2026 13:11:12.167 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:11:12.305 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [8600] milliseconds
+20-Feb-2026 13:18:39.542 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+20-Feb-2026 13:18:39.546 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:18:39.580 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+20-Feb-2026 13:18:39.633 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:18:39.661 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:18:45.634 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.89
+20-Feb-2026 13:18:45.637 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          May 3 2024 20:22:11 UTC
+20-Feb-2026 13:18:45.637 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.89.0
+20-Feb-2026 13:18:45.637 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+20-Feb-2026 13:18:45.637 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+20-Feb-2026 13:18:45.637 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+20-Feb-2026 13:18:45.644 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk1.8.0_202\jre
+20-Feb-2026 13:18:45.644 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_202-b08
+20-Feb-2026 13:18:45.645 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+20-Feb-2026 13:18:45.645 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:18:45.645 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:18:45.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\conf\logging.properties
+20-Feb-2026 13:18:45.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+20-Feb-2026 13:18:45.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+20-Feb-2026 13:18:45.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+20-Feb-2026 13:18:45.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+20-Feb-2026 13:18:45.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:18:45.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:18:45.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\temp
+20-Feb-2026 13:18:45.700 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded Apache Tomcat Native library [1.3.0] using APR version [1.7.4].
+20-Feb-2026 13:18:45.700 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+20-Feb-2026 13:18:45.700 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+20-Feb-2026 13:18:45.716 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 3.0.13 30 Jan 2024]
+20-Feb-2026 13:18:46.650 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:18:46.696 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1527] milliseconds
+20-Feb-2026 13:18:46.761 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+20-Feb-2026 13:18:46.761 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.89]
+20-Feb-2026 13:18:46.798 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey.war]
+20-Feb-2026 13:18:46.832 INFO [main] org.apache.catalina.startup.ExpandWar.expand An expanded directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey] was found with a last modified time that did not match the associated WAR. It will be deleted.
+20-Feb-2026 13:18:49.446 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+20-Feb-2026 13:18:49.694 INFO [main] com.sun.faces.config.ConfigureListener.contextInitialized Initializing Mojarra 2.2.20 ( 20190731-0756 59754ac80c05d61848a08939ddd11a324f2345ac) for context '/survey'
+20-Feb-2026 13:18:49.861 INFO [main] com.sun.faces.spi.InjectionProviderFactory.createInstance JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+20-Feb-2026 13:18:51.238 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey.war] has finished in [4,423] ms
+20-Feb-2026 13:18:51.246 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin.war]
+20-Feb-2026 13:18:51.249 WARNING [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match [Context] failed to set property [antiJARLocking] to [true]
+20-Feb-2026 13:18:51.249 INFO [main] org.apache.catalina.startup.ExpandWar.expand An expanded directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin] was found with a last modified time that did not match the associated WAR. It will be deleted.
+20-Feb-2026 13:18:53.072 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+20-Feb-2026 13:18:53.272 INFO [main] com.sun.faces.config.ConfigureListener.contextInitialized Initializing Mojarra 2.2.20 ( 20190731-0756 59754ac80c05d61848a08939ddd11a324f2345ac) for context '/surveyadmin'
+20-Feb-2026 13:18:53.405 INFO [main] com.sun.faces.spi.InjectionProviderFactory.createInstance JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+20-Feb-2026 13:18:53.874 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin.war] has finished in [2,628] ms
+20-Feb-2026 13:18:53.874 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\docs]
+20-Feb-2026 13:18:53.915 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\docs] has finished in [41] ms
+20-Feb-2026 13:18:53.915 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\examples]
+20-Feb-2026 13:18:54.320 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\examples] has finished in [405] ms
+20-Feb-2026 13:18:54.320 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\host-manager]
+20-Feb-2026 13:18:54.380 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\host-manager] has finished in [60] ms
+20-Feb-2026 13:18:54.383 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\manager]
+20-Feb-2026 13:18:54.422 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\manager] has finished in [39] ms
+20-Feb-2026 13:18:54.422 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\ROOT]
+20-Feb-2026 13:18:54.469 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\ROOT] has finished in [47] ms
+20-Feb-2026 13:18:54.480 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:18:54.544 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [7845] milliseconds
+20-Feb-2026 13:21:01.089 WARNING [http-nio-8080-exec-1] com.sun.faces.application.resource.ResourceHandlerImpl.logMissingResource JSF1064: Unable to find or serve resource, /faces/index.xhtml.
+20-Feb-2026 13:21:32.838 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+20-Feb-2026 13:21:32.840 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:21:33.139 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+20-Feb-2026 13:21:33.303 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:21:33.319 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:21:37.819 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.89
+20-Feb-2026 13:21:37.827 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          May 3 2024 20:22:11 UTC
+20-Feb-2026 13:21:37.841 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.89.0
+20-Feb-2026 13:21:37.842 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+20-Feb-2026 13:21:37.847 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+20-Feb-2026 13:21:37.847 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+20-Feb-2026 13:21:37.848 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk1.8.0_202\jre
+20-Feb-2026 13:21:37.848 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_202-b08
+20-Feb-2026 13:21:37.848 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+20-Feb-2026 13:21:37.849 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:21:37.849 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:21:37.850 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\conf\logging.properties
+20-Feb-2026 13:21:37.852 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+20-Feb-2026 13:21:37.852 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+20-Feb-2026 13:21:37.852 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+20-Feb-2026 13:21:37.854 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+20-Feb-2026 13:21:37.854 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:21:37.855 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:21:37.855 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\temp
+20-Feb-2026 13:21:37.868 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded Apache Tomcat Native library [1.3.0] using APR version [1.7.4].
+20-Feb-2026 13:21:37.868 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+20-Feb-2026 13:21:37.868 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+20-Feb-2026 13:21:37.884 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 3.0.13 30 Jan 2024]
+20-Feb-2026 13:21:38.504 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:21:38.551 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1166] milliseconds
+20-Feb-2026 13:21:38.630 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+20-Feb-2026 13:21:38.632 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.89]
+20-Feb-2026 13:21:38.673 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey.war]
+20-Feb-2026 13:21:41.869 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+20-Feb-2026 13:21:42.203 INFO [main] com.sun.faces.config.ConfigureListener.contextInitialized Initializing Mojarra 2.2.20 ( 20190731-0756 59754ac80c05d61848a08939ddd11a324f2345ac) for context '/survey'
+20-Feb-2026 13:21:42.471 INFO [main] com.sun.faces.spi.InjectionProviderFactory.createInstance JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+20-Feb-2026 13:21:43.814 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey.war] has finished in [5,141] ms
+20-Feb-2026 13:21:43.828 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin.war]
+20-Feb-2026 13:21:43.835 WARNING [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match [Context] failed to set property [antiJARLocking] to [true]
+20-Feb-2026 13:21:45.292 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+20-Feb-2026 13:21:45.438 INFO [main] com.sun.faces.config.ConfigureListener.contextInitialized Initializing Mojarra 2.2.20 ( 20190731-0756 59754ac80c05d61848a08939ddd11a324f2345ac) for context '/surveyadmin'
+20-Feb-2026 13:21:45.575 INFO [main] com.sun.faces.spi.InjectionProviderFactory.createInstance JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+20-Feb-2026 13:21:46.197 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin.war] has finished in [2,369] ms
+20-Feb-2026 13:21:46.197 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\docs]
+20-Feb-2026 13:21:46.242 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\docs] has finished in [45] ms
+20-Feb-2026 13:21:46.244 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\examples]
+20-Feb-2026 13:21:46.593 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\examples] has finished in [349] ms
+20-Feb-2026 13:21:46.593 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\host-manager]
+20-Feb-2026 13:21:46.639 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\host-manager] has finished in [46] ms
+20-Feb-2026 13:21:46.639 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\manager]
+20-Feb-2026 13:21:46.687 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\manager] has finished in [48] ms
+20-Feb-2026 13:21:46.690 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\ROOT]
+20-Feb-2026 13:21:46.722 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\ROOT] has finished in [32] ms
+20-Feb-2026 13:21:46.724 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:21:46.761 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [8208] milliseconds
+20-Feb-2026 13:43:17.586 WARNING [http-nio-8080-exec-7] com.sun.faces.application.resource.ResourceHandlerImpl.logMissingResource JSF1064: Unable to find or serve resource, /faces/index.xhtml.
+20-Feb-2026 13:43:29.249 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+20-Feb-2026 13:43:29.249 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:43:29.536 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+20-Feb-2026 13:43:29.658 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads The web application [survey] appears to have started a thread named [mysql-cj-abandoned-connection-cleanup] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.io.WinNTFileSystem.canonicalize0(Native Method)
+ java.io.WinNTFileSystem.canonicalize(WinNTFileSystem.java:428)
+ java.io.File.getCanonicalPath(File.java:618)
+ org.apache.catalina.webresources.AbstractFileResourceSet.file(AbstractFileResourceSet.java:94)
+ org.apache.catalina.webresources.DirResourceSet.getResource(DirResourceSet.java:94)
+ org.apache.catalina.webresources.StandardRoot.getResourceInternal(StandardRoot.java:272)
+ org.apache.catalina.webresources.CachedResource.validateResource(CachedResource.java:105)
+ org.apache.catalina.webresources.Cache.getResource(Cache.java:96)
+ org.apache.catalina.webresources.StandardRoot.getResource(StandardRoot.java:211)
+ org.apache.catalina.webresources.StandardRoot.getClassLoaderResource(StandardRoot.java:220)
+ org.apache.catalina.loader.WebappClassLoaderBase.findResource(WebappClassLoaderBase.java:872)
+ org.apache.catalina.loader.WebappClassLoaderBase.getResource(WebappClassLoaderBase.java:981)
+ com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.checkThreadContextClassLoader(AbandonedConnectionCleanupThread.java:116)
+ com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.run(AbandonedConnectionCleanupThread.java:83)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+20-Feb-2026 13:43:29.722 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [surveyadmin] registered the JDBC driver [com.mysql.cj.jdbc.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+20-Feb-2026 13:43:29.722 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads The web application [surveyadmin] appears to have started a thread named [mysql-cj-abandoned-connection-cleanup] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.lang.Object.wait(Native Method)
+ java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:144)
+ com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.run(AbandonedConnectionCleanupThread.java:84)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+20-Feb-2026 13:43:29.780 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:43:29.794 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:43:34.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.89
+20-Feb-2026 13:43:34.373 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          May 3 2024 20:22:11 UTC
+20-Feb-2026 13:43:34.375 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.89.0
+20-Feb-2026 13:43:34.375 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+20-Feb-2026 13:43:34.375 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+20-Feb-2026 13:43:34.377 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+20-Feb-2026 13:43:34.377 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk1.8.0_202\jre
+20-Feb-2026 13:43:34.377 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_202-b08
+20-Feb-2026 13:43:34.377 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+20-Feb-2026 13:43:34.377 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:43:34.377 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:43:34.383 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\conf\logging.properties
+20-Feb-2026 13:43:34.383 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+20-Feb-2026 13:43:34.383 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+20-Feb-2026 13:43:34.383 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+20-Feb-2026 13:43:34.389 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+20-Feb-2026 13:43:34.389 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:43:34.389 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:43:34.391 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\temp
+20-Feb-2026 13:43:34.395 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded Apache Tomcat Native library [1.3.0] using APR version [1.7.4].
+20-Feb-2026 13:43:34.405 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+20-Feb-2026 13:43:34.405 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+20-Feb-2026 13:43:34.441 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 3.0.13 30 Jan 2024]
+20-Feb-2026 13:43:35.315 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:43:35.375 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1391] milliseconds
+20-Feb-2026 13:43:35.437 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+20-Feb-2026 13:43:35.437 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.89]
+20-Feb-2026 13:43:35.452 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey.war]
+20-Feb-2026 13:43:35.515 INFO [main] org.apache.catalina.startup.ExpandWar.expand An expanded directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey] was found with a last modified time that did not match the associated WAR. It will be deleted.
+20-Feb-2026 13:43:38.014 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+20-Feb-2026 13:43:38.261 INFO [main] com.sun.faces.config.ConfigureListener.contextInitialized Initializing Mojarra 2.2.20 ( 20190731-0756 59754ac80c05d61848a08939ddd11a324f2345ac) for context '/survey'
+20-Feb-2026 13:43:38.456 INFO [main] com.sun.faces.spi.InjectionProviderFactory.createInstance JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+20-Feb-2026 13:43:39.894 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey.war] has finished in [4,440] ms
+20-Feb-2026 13:43:39.902 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin.war]
+20-Feb-2026 13:43:39.908 WARNING [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match [Context] failed to set property [antiJARLocking] to [true]
+20-Feb-2026 13:43:39.911 INFO [main] org.apache.catalina.startup.ExpandWar.expand An expanded directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin] was found with a last modified time that did not match the associated WAR. It will be deleted.
+20-Feb-2026 13:43:41.636 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+20-Feb-2026 13:43:41.781 INFO [main] com.sun.faces.config.ConfigureListener.contextInitialized Initializing Mojarra 2.2.20 ( 20190731-0756 59754ac80c05d61848a08939ddd11a324f2345ac) for context '/surveyadmin'
+20-Feb-2026 13:43:41.926 INFO [main] com.sun.faces.spi.InjectionProviderFactory.createInstance JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+20-Feb-2026 13:43:42.589 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin.war] has finished in [2,687] ms
+20-Feb-2026 13:43:42.589 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\docs]
+20-Feb-2026 13:43:42.627 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\docs] has finished in [38] ms
+20-Feb-2026 13:43:42.627 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\examples]
+20-Feb-2026 13:43:43.070 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\examples] has finished in [443] ms
+20-Feb-2026 13:43:43.070 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\host-manager]
+20-Feb-2026 13:43:43.122 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\host-manager] has finished in [52] ms
+20-Feb-2026 13:43:43.124 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\manager]
+20-Feb-2026 13:43:43.166 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\manager] has finished in [42] ms
+20-Feb-2026 13:43:43.166 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\ROOT]
+20-Feb-2026 13:43:43.209 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\ROOT] has finished in [43] ms
+20-Feb-2026 13:43:43.219 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:43:43.253 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [7887] milliseconds
+20-Feb-2026 13:46:14.863 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+20-Feb-2026 13:46:14.890 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:46:16.094 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+20-Feb-2026 13:46:16.310 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:46:16.432 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:46:24.050 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.89
+20-Feb-2026 13:46:24.058 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          May 3 2024 20:22:11 UTC
+20-Feb-2026 13:46:24.064 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.89.0
+20-Feb-2026 13:46:24.064 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+20-Feb-2026 13:46:24.069 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+20-Feb-2026 13:46:24.071 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+20-Feb-2026 13:46:24.071 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk1.8.0_202\jre
+20-Feb-2026 13:46:24.071 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_202-b08
+20-Feb-2026 13:46:24.071 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+20-Feb-2026 13:46:24.075 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:46:24.075 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:46:24.087 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\conf\logging.properties
+20-Feb-2026 13:46:24.087 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+20-Feb-2026 13:46:24.089 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+20-Feb-2026 13:46:24.089 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+20-Feb-2026 13:46:24.089 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+20-Feb-2026 13:46:24.089 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:46:24.092 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89
+20-Feb-2026 13:46:24.092 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\temp
+20-Feb-2026 13:46:24.111 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded Apache Tomcat Native library [1.3.0] using APR version [1.7.4].
+20-Feb-2026 13:46:24.124 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+20-Feb-2026 13:46:24.126 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+20-Feb-2026 13:46:24.152 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 3.0.13 30 Jan 2024]
+20-Feb-2026 13:46:27.012 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:46:27.222 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [3731] milliseconds
+20-Feb-2026 13:46:27.635 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+20-Feb-2026 13:46:27.637 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.89]
+20-Feb-2026 13:46:27.724 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey.war]
+20-Feb-2026 13:46:36.114 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+20-Feb-2026 13:46:36.679 INFO [main] com.sun.faces.config.ConfigureListener.contextInitialized Initializing Mojarra 2.2.20 ( 20190731-0756 59754ac80c05d61848a08939ddd11a324f2345ac) for context '/survey'
+20-Feb-2026 13:46:37.672 INFO [main] com.sun.faces.spi.InjectionProviderFactory.createInstance JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+20-Feb-2026 13:46:41.177 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\survey.war] has finished in [13,412] ms
+20-Feb-2026 13:46:41.189 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin.war]
+20-Feb-2026 13:46:41.197 WARNING [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin Match [Context] failed to set property [antiJARLocking] to [true]
+20-Feb-2026 13:46:43.857 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+20-Feb-2026 13:46:44.140 INFO [main] com.sun.faces.config.ConfigureListener.contextInitialized Initializing Mojarra 2.2.20 ( 20190731-0756 59754ac80c05d61848a08939ddd11a324f2345ac) for context '/surveyadmin'
+20-Feb-2026 13:46:44.407 INFO [main] com.sun.faces.spi.InjectionProviderFactory.createInstance JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+20-Feb-2026 13:46:45.343 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\surveyadmin.war] has finished in [4,154] ms
+20-Feb-2026 13:46:45.347 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\docs]
+20-Feb-2026 13:46:45.435 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\docs] has finished in [88] ms
+20-Feb-2026 13:46:45.440 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\examples]
+20-Feb-2026 13:46:46.211 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\examples] has finished in [770] ms
+20-Feb-2026 13:46:46.211 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\host-manager]
+20-Feb-2026 13:46:46.293 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\host-manager] has finished in [82] ms
+20-Feb-2026 13:46:46.293 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\manager]
+20-Feb-2026 13:46:46.365 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\manager] has finished in [72] ms
+20-Feb-2026 13:46:46.373 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\ROOT]
+20-Feb-2026 13:46:46.422 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\atul3\Downloads\jobapplication-primefaces\jobapplication-primefaces\online-survey-system-java\.tools\apache-tomcat-9.0.89\webapps\ROOT] has finished in [49] ms
+20-Feb-2026 13:46:46.431 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+20-Feb-2026 13:46:46.463 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [19245] milliseconds
+20-Feb-2026 14:05:13.365 WARNING [http-nio-8080-exec-3] com.sun.faces.context.SessionMap.put JSF1063: WARNING! Setting non-serializable attribute value into HttpSession (key: topic, value class: beans.Topic).
+20-Feb-2026 15:07:54.502 WARNING [main] org.apache.catalina.core.StandardServer.await Invalid shutdown command [] received
+20-Feb-2026 15:08:22.195 WARNING [main] org.apache.catalina.core.StandardServer.await Invalid shutdown command [] received

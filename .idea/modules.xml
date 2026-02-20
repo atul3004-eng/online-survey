@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/online-survey-system-java.iml" filepath="$PROJECT_DIR$/online-survey-system-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/survey/survey.iml" filepath="$PROJECT_DIR$/survey/survey.iml" />
+      <module fileurl="file://$PROJECT_DIR$/surveyadmin/surveyadmin.iml" filepath="$PROJECT_DIR$/surveyadmin/surveyadmin.iml" />
+    </modules>
+  </component>
+</project>

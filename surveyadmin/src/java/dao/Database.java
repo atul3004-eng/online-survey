@@ -5,10 +5,10 @@ public class Database {
 
       public static Connection getConnection() {
           try  {
-              Class.forName("oracle.jdbc.driver.OracleDriver");
+              Class.forName("com.mysql.cj.jdbc.Driver");
               Connection con = DriverManager.getConnection
-                      ("jdbc:oracle:thin:@localhost:1521:xe",
-                      "survey","survey");
+                      ("jdbc:mysql://localhost:3306/survey?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC",
+                      "root","root");
               return con;
           }
           catch(Exception ex) {
