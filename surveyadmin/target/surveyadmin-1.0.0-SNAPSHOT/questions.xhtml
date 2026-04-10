@@ -6,86 +6,102 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/templates/admin.xhtml">
     <ui:define name="content">
-        <section class="content-grid" rendered="#{questionBean.topicSelected}">
-            <p:outputPanel id="questionEditor">
-                <p:card styleClass="form-card">
-                    <f:facet name="title">Question CRUD</f:facet>
-                    <f:facet name="subtitle">Managing questions for "#{questionBean.topic.title}".</f:facet>
-                    <h:form id="questionForm">
-                        <div class="field-grid">
-                            <div class="field-row">
-                                <p:outputLabel for="questionText" value="Question"/>
-                                <p:inputTextarea id="questionText" value="#{questionBean.currentQuestion.text}" required="true" requiredMessage="Question text is required." rows="3" autoResize="false"/>
+        <section class="row g-4 mt-1" rendered="#{questionBean.topicSelected}">
+            <div class="col-12 col-xl-4">
+                <p:outputPanel id="questionEditor">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <div class="mb-4">
+                                <h2 class="h4 mb-2">Question CRUD</h2>
+                                <p class="text-muted mb-0">Managing questions for "#{questionBean.topic.title}".</p>
                             </div>
-                            <div class="field-row">
-                                <p:outputLabel for="option1" value="Option 1"/>
-                                <p:inputText id="option1" value="#{questionBean.currentQuestion.option1}" required="true" requiredMessage="Option 1 is required." maxlength="255"/>
-                            </div>
-                            <div class="field-row">
-                                <p:outputLabel for="option2" value="Option 2"/>
-                                <p:inputText id="option2" value="#{questionBean.currentQuestion.option2}" required="true" requiredMessage="Option 2 is required." maxlength="255"/>
-                            </div>
-                            <div class="field-row">
-                                <p:outputLabel for="option3" value="Option 3"/>
-                                <p:inputText id="option3" value="#{questionBean.currentQuestion.option3}" required="true" requiredMessage="Option 3 is required." maxlength="255"/>
-                            </div>
+                            <h:form id="questionForm">
+                                <div class="mb-3">
+                                    <p:outputLabel for="questionText" value="Question" styleClass="form-label fw-semibold"/>
+                                    <p:inputTextarea id="questionText" value="#{questionBean.currentQuestion.text}" required="true" requiredMessage="Question text is required." rows="3" autoResize="false" styleClass="w-100"/>
+                                </div>
+                                <div class="mb-3">
+                                    <p:outputLabel for="option1" value="Option 1" styleClass="form-label fw-semibold"/>
+                                    <p:inputText id="option1" value="#{questionBean.currentQuestion.option1}" required="true" requiredMessage="Option 1 is required." maxlength="255" styleClass="w-100"/>
+                                </div>
+                                <div class="mb-3">
+                                    <p:outputLabel for="option2" value="Option 2" styleClass="form-label fw-semibold"/>
+                                    <p:inputText id="option2" value="#{questionBean.currentQuestion.option2}" required="true" requiredMessage="Option 2 is required." maxlength="255" styleClass="w-100"/>
+                                </div>
+                                <div class="mb-3">
+                                    <p:outputLabel for="option3" value="Option 3" styleClass="form-label fw-semibold"/>
+                                    <p:inputText id="option3" value="#{questionBean.currentQuestion.option3}" required="true" requiredMessage="Option 3 is required." maxlength="255" styleClass="w-100"/>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <p:commandButton value="#{questionBean.currentQuestion.id == null ? 'Create Question' : 'Update Question'}"
+                                                     action="#{questionBean.save}"
+                                                     update=":questionEditor :questionTableForm:questionTable :messages"/>
+                                    <p:commandButton value="Clear" action="#{questionBean.resetForm}" process="@this" resetValues="true" update=":questionEditor" styleClass="p-button-outlined"/>
+                                    <h:link outcome="/topics.xhtml" value="Back to Topics" styleClass="btn btn-outline-secondary btn-sm d-inline-flex align-items-center"/>
+                                </div>
+                            </h:form>
                         </div>
-                        <div class="button-row">
-                            <p:commandButton value="#{questionBean.currentQuestion.id == null ? 'Create Question' : 'Update Question'}"
-                                             action="#{questionBean.save}"
-                                             update=":questionEditor :questionTableForm:questionTable :messages"/>
-                            <p:commandButton value="Clear" action="#{questionBean.resetForm}" process="@this" resetValues="true" update=":questionEditor" styleClass="p-button-outlined"/>
-                            <h:link outcome="/topics.xhtml" value="Back to Topics" styleClass="table-link"/>
-                        </div>
-                    </h:form>
-                </p:card>
-            </p:outputPanel>
+                    </div>
+                </p:outputPanel>
+            </div>
 
-            <p:card styleClass="table-card">
-                <f:facet name="title">Questions</f:facet>
-                <f:facet name="subtitle">Edit or delete any question tied to this topic.</f:facet>
-                <h:form id="questionTableForm">
-                    <p:dataTable id="questionTable" value="#{questionBean.questions}" var="question" paginator="true" rows="8"
-                                 emptyMessage="No questions added yet." rowKey="#{question.id}">
-                        <p:column headerText="Question">
-                            <h:outputText value="#{question.text}"/>
-                        </p:column>
-                        <p:column headerText="Option 1">
-                            <h:outputText value="#{question.option1}"/>
-                        </p:column>
-                        <p:column headerText="Option 2">
-                            <h:outputText value="#{question.option2}"/>
-                        </p:column>
-                        <p:column headerText="Option 3">
-                            <h:outputText value="#{question.option3}"/>
-                        </p:column>
-                        <p:column headerText="Actions" styleClass="action-column">
-                            <h:link outcome="/questions.xhtml" value="Edit" styleClass="table-link">
-                                <f:param name="topicId" value="#{questionBean.topicId}"/>
-                                <f:param name="editId" value="#{question.id}"/>
-                            </h:link>
-                            <p:commandButton value="Delete" action="#{questionBean.delete(question)}"
-                                             process="@this"
-                                             update="questionTable :questionEditor :messages"
-                                             styleClass="p-button-danger p-button-sm">
-                                <p:confirm header="Delete question" message="Delete this question?" icon="pi pi-exclamation-triangle"/>
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>
-                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
-                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes p-button-danger"/>
-                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no p-button-outlined"/>
-                    </p:confirmDialog>
-                </h:form>
-            </p:card>
+            <div class="col-12 col-xl-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-4">
+                            <h2 class="h4 mb-2">Questions</h2>
+                            <p class="text-muted mb-0">Edit or delete any question tied to this topic.</p>
+                        </div>
+                        <h:form id="questionTableForm">
+                            <p:dataTable id="questionTable" value="#{questionBean.questions}" var="question" paginator="true" rows="8"
+                                         emptyMessage="No questions added yet." rowKey="#{question.id}">
+                                <p:column headerText="Question">
+                                    <h:outputText value="#{question.text}"/>
+                                </p:column>
+                                <p:column headerText="Option 1">
+                                    <h:outputText value="#{question.option1}"/>
+                                </p:column>
+                                <p:column headerText="Option 2">
+                                    <h:outputText value="#{question.option2}"/>
+                                </p:column>
+                                <p:column headerText="Option 3">
+                                    <h:outputText value="#{question.option3}"/>
+                                </p:column>
+                                <p:column headerText="Actions" styleClass="action-column">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <h:link outcome="/questions.xhtml" value="Edit" styleClass="btn btn-outline-primary btn-sm">
+                                            <f:param name="topicId" value="#{questionBean.topicId}"/>
+                                            <f:param name="editId" value="#{question.id}"/>
+                                        </h:link>
+                                        <p:commandButton value="Delete" action="#{questionBean.delete(question)}"
+                                                         process="@this"
+                                                         update="questionTable :questionEditor :messages"
+                                                         styleClass="p-button-danger p-button-sm">
+                                            <p:confirm header="Delete question" message="Delete this question?" icon="pi pi-exclamation-triangle"/>
+                                        </p:commandButton>
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes p-button-danger"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no p-button-outlined"/>
+                            </p:confirmDialog>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section class="content-grid centered-grid" rendered="#{not questionBean.topicSelected}">
-            <p:card styleClass="form-card narrow-card">
-                <f:facet name="title">Topic required</f:facet>
-                <f:facet name="subtitle">Open questions from the topic list so the CRUD form knows which topic to use.</f:facet>
-                <h:link outcome="/topics.xhtml" value="Return to Topics" styleClass="table-link"/>
-            </p:card>
+        <section class="row justify-content-center mt-4" rendered="#{not questionBean.topicSelected}">
+            <div class="col-12 col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="h4 mb-2">Topic required</h2>
+                        <p class="text-muted mb-3">Open questions from the topic list so the CRUD form knows which topic to use.</p>
+                        <h:link outcome="/topics.xhtml" value="Return to Topics" styleClass="btn btn-outline-secondary"/>
+                    </div>
+                </div>
+            </div>
         </section>
     </ui:define>
 </ui:composition>

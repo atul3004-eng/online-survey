@@ -1,158 +1,55 @@
-body {
-    margin: 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background:
-        radial-gradient(circle at top left, rgba(0, 122, 204, 0.18), transparent 34%),
-        linear-gradient(160deg, #f3f7fb 0%, #eef5f1 55%, #fdfcf7 100%);
-    color: #183247;
+:root {
+    --admin-bg: radial-gradient(circle at top left, rgba(13, 110, 253, 0.18), transparent 30%),
+        linear-gradient(160deg, #f8fbff 0%, #eef5ff 45%, #f9f5ec 100%);
+    --hero-bg: linear-gradient(135deg, #0f172a 0%, #1d4ed8 55%, #0ea5e9 100%);
 }
 
-.app-shell {
+body.admin-body {
     min-height: 100vh;
-}
-
-.app-frame {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 32px 20px 48px;
+    background: var(--admin-bg);
 }
 
 .hero-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 24px;
-    padding: 28px 32px;
-    border-radius: 28px;
-    background: linear-gradient(135deg, #12344d 0%, #1b6d85 58%, #d6a24b 130%);
-    color: #ffffff;
-    box-shadow: 0 24px 50px rgba(18, 52, 77, 0.18);
+    border-radius: 1.5rem;
 }
 
-.hero-card h1 {
-    margin: 8px 0 12px;
-    font-size: clamp(2rem, 5vw, 3.3rem);
-    line-height: 1;
+.hero-surface {
+    background: var(--hero-bg);
 }
 
-.eyebrow {
+.ui-messages {
     margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    font-size: 0.75rem;
-    opacity: 0.82;
-}
-
-.hero-copy {
-    max-width: 640px;
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.84);
-}
-
-.menu-bar {
-    margin: 18px 0 26px;
-    display: flex;
-    gap: 12px;
-}
-
-.menu-link,
-.table-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: #0f5f82;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.content-grid {
-    display: grid;
-    gap: 24px;
-}
-
-.centered-grid {
-    justify-items: center;
-}
-
-.form-card,
-.table-card {
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 16px 36px rgba(16, 59, 84, 0.08);
-}
-
-.narrow-card {
-    width: min(100%, 520px);
-}
-
-.field-grid {
-    display: grid;
-    gap: 18px;
-}
-
-.field-row {
-    display: grid;
-    gap: 8px;
-}
-
-.button-row {
-    margin-top: 18px;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.action-column {
-    white-space: nowrap;
-}
-
-.action-column .ui-button,
-.action-column .table-link {
-    margin-right: 8px;
-}
-
-.user-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.user-chip {
-    padding: 8px 14px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(8px);
-}
-
-.primary-action {
-    min-width: 140px;
-}
-
-.ui-card .ui-card-title {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: #16344a;
-}
-
-.ui-card .ui-card-subtitle {
-    color: #5a7184;
 }
 
 .ui-inputfield,
-.ui-password,
-.ui-inputtextarea {
+.ui-inputtextarea,
+.ui-password input {
     width: 100%;
 }
 
-@media (max-width: 768px) {
-    .hero-card {
-        flex-direction: column;
-    }
+.ui-datatable .ui-datatable-header,
+.ui-datatable .ui-paginator {
+    background: transparent;
+    border-color: #e9ecef;
+}
 
-    .app-frame {
-        padding: 20px 14px 36px;
-    }
+.ui-datatable table {
+    font-size: 0.95rem;
+}
+
+.ui-datatable .ui-datatable-data > tr > td,
+.ui-datatable .ui-datatable-data > tr > td:last-child {
+    vertical-align: middle;
+}
+
+.action-column {
+    min-width: 15rem;
+}
+
+.action-column .ui-button {
+    margin: 0;
+}
+
+.ui-confirmdialog .ui-dialog-content {
+    font-size: 0.95rem;
 }
