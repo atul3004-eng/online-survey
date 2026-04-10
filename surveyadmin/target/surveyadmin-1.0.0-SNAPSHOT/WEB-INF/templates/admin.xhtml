@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>#{appInfoBean.appTitle}</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+<h:body styleClass="app-shell">
+    <div class="app-frame">
+        <header class="hero-card">
+            <div>
+                <p class="eyebrow">JSF 2.2 + PrimeFaces 12</p>
+                <h1>#{appInfoBean.appTitle}</h1>
+                <p class="hero-copy">Manage survey topics, questions, and live response summaries from one modern admin console.</p>
+            </div>
+            <h:form rendered="#{authBean.loggedIn}">
+                <div class="user-actions">
+                    <span class="user-chip">#{authBean.loggedInUser}</span>
+                    <p:commandButton value="Logout" action="#{authBean.logout}" ajax="false" styleClass="p-button-outlined"/>
+                </div>
+            </h:form>
+        </header>
+
+        <nav class="menu-bar" rendered="#{authBean.loggedIn}">
+            <h:link outcome="/topics.xhtml" value="Topics" styleClass="menu-link"/>
+        </nav>
+
+        <p:messages id="messages" showDetail="true" closable="true"/>
+        <ui:insert name="content"/>
+    </div>
+</h:body>
+</html>

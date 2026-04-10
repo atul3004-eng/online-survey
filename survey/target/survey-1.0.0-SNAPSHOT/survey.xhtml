@@ -16,6 +16,8 @@
                 <div class="header">Survey</div>
                 <p/>
                 <div class="qno">
+                    Topic: <h:outputText value="#{topic.title}" />
+                    <br/>
                     Question : <h:outputText value="#{topic.position + 1}"/>/ <h:outputText value="#{topic.questionCount}"/>
                 </div>
                 <p/>
@@ -32,11 +34,11 @@
                 </div>
                 <p/>
                 <div class="buttons">
-                    <h:commandButton actionListener="#{topic.previous}" rendered="#{topic.position &gt; 0}" value="Previous">
+                    <h:commandButton action="#{topic.previous}" rendered="#{topic.position &gt; 0}" value="Previous">
                         <f:ajax   execute="@form" render="@form" />
                     </h:commandButton>
                     &nbsp;
-                    <h:commandButton actionListener="#{topic.next}" rendered="#{topic.position &lt; topic.questionCount - 1}" value="Next">
+                    <h:commandButton action="#{topic.next}" rendered="#{topic.position &lt; topic.questionCount - 1}" value="Next">
                         <f:ajax   execute="@form" render="@form" />
                     </h:commandButton>
                     &nbsp;

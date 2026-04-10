@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/admin.xhtml">
+    <ui:define name="content">
+        <section class="content-grid" rendered="#{not empty surveyResultBean.topic}">
+            <p:card styleClass="table-card">
+                <f:facet name="title">Survey Results</f:facet>
+                <f:facet name="subtitle">Response percentages for "#{surveyResultBean.topic.title}".</f:facet>
+                <h:form>
+                    <p:dataTable value="#{surveyResultBean.results}" var="result" emptyMessage="No survey submissions found yet.">
+                        <p:column headerText="Question">
+                            <h:outputText value="#{result.question}"/>
+                        </p:column>
+                        <p:column headerText="Option 1">
+                            <h:outputText value="#{result.option1} (#{result.option1Percent}%)"/>
+                        </p:column>
+                        <p:column headerText="Option 2">
+                            <h:outputText value="#{result.option2} (#{result.option2Percent}%)"/>
+                        </p:column>
+                        <p:column headerText="Option 3">
+                            <h:outputText value="#{result.option3} (#{result.option3Percent}%)"/>
+                        </p:column>
+                    </p:dataTable>
+                    <div class="button-row">
+                        <h:link outcome="/topics.xhtml" value="Back to Topics" styleClass="table-link"/>
+                    </div>
+                </h:form>
+            </p:card>
+        </section>
+
+        <section class="content-grid centered-grid" rendered="#{empty surveyResultBean.topic}">
+            <p:card styleClass="form-card narrow-card">
+                <f:facet name="title">Topic required</f:facet>
+                <f:facet name="subtitle">Open results from the topic list to view the analytics for a specific survey topic.</f:facet>
+                <h:link outcome="/topics.xhtml" value="Return to Topics" styleClass="table-link"/>
+            </p:card>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

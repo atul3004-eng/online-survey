@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/admin.xhtml">
+    <ui:define name="content">
+        <section class="content-grid centered-grid">
+            <p:card styleClass="form-card narrow-card">
+                <f:facet name="title">Admin Login</f:facet>
+                <f:facet name="subtitle">Use the seeded admin account or your existing user record.</f:facet>
+                <h:form id="loginForm">
+                    <div class="field-grid">
+                        <div class="field-row">
+                            <p:outputLabel for="username" value="Username"/>
+                            <p:inputText id="username" value="#{authBean.username}" required="true" requiredMessage="Username is required."/>
+                        </div>
+                        <div class="field-row">
+                            <p:outputLabel for="password" value="Password"/>
+                            <p:password id="password" value="#{authBean.password}" feedback="false" required="true" requiredMessage="Password is required."/>
+                        </div>
+                    </div>
+                    <p:commandButton value="Sign In" action="#{authBean.login}" ajax="false" styleClass="primary-action"/>
+                </h:form>
+            </p:card>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>
