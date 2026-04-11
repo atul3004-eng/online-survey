@@ -4,6 +4,6 @@ C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\model\AnswerDeta
 C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\model\AnswerMaster.java
 C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\model\Question.java
 C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\model\Topic.java
-C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\persistence\JpaUtil.java
+C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\persistence\JpaUtility.java
 C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\repository\SurveyRepository.java
 C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\repository\TopicRepository.java

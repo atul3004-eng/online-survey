@@ -22,7 +22,7 @@ public class AnswerMaster implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "surveyid")
-    private Long id;
+    private Long surveyId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "topicid", nullable = false)
@@ -39,12 +39,12 @@ public class AnswerMaster implements Serializable {
         }
     }
 
-    public Long getId() {
-        return id;
+    public Long getSurveyId() {
+        return surveyId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setSurveyId(Long surveyId) {
+        this.surveyId = surveyId;
     }
 
     public Topic getTopic() {

@@ -2,14 +2,14 @@ package com.kiptoo2000.survey.repository;
 
 import com.kiptoo2000.survey.model.Question;
 import com.kiptoo2000.survey.model.Topic;
-import com.kiptoo2000.survey.persistence.JpaUtil;
+import com.kiptoo2000.survey.persistence.JpaUtility;
 import java.util.List;
 import javax.persistence.EntityManager;
 
 public class TopicRepository {
 
     public List<Topic> findAll() {
-        EntityManager entityManager = JpaUtil.createEntityManager();
+        EntityManager entityManager = JpaUtility.createEntityManager();
         try {
             return entityManager.createQuery(
                     "SELECT t FROM Topic t ORDER BY t.title", Topic.class)
@@ -23,7 +23,7 @@ public class TopicRepository {
         if (id == null) {
             return null;
         }
-        EntityManager entityManager = JpaUtil.createEntityManager();
+        EntityManager entityManager = JpaUtility.createEntityManager();
         try {
             return entityManager.find(Topic.class, id);
         } finally {
@@ -32,7 +32,7 @@ public class TopicRepository {
     }
 
     public List<Question> findQuestionsByTopicId(Long topicId) {
-        EntityManager entityManager = JpaUtil.createEntityManager();
+        EntityManager entityManager = JpaUtility.createEntityManager();
         try {
             return entityManager.createQuery(
                     "SELECT q FROM Question q WHERE q.topic.id = :topicId ORDER BY q.id",

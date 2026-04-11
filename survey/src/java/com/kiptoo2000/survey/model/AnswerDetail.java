@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class AnswerDetail implements Serializable {
 
     @EmbeddedId
-    private AnswerDetailId id;
+    private AnswerDetailId id = new AnswerDetailId();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId("surveyId")

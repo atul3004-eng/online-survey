@@ -1,7 +1,7 @@
 com\kiptoo2000\survey\repository\TopicRepository.class
+com\kiptoo2000\survey\persistence\JpaUtility.class
 com\kiptoo2000\survey\model\Topic.class
 com\kiptoo2000\survey\model\AnswerDetail.class
-com\kiptoo2000\survey\persistence\JpaUtil.class
 com\kiptoo2000\survey\bean\SurveyBean.class
 com\kiptoo2000\survey\repository\SurveyRepository.class
 com\kiptoo2000\survey\model\Question.class

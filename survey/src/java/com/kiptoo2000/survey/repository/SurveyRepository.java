@@ -5,15 +5,17 @@ import com.kiptoo2000.survey.model.AnswerDetailId;
 import com.kiptoo2000.survey.model.AnswerMaster;
 import com.kiptoo2000.survey.model.Question;
 import com.kiptoo2000.survey.model.Topic;
-import com.kiptoo2000.survey.persistence.JpaUtil;
+import com.kiptoo2000.survey.persistence.JpaUtility;
+
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-public class SurveyRepository {
+public class SurveyRepository  implements Serializable {
 
     public boolean storeSurveyResults(Long topicId, List<Question> questions) {
-        EntityManager entityManager = JpaUtil.createEntityManager();
+        EntityManager entityManager = JpaUtility.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
@@ -28,7 +30,7 @@ public class SurveyRepository {
                 Question managedQuestion = entityManager.find(Question.class, question.getId());
                 AnswerDetail detail = new AnswerDetail();
                 AnswerDetailId detailId = new AnswerDetailId();
-                detailId.setSurveyId(survey.getId());
+                detailId.setSurveyId(survey.getSurveyId());
                 detailId.setQuestionId(managedQuestion.getId());
                 detail.setId(detailId);
                 detail.setSurvey(survey);
