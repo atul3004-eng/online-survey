@@ -6,13 +6,13 @@ import javax.persistence.EntityManager;
 
 public class UserRepository {
 
-    public boolean isValidLogin(String username, String password) {
+    public User findByUsername(String username) {
         EntityManager entityManager = JpaUtil.createEntityManager();
         try {
-            User user = entityManager.find(User.class, username);
-            return user != null && user.getPassword().equals(password);
+            return entityManager.find(User.class, username);
         } finally {
             entityManager.close();
         }
     }
+
 }

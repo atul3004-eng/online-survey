@@ -18,19 +18,19 @@
                         <h1 class="display-5 fw-bold text-white mb-3">#{appInfoBean.appTitle}</h1>
                         <p class="lead mb-0 text-white-50">Manage survey topics, questions, and live response summaries from one Bootstrap-powered admin console.</p>
                     </div>
-                    <h:form rendered="#{authBean.loggedIn}" styleClass="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
+                    <h:panelGroup layout="block" rendered="#{authBean.loggedIn}" styleClass="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
                         <span class="badge rounded-pill text-bg-light px-3 py-2">#{authBean.loggedInUser}</span>
-                        <p:commandButton value="Logout" action="#{authBean.logout}" ajax="false" styleClass="p-button-secondary"/>
-                    </h:form>
+                        <h:outputLink value="#{request.contextPath}/logout" styleClass="btn btn-light btn-sm">Logout</h:outputLink>
+                    </h:panelGroup>
                 </div>
             </div>
         </header>
 
-        <nav class="mt-4" rendered="#{authBean.loggedIn}">
+        <h:panelGroup layout="block" styleClass="mt-4" rendered="#{authBean.loggedIn}">
             <div class="nav nav-pills gap-2">
                 <h:link outcome="/topics.xhtml" value="Topics" styleClass="nav-link active"/>
             </div>
-        </nav>
+        </h:panelGroup>
 
         <div class="mt-4">
             <p:messages id="messages" showDetail="true" closable="true"/>

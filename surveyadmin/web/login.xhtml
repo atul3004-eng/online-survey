@@ -19,17 +19,23 @@
                             <h2 class="h3 mb-2">Admin Login</h2>
                             <p class="text-muted mb-0">Use the seeded admin account or your existing user record.</p>
                         </div>
-                        <h:form id="loginForm">
+                        <h:panelGroup layout="block" styleClass="alert alert-danger" rendered="#{not empty param.error}">
+                            Invalid username or password.
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="alert alert-success" rendered="#{not empty param.logout}">
+                            You have been signed out.
+                        </h:panelGroup>
+                        <form id="loginForm" method="post" action="#{request.contextPath}/login">
                             <div class="mb-3">
-                                <p:outputLabel for="username" value="Username" styleClass="form-label fw-semibold"/>
-                                <p:inputText id="username" value="#{authBean.username}" required="true" requiredMessage="Username is required." styleClass="w-100"/>
+                                <label for="username" class="form-label fw-semibold">Username</label>
+                                <input id="username" name="username" type="text" required="required" class="form-control"/>
                             </div>
                             <div class="mb-4">
-                                <p:outputLabel for="password" value="Password" styleClass="form-label fw-semibold"/>
-                                <p:password id="password" value="#{authBean.password}" feedback="false" required="true" requiredMessage="Password is required." styleClass="w-100"/>
+                                <label for="password" class="form-label fw-semibold">Password</label>
+                                <input id="password" name="password" type="password" required="required" class="form-control"/>
                             </div>
-                            <p:commandButton value="Sign In" action="#{authBean.login}" ajax="false" styleClass="w-100"/>
-                        </h:form>
+                            <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                        </form>
                     </div>
                 </div>
             </div>
