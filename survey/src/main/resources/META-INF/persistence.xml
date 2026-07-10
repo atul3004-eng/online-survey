@@ -10,6 +10,8 @@
         <class>com.kiptoo2000.survey.model.AnswerMaster</class>
         <class>com.kiptoo2000.survey.model.AnswerDetail</class>
         <class>com.kiptoo2000.survey.model.AnswerDetailId</class>
+        <class>com.kiptoo2000.survey.model.WellnessResponse</class>
+        <class>com.kiptoo2000.survey.model.WellnessAnswer</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/survey?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC"/>

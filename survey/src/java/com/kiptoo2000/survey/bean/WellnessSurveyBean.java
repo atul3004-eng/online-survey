@@ -78,6 +78,10 @@ public class WellnessSurveyBean implements Serializable {
         return wellnessSurveyRepository.findAllResponses();
     }
 
+    public List<WellnessAnswer> getExportAnswers() {
+        return wellnessSurveyRepository.findAllAnswersForExport();
+    }
+
     public void viewSavedResponse(Long responseId) {
         selectedResponse = wellnessSurveyRepository.findResponse(responseId);
         selectedAnswers = wellnessSurveyRepository.findAnswers(responseId);

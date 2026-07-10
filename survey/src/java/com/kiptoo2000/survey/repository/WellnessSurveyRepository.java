@@ -94,6 +94,18 @@ public class WellnessSurveyRepository implements Serializable {
         }
     }
 
+    public List<WellnessAnswer> findAllAnswersForExport() {
+        EntityManager entityManager = JpaUtility.createEntityManager();
+        try {
+            return entityManager.createQuery(
+                    "SELECT a FROM WellnessAnswer a JOIN FETCH a.response r ORDER BY r.submittedOn DESC, r.id DESC, a.displayOrder, a.id",
+                    WellnessAnswer.class)
+                    .getResultList();
+        } finally {
+            entityManager.close();
+        }
+    }
+
     private WellnessAnswer answer(String key, String value) {
         FieldMeta meta = FIELD_META.get(key);
         WellnessAnswer answer = new WellnessAnswer();
