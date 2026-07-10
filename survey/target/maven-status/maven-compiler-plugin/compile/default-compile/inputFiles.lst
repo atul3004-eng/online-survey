@@ -1,9 +1,0 @@
-C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\bean\SurveyBean.java
-C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\model\AnswerDetail.java
-C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\model\AnswerDetailId.java
-C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\model\AnswerMaster.java
-C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\model\Question.java
-C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\model\Topic.java
-C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\persistence\JpaUtility.java
-C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\repository\SurveyRepository.java
-C:\projects\online-survey\survey\src\java\com\kiptoo2000\survey\repository\TopicRepository.java
