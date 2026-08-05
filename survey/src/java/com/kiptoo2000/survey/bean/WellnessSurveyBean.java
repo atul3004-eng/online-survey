@@ -3,7 +3,10 @@ package com.kiptoo2000.survey.bean;
 import com.kiptoo2000.survey.model.WellnessAnswer;
 import com.kiptoo2000.survey.model.WellnessResponse;
 import com.kiptoo2000.survey.repository.WellnessSurveyRepository;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +17,7 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "wellnessSurvey")
@@ -50,6 +54,14 @@ public class WellnessSurveyBean implements Serializable {
     }
 
     public String submit() {
+        if (!isEmployeeTotalValid()) {
+            FacesContext.getCurrentInstance().validationFailed();
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid employee total",
+                            "Total employees must equal full-time + part-time + contracted/outsourced employees."));
+            return null;
+        }
+
         try {
             savedResponseId = wellnessSurveyRepository.save(answers, multiAnswers);
             submitted = true;
@@ -63,6 +75,26 @@ public class WellnessSurveyBean implements Serializable {
                             "The survey could not be saved. Please check the database connection and schema."));
         }
         return null;
+    }
+
+    private boolean isEmployeeTotalValid() {
+        String fullTime = answers.get("fullTime");
+        String partTime = answers.get("partTime");
+        String contracted = answers.get("contracted");
+        String totalEmployees = answers.get("totalEmployees");
+        if (isBlank(fullTime) || isBlank(partTime) || isBlank(contracted) || isBlank(totalEmployees)) {
+            return true;
+        }
+        try {
+            int expectedTotal = Integer.parseInt(fullTime) + Integer.parseInt(partTime) + Integer.parseInt(contracted);
+            return expectedTotal == Integer.parseInt(totalEmployees);
+        } catch (NumberFormatException ex) {
+            return true;
+        }
+    }
+
+    private boolean isBlank(String value) {
+        return value == null || value.trim().isEmpty();
     }
 
     public String reset() {
@@ -80,6 +112,82 @@ public class WellnessSurveyBean implements Serializable {
 
     public List<WellnessAnswer> getExportAnswers() {
         return wellnessSurveyRepository.findAllAnswersForExport();
+    }
+
+    public void downloadFullResultsExcel() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        try {
+            externalContext.responseReset();
+            externalContext.setResponseContentType("application/vnd.ms-excel; charset=UTF-16LE");
+            externalContext.setResponseHeader("Content-Disposition",
+                    "attachment; filename=\"workplace-wellness-full-results.xls\"");
+
+            OutputStream outputStream = externalContext.getResponseOutputStream();
+            outputStream.write(new byte[]{(byte) 0xFF, (byte) 0xFE});
+            outputStream.write(buildFullResultsExcelText().getBytes(Charset.forName("UTF-16LE")));
+            outputStream.flush();
+            facesContext.responseComplete();
+        } catch (IOException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Download failed",
+                            "The Excel file could not be generated."));
+        }
+    }
+
+    private String buildFullResultsExcelText() {
+        StringBuilder builder = new StringBuilder();
+        appendExcelRow(builder, new Object[]{
+            "Response ID",
+            "Submitted On",
+            "Company",
+            "Email",
+            "Phone",
+            "Section",
+            "Question",
+            "Answer"
+        });
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        for (WellnessAnswer answer : wellnessSurveyRepository.findAllAnswersForExport()) {
+            WellnessResponse response = answer.getResponse();
+            appendExcelRow(builder, new Object[]{
+                response != null ? response.getId() : null,
+                response != null ? formatDate(response.getSubmittedOn(), dateFormat) : "",
+                response != null ? response.getCompanyName() : "",
+                response != null ? response.getEmail() : "",
+                response != null ? response.getPhone() : "",
+                answer.getSectionName(),
+                answer.getQuestionLabel(),
+                answer.getAnswerValue()
+            });
+        }
+        return builder.toString();
+    }
+
+    private void appendExcelRow(StringBuilder builder, Object[] values) {
+        for (int index = 0; index < values.length; index++) {
+            if (index > 0) {
+                builder.append('\t');
+            }
+            builder.append(formatExcelValue(values[index]));
+        }
+        builder.append("\r\n");
+    }
+
+    private String formatExcelValue(Object value) {
+        if (value == null) {
+            return "";
+        }
+        String text = String.valueOf(value).replace("\"", "\"\"");
+        if (text.indexOf('\t') >= 0 || text.indexOf('\n') >= 0 || text.indexOf('\r') >= 0 || text.indexOf('"') >= 0) {
+            return "\"" + text + "\"";
+        }
+        return text;
+    }
+
+    private String formatDate(Date date, SimpleDateFormat dateFormat) {
+        return date == null ? "" : dateFormat.format(date);
     }
 
     public void viewSavedResponse(Long responseId) {
