@@ -32,6 +32,14 @@ public class WellnessSurveyBean implements Serializable {
     private Long savedResponseId;
     private boolean submitted;
     private String submittedOn;
+    private String referenceId;
+    private String submittedBy;
+    private String surveyCategory;
+    private String surveyOpenedOn;
+
+    public WellnessSurveyBean() {
+        initializePrefilledData();
+    }
 
     public Map<String, String> getAnswers() {
         return answers;
@@ -51,6 +59,68 @@ public class WellnessSurveyBean implements Serializable {
 
     public String getSubmittedOn() {
         return submittedOn;
+    }
+
+    public String getReferenceId() {
+        return referenceId;
+    }
+
+    public String getSubmittedBy() {
+        return submittedBy;
+    }
+
+    public String getSurveyCategory() {
+        return surveyCategory;
+    }
+
+    public String getSurveyOpenedOn() {
+        return surveyOpenedOn;
+    }
+
+    public String getDisplayCompanyName() {
+        return valueOrFallback(answers.get("companyName"), "-");
+    }
+
+    public String getDisplayEmail() {
+        return valueOrFallback(answers.get("email"), "-");
+    }
+
+    public String getDisplayPhone() {
+        return valueOrFallback(answers.get("phone"), "-");
+    }
+
+    public String getDisplayAddress() {
+        String address = buildAddressText();
+        if (isBlank(address)) {
+            return "-";
+        }
+        return address;
+    }
+
+    public String getProgressText(Long sectionNumber) {
+        return getProgressPercent(sectionNumber) + "%";
+    }
+
+    public int getProgressPercent(Long sectionNumber) {
+        if (sectionNumber == null) {
+            return 0;
+        }
+        int section = sectionNumber.intValue();
+        if (section < 1) {
+            return 0;
+        }
+        if (section > 4) {
+            section = 4;
+        }
+        return section * 25;
+    }
+
+    public String getProgressText() {
+        return getProgressText(Long.valueOf(1L));
+    }
+
+    public int getProgressPercent() {
+        return getProgressPercent(Long.valueOf(1L));
     }
 
     public String submit() {
@@ -73,8 +143,9 @@ public class WellnessSurveyBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Save failed",
                             "The survey could not be saved. Please check the database connection and schema."));
+            return null;
         }
-        return null;
+        return "wellness-complete?faces-redirect=true";
     }
 
     private boolean isEmployeeTotalValid() {
@@ -97,13 +168,68 @@ public class WellnessSurveyBean implements Serializable {
         return value == null || value.trim().isEmpty();
     }
 
+    private String trimToEmpty(String value) {
+        return value == null ? "" : value.trim();
+    }
+
+    private String valueOrFallback(String value, String fallback) {
+        return isBlank(value) ? fallback : value.trim();
+    }
+
+    private void appendAddressPart(StringBuilder builder, String label, String value) {
+        if (isBlank(value)) {
+            return;
+        }
+        if (builder.length() > 0) {
+            builder.append(", ");
+        }
+        builder.append(label).append(' ').append(value);
+    }
+
+    private String buildAddressText() {
+        StringBuilder builder = new StringBuilder();
+        appendAddressPart(builder, "Zone", trimToEmpty(answers.get("zone")));
+        appendAddressPart(builder, "Street", trimToEmpty(answers.get("street")));
+        appendAddressPart(builder, "Building", trimToEmpty(answers.get("buildingNo")));
+        appendAddressPart(builder, "Unit", trimToEmpty(answers.get("unit")));
+        return builder.toString();
+    }
+
+    private void initializePrefilledData() {
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String suffix = timestamp.length() > 6 ? timestamp.substring(timestamp.length() - 6) : timestamp;
+        referenceId = "SUR-" + suffix;
+        submittedBy = "Survey Participant";
+        surveyCategory = "Workplace Wellness";
+        surveyOpenedOn = new SimpleDateFormat("dd MMM yyyy").format(new Date());
+    }
+
+    public String beginSurvey() {
+        answers.clear();
+        multiAnswers.clear();
+        submitted = false;
+        submittedOn = null;
+        savedResponseId = null;
+        initializePrefilledData();
+        return "wellness?faces-redirect=true";
+    }
+
+    public String startSurvey() {
+        submitted = false;
+        submittedOn = null;
+        savedResponseId = null;
+        answers.put("address", buildAddressText());
+        initializePrefilledData();
+        return "wellness?faces-redirect=true";
+    }
+
     public String reset() {
         answers.clear();
         multiAnswers.clear();
         submitted = false;
         submittedOn = null;
         savedResponseId = null;
-        return "wellness?faces-redirect=true";
+        return "wellness-start?faces-redirect=true";
     }
 
     public List<WellnessResponse> getSavedResponses() {

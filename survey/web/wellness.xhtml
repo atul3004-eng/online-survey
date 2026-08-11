@@ -26,6 +26,11 @@
             </div>
         </header>
 
+        <div class="actions top-actions">
+            <p:button value="Back to Start" icon="pi pi-arrow-left" outcome="wellness-start" styleClass="ui-button-secondary"/>
+            <p:button value="View Saved Results" icon="pi pi-table" outcome="wellness-results"/>
+        </div>
+
         <h:form id="wellnessForm">
             <p:messages id="validationMessages"
                         showDetail="true"
@@ -37,33 +42,46 @@
                 <p:autoUpdate/>
             </p:growl>
 
-            <p:wizard id="wizard" widgetVar="wellnessWizard" styleClass="wellness-wizard" showNavBar="true">
+            <p:wizard id="wizard" widgetVar="wellnessWizard" styleClass="wellness-wizard" showNavBar="false">
                 <p:tab id="company" title="Company Profile">
                     <section class="survey-section">
                         <h2>Section 1: Company Profile</h2>
-                        <div class="form-grid two">
-                            <span class="field">
-                                <p:outputLabel for="companyName" value="Company name"/>
-                                <p:inputText id="companyName" value="#{wellnessSurvey.answers['companyName']}" required="true"/>
-                            </span>
-                            <span class="field">
-                                <p:outputLabel for="address" value="Address"/>
-                                <p:inputText id="address" value="#{wellnessSurvey.answers['address']}" required="true"/>
-                            </span>
-                            <span class="field">
-                                <p:outputLabel for="email" value="Email address"/>
-                                <p:inputText id="email" value="#{wellnessSurvey.answers['email']}" required="true"
-                                             validatorMessage="Enter a valid email address, for example name@example.com.">
-                                    <f:validateRegex pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"/>
-                                </p:inputText>
-                            </span>
-                            <span class="field">
-                                <p:outputLabel for="phone" value="Phone number"/>
-                                <p:inputText id="phone" value="#{wellnessSurvey.answers['phone']}" required="true"
-                                             validatorMessage="Enter a valid phone number using digits, spaces, +, - or brackets.">
-                                    <f:validateRegex pattern="^[+0-9][0-9 ()-]{6,24}$"/>
-                                </p:inputText>
-                            </span>
+                        <div class="prefill-card">
+                            <h3>Pre-filled information</h3>
+                            <div class="prefill-grid">
+                                <span>
+                                    <small>Reference ID</small>
+                                    <strong><h:outputText value="#{wellnessSurvey.referenceId}"/></strong>
+                                </span>
+                                <span>
+                                    <small>Company name</small>
+                                    <strong><h:outputText value="#{wellnessSurvey.displayCompanyName}"/></strong>
+                                </span>
+                                <span>
+                                    <small>Email address</small>
+                                    <strong><h:outputText value="#{wellnessSurvey.displayEmail}"/></strong>
+                                </span>
+                                <span>
+                                    <small>Date</small>
+                                    <strong><h:outputText value="#{wellnessSurvey.surveyOpenedOn}"/></strong>
+                                </span>
+                                <span>
+                                    <small>Phone number</small>
+                                    <strong><h:outputText value="#{wellnessSurvey.displayPhone}"/></strong>
+                                </span>
+                                <span class="prefill-span-two">
+                                    <small>Address</small>
+                                    <strong><h:outputText value="#{wellnessSurvey.displayAddress}"/></strong>
+                                </span>
+                                <span>
+                                    <small>Category</small>
+                                    <strong><h:outputText value="#{wellnessSurvey.surveyCategory}"/></strong>
+                                </span>
+                                <span>
+                                    <small>Submitted by</small>
+                                    <strong><h:outputText value="#{wellnessSurvey.submittedBy}"/></strong>
+                                </span>
+                            </div>
                         </div>
 
                         <h3>Focal point contact details</h3>
@@ -182,6 +200,32 @@
                                 <f:selectItems value="#{wellnessSurvey.countries}"/>
                             </p:selectManyCheckbox>
                             <p:inputText placeholder="Other country" value="#{wellnessSurvey.answers['countryOther']}"/>
+                        </div>
+
+                        <div class="section-progress">
+                            <div class="progress-meta">
+                                <span>Section 1 of 4</span>
+                                <strong>25%</strong>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill" style="width: 25%;"></div>
+                            </div>
+                            <p>Complete the company details, then continue.</p>
+                        </div>
+
+                        <div class="wizard-footer">
+                            <div class="wizard-footer-progress">
+                                <span>Section 1 of 4</span>
+                                <strong>25%</strong>
+                            </div>
+                            <div class="wizard-footer-actions wizard-footer-actions-end">
+                                <p:commandButton type="button"
+                                                 value="Next"
+                                                 icon="pi pi-arrow-right"
+                                                 iconPos="right"
+                                                 styleClass="wizard-next-button"
+                                                 onclick="PF('wellnessWizard').next();"/>
+                            </div>
                         </div>
                     </section>
                 </p:tab>
@@ -313,6 +357,37 @@
                                 <p:inputText placeholder="Other training item" value="#{wellnessSurvey.answers['trainingOther']}"/>
                             </h:panelGroup>
                         </p:outputPanel>
+
+                        <div class="section-progress">
+                            <div class="progress-meta">
+                                <span>Section 2 of 4</span>
+                                <strong>50%</strong>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill" style="width: 50%;"></div>
+                            </div>
+                            <p>Occupational health and safety details are almost halfway done.</p>
+                        </div>
+
+                        <div class="wizard-footer">
+                            <div class="wizard-footer-progress">
+                                <span>Section 2 of 4</span>
+                                <strong>50%</strong>
+                            </div>
+                            <div class="wizard-footer-actions">
+                                <p:commandButton type="button"
+                                                 value="Back"
+                                                 icon="pi pi-arrow-left"
+                                                 styleClass="ui-button-secondary wizard-back-button"
+                                                 onclick="PF('wellnessWizard').back();"/>
+                                <p:commandButton type="button"
+                                                 value="Next"
+                                                 icon="pi pi-arrow-right"
+                                                 iconPos="right"
+                                                 styleClass="wizard-next-button"
+                                                 onclick="PF('wellnessWizard').next();"/>
+                            </div>
+                        </div>
                     </section>
                 </p:tab>
 
@@ -352,6 +427,37 @@
                                 <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                 <f:selectItem itemLabel="No" itemValue="No"/>
                             </p:selectOneRadio>
+                        </div>
+
+                        <div class="section-progress">
+                            <div class="progress-meta">
+                                <span>Section 3 of 4</span>
+                                <strong>75%</strong>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill" style="width: 75%;"></div>
+                            </div>
+                            <p>Medical examination details are nearly complete.</p>
+                        </div>
+
+                        <div class="wizard-footer">
+                            <div class="wizard-footer-progress">
+                                <span>Section 3 of 4</span>
+                                <strong>75%</strong>
+                            </div>
+                            <div class="wizard-footer-actions">
+                                <p:commandButton type="button"
+                                                 value="Back"
+                                                 icon="pi pi-arrow-left"
+                                                 styleClass="ui-button-secondary wizard-back-button"
+                                                 onclick="PF('wellnessWizard').back();"/>
+                                <p:commandButton type="button"
+                                                 value="Next"
+                                                 icon="pi pi-arrow-right"
+                                                 iconPos="right"
+                                                 styleClass="wizard-next-button"
+                                                 onclick="PF('wellnessWizard').next();"/>
+                            </div>
                         </div>
                     </section>
                 </p:tab>
@@ -473,33 +579,44 @@
                             </p:selectOneRadio>
                         </div>
 
-                        <div class="actions">
-                            <p:commandButton value="Submit Survey" icon="pi pi-check" action="#{wellnessSurvey.submit}" update="@form" styleClass="ui-button-success"/>
-                            <p:button value="View Saved Results" icon="pi pi-table" outcome="wellness-results"/>
-                            <p:commandButton value="Clear" icon="pi pi-refresh" action="#{wellnessSurvey.reset}" immediate="true" styleClass="ui-button-secondary"/>
+                        <div class="section-progress final-progress">
+                            <div class="progress-meta">
+                                <span>Section 4 of 4</span>
+                                <strong>100%</strong>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill" style="width: 100%;"></div>
+                            </div>
+                            <p>Review your answers, then submit.</p>
+                        </div>
+
+                        <div class="wizard-footer">
+                            <div class="wizard-footer-progress">
+                                <span>Section 4 of 4</span>
+                                <strong>100%</strong>
+                            </div>
+                            <div class="wizard-footer-actions">
+                                <p:commandButton type="button"
+                                                 value="Back"
+                                                 icon="pi pi-arrow-left"
+                                                 styleClass="ui-button-secondary wizard-back-button"
+                                                 onclick="PF('wellnessWizard').back();"/>
+                                <p:commandButton value="Submit Survey"
+                                                 icon="pi pi-check"
+                                                 action="#{wellnessSurvey.submit}"
+                                                 ajax="false"
+                                                 styleClass="ui-button-success wizard-submit-button"/>
+                                <p:commandButton value="Clear"
+                                                 icon="pi pi-refresh"
+                                                 action="#{wellnessSurvey.reset}"
+                                                 ajax="false"
+                                                 immediate="true"
+                                                 styleClass="ui-button-secondary"/>
+                            </div>
                         </div>
                     </section>
                 </p:tab>
             </p:wizard>
-
-            <p:outputPanel id="resultPanel" layout="block" styleClass="result-panel" rendered="#{wellnessSurvey.submitted}">
-                <h2>Submitted Survey Preview</h2>
-                <p>
-                    Saved to the database as response
-                    <strong>#<h:outputText value="#{wellnessSurvey.savedResponseId}"/></strong>
-                    on <strong><h:outputText value="#{wellnessSurvey.submittedOn}"/></strong>.
-                </p>
-                <div class="result-grid">
-                    <span>Company</span><strong><h:outputText value="#{wellnessSurvey.answers['companyName']}"/></strong>
-                    <span>Industry</span><strong><h:outputText value="#{wellnessSurvey.answers['industry']}"/></strong>
-                    <span>Total employees</span><strong><h:outputText value="#{wellnessSurvey.answers['totalEmployees']}"/></strong>
-                    <span>OHS policy</span><strong><h:outputText value="#{wellnessSurvey.answers['ohsPolicy']}"/></strong>
-                    <span>Risk assessment</span><strong><h:outputText value="#{wellnessSurvey.answers['riskAssessment']}"/></strong>
-                    <span>Wellness policy</span><strong><h:outputText value="#{wellnessSurvey.answers['wellnessPolicy']}"/></strong>
-                    <span>Wellness program</span><strong><h:outputText value="#{wellnessSurvey.answers['wellnessProgram']}"/></strong>
-                    <span>Mental health support</span><strong><h:outputText value="#{wellnessSurvey.answers['mentalHealthSupport']}"/></strong>
-                </div>
-            </p:outputPanel>
         </h:form>
     </div>
 </h:body>

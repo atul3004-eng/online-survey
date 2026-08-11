@@ -112,6 +112,83 @@ body.survey-body {
     box-shadow: 0 14px 36px rgba(31, 41, 55, 0.08);
 }
 
+.wellness-stage-card {
+    max-width: 860px;
+    margin: 24px auto 0;
+    padding: 40px 36px;
+    background: #ffffff;
+    border: 1px solid #dce4ef;
+    border-radius: 18px;
+    box-shadow: 0 20px 46px rgba(31, 41, 55, 0.12);
+    text-align: center;
+}
+
+.stage-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin: 28px 0 20px;
+    text-align: left;
+}
+
+.stage-summary div,
+.stage-note {
+    padding: 16px 18px;
+    background: #faf6ef;
+    border: 1px solid #eee4d4;
+    border-radius: 12px;
+}
+
+.stage-summary span {
+    display: block;
+    color: #7c6650;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.stage-summary strong {
+    display: block;
+    margin-top: 6px;
+    color: #3b2c23;
+    line-height: 1.45;
+}
+
+.stage-note {
+    color: #5a4638;
+    line-height: 1.6;
+}
+
+.actions-centered {
+    justify-content: center;
+}
+
+.stage-button {
+    min-width: 210px;
+}
+
+.completion-card {
+    max-width: 760px;
+}
+
+.completion-icon {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #41202d;
+    color: #ffffff;
+    font-size: 3rem;
+    line-height: 96px;
+    box-shadow: 0 0 0 12px rgba(228, 216, 191, 0.7);
+}
+
+.completion-grid {
+    margin-top: 22px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
 .validation-summary {
     margin-bottom: 16px;
 }
@@ -173,6 +250,51 @@ body.survey-body {
     font-weight: 700;
 }
 
+.prefill-card {
+    margin-bottom: 22px;
+    padding: 20px 22px;
+    background: linear-gradient(180deg, #f8f6ee 0%, #f3efe4 100%);
+    border: 1px solid #e7decc;
+    border-radius: 14px;
+}
+
+.prefill-card h3 {
+    margin: 0 0 16px;
+}
+
+.stage-form {
+    margin-top: 26px;
+    text-align: left;
+}
+
+.prefill-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.prefill-grid span {
+    display: grid;
+    gap: 6px;
+}
+
+.prefill-grid small {
+    color: #7c6650;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.prefill-grid strong {
+    color: #2a2f3a;
+    font-size: 1.05rem;
+}
+
+.prefill-span-two {
+    grid-column: span 2;
+}
+
 .wellness-page .ui-inputfield,
 .wellness-page .ui-selectonemenu,
 .wellness-page textarea {
@@ -198,6 +320,99 @@ body.survey-body {
     justify-content: flex-start;
     margin-top: 0;
     margin-bottom: 18px;
+}
+
+.section-progress {
+    display: grid;
+    gap: 10px;
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.progress-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #4b5563;
+}
+
+.progress-meta span {
+    font-weight: 600;
+}
+
+.progress-meta strong {
+    color: #6b2238;
+    font-size: 1.2rem;
+}
+
+.progress-track {
+    overflow: hidden;
+    height: 12px;
+    background: #eadfd6;
+    border-radius: 999px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6b2238 0%, #8f2e4a 100%);
+    border-radius: 999px;
+}
+
+.section-progress p {
+    margin: 0;
+    color: #6b7280;
+}
+
+.final-progress {
+    margin-top: 18px;
+}
+
+.wizard-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.wizard-footer-progress {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #4b5563;
+}
+
+.wizard-footer-progress span {
+    font-weight: 600;
+}
+
+.wizard-footer-progress strong {
+    color: #6b2238;
+    font-size: 1.2rem;
+}
+
+.wizard-footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.wizard-footer-actions-end {
+    margin-left: auto;
+}
+
+.wizard-next-button,
+.wizard-submit-button {
+    min-width: 170px;
+}
+
+.wizard-back-button {
+    min-width: 150px;
 }
 
 .id-column {
@@ -244,7 +459,9 @@ body.survey-body {
     .form-grid.two,
     .form-grid.three,
     .form-grid.four,
-    .form-grid.five {
+    .form-grid.five,
+    .prefill-grid,
+    .stage-summary {
         grid-template-columns: 1fr;
     }
 
@@ -261,11 +478,29 @@ body.survey-body {
 
     .wellness-header,
     .wellness-wizard,
+    .wellness-stage-card,
     .result-panel {
         padding: 14px;
     }
 
     .result-grid {
         grid-template-columns: 1fr;
+    }
+
+    .progress-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .wizard-footer,
+    .wizard-footer-progress,
+    .wizard-footer-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .wizard-footer-actions-end {
+        margin-left: 0;
     }
 }

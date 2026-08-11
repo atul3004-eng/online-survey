@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Workplace Wellness Survey Start</title>
+    <link rel="stylesheet" href="styles.css"/>
+</h:head>
+<h:body styleClass="wellness-page">
+    <div class="wellness-shell">
+        <section class="wellness-stage-card">
+            <p class="eyebrow">Workplace Wellness Baseline Survey</p>
+            <h1>Start Survey</h1>
+            <p class="intro">
+                Complete this baseline survey to capture your organization's occupational health,
+                medical examination, and workplace wellness practices.
+            </p>
+
+            <div class="stage-summary">
+                <div>
+                    <span>Format</span>
+                    <strong>Single guided survey</strong>
+                </div>
+                <div>
+                    <span>Sections</span>
+                    <strong>4 sections</strong>
+                </div>
+                <div>
+                    <span>Includes</span>
+                    <strong>Company, OHS, Medical, Wellness</strong>
+                </div>
+            </div>
+
+            <div class="stage-note">
+                Please keep your company and focal-point contact details ready before starting.
+            </div>
+
+            <h:form id="startForm">
+                <p:messages id="startMessages"
+                            showDetail="true"
+                            closable="true"
+                            styleClass="validation-summary"/>
+
+                <div class="survey-section stage-form">
+                    <h3>Pre-filled information for the survey</h3>
+
+                    <div class="form-grid two">
+                        <span class="field">
+                            <p:outputLabel for="companyName" value="Company name"/>
+                            <p:inputText id="companyName" value="#{wellnessSurvey.answers['companyName']}" required="true"/>
+                        </span>
+                        <span class="field">
+                            <p:outputLabel for="email" value="Email address"/>
+                            <p:inputText id="email" value="#{wellnessSurvey.answers['email']}" required="true"
+                                         validatorMessage="Enter a valid email address, for example name@example.com.">
+                                <f:validateRegex pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"/>
+                            </p:inputText>
+                        </span>
+                        <span class="field">
+                            <p:outputLabel for="phone" value="Phone number"/>
+                            <p:inputText id="phone" value="#{wellnessSurvey.answers['phone']}" required="true"
+                                         validatorMessage="Enter a valid phone number using digits, spaces, +, - or brackets.">
+                                <f:validateRegex pattern="^[+0-9][0-9 ()-]{6,24}$"/>
+                            </p:inputText>
+                        </span>
+                    </div>
+
+                    <h3>Address details</h3>
+                    <div class="form-grid two">
+                        <span class="field">
+                            <p:outputLabel for="zone" value="Zone"/>
+                            <p:inputText id="zone" value="#{wellnessSurvey.answers['zone']}" required="true"/>
+                        </span>
+                        <span class="field">
+                            <p:outputLabel for="street" value="Street"/>
+                            <p:inputText id="street" value="#{wellnessSurvey.answers['street']}" required="true"/>
+                        </span>
+                        <span class="field">
+                            <p:outputLabel for="buildingNo" value="Building No"/>
+                            <p:inputText id="buildingNo" value="#{wellnessSurvey.answers['buildingNo']}" required="true"/>
+                        </span>
+                        <span class="field">
+                            <p:outputLabel for="unit" value="Unit"/>
+                            <p:inputText id="unit" value="#{wellnessSurvey.answers['unit']}" required="true"/>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="actions actions-centered">
+                    <p:commandButton value="Start Survey"
+                                     icon="pi pi-play"
+                                     action="#{wellnessSurvey.startSurvey}"
+                                     ajax="false"
+                                     styleClass="ui-button-success stage-button"/>
+                    <p:button value="View Saved Results"
+                              icon="pi pi-table"
+                              outcome="wellness-results"
+                              styleClass="ui-button-secondary"/>
+                </div>
+            </h:form>
+        </section>
+    </div>
+</h:body>
+</html>
