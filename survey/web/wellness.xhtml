@@ -1,623 +1,2614 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <title>Workplace Wellness Baseline Survey</title>
-    <link rel="stylesheet" href="styles.css"/>
-</h:head>
-<h:body styleClass="wellness-page">
-    <div class="wellness-shell">
-        <header class="wellness-header">
-            <div>
-                <p class="eyebrow">National Health Strategy 2024-2030</p>
-                <h1>Workplace Wellness Support and Monitoring Baseline Survey</h1>
-                <p class="intro">
-                    This survey assesses workplace wellness and health-promoting policies, activities, and initiatives
-                    within private sector organizations and companies. Responses are treated confidentially and reported
-                    in aggregate form.
-                </p>
-            </div>
-            <div class="header-panel">
-                <span>4 Sections</span>
-                <strong>Company, OHS, Medical, Wellness</strong>
-            </div>
-        </header>
+<?xml version="1.0" encoding="UTF-8" ?>
 
-        <div class="actions top-actions">
-            <p:button value="Back to Start" icon="pi pi-arrow-left" outcome="wellness-start" styleClass="ui-button-secondary"/>
-            <p:button value="View Saved Results" icon="pi pi-table" outcome="wellness-results"/>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" lang="en">
+
+<h:head>
+
+    <meta charset="UTF-8"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <meta name="description"
+          content="Workplace Wellness Support and Monitoring Baseline Survey"/>
+
+    <meta name="author"
+          content="Ministry of Public Health"/>
+
+    <title>Workplace Wellness Survey | HEALTH</title>
+
+    <!-- Uses the same light.css survey styling as WEB-INF/mockup.html. -->
+    <h:outputStylesheet library="css"
+                        name="light.css"/>
+    <link rel="shortcut icon"
+          href="/NCGP/faces/javax.faces.resources/MophTheam/images/favicon.ico"/>
+
+    <!-- PrimeFaces overrides -->
+    <link href="/NCGP/faces/javax.faces.resources/MophTheam/css/primefaces_override.css"
+          rel="stylesheet"
+          type="text/css"/>
+
+    <!-- Optional PrimeFaces icon CSS if not already loaded by PrimeFaces -->
+    <h:outputStylesheet library="primefaces"
+                        name="primeicons/primeicons.css"/>
+
+    <!-- Small JSF-specific overrides -->
+    <style>
+
+        /*
+         * ============================================================
+         * JSF / PRIMEFACES OVERRIDES FOR THE MOPH LIGHT SURVEY THEME
+         * ============================================================
+         */
+
+        .survey-page {
+            background: #f7f8fa;
+        }
+
+        /*
+         * Keep the mockup's centered card.
+         */
+        .survey {
+            max-width: 1100px;
+            width: 100%;
+            margin: 2rem auto;
+        }
+
+        .survey__card {
+            padding: 2rem 2.5rem;
+        }
+
+        /*
+         * Header
+         */
+        .survey__head {
+            align-items: flex-start;
+        }
+
+        .survey__title {
+            color: #8a1538;
+        }
+
+        /*
+         * Section heading
+         */
+        .survey-section > h2 {
+            color: #8a1538;
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+        }
+
+        /*
+         * Sub headings
+         */
+        .required-mark {
+            color: #8a1538;
+            font-size: .78rem;
+            font-weight: 600;
+            margin-left: .25rem;
+        }
+
+        .survey-section > h3 {
+            color: #343a40;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            margin-bottom: .75rem;
+        }
+
+        /*
+         * Pre-filled information
+         */
+        .prefill-card {
+            background: #f6f7f9;
+            border: 1px solid #eceef1;
+            border-radius: .4rem;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .prefill-card h3 {
+            color: #8a1538;
+            font-size: .95rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .prefill-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .prefill-grid > span {
+            display: block;
+        }
+
+        .prefill-grid small {
+            display: block;
+            color: #8b95a1;
+            font-size: .75rem;
+            margin-bottom: .2rem;
+        }
+
+        .prefill-grid strong {
+            display: block;
+            color: #343a40;
+            font-size: .9rem;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .prefill-span-two {
+            grid-column: span 2;
+        }
+
+        /*
+         * Form grids
+         */
+        .form-grid {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-grid.two {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .form-grid.three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .form-grid.four {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .form-grid.five {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+
+        /*
+         * Fields
+         */
+        .field {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .field > label,
+        .survey-section .ui-outputlabel {
+            display: block;
+            color: #343a40;
+            font-size: .85rem;
+            font-weight: 600;
+            margin-bottom: .4rem;
+        }
+
+        /*
+         * PrimeFaces input controls should look like Bootstrap inputs
+         * used in the mockup.
+         */
+        .survey-section .ui-inputfield,
+        .survey-section .ui-inputtextarea,
+        .survey-section .ui-selectonemenu {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .survey-section .ui-inputtext,
+        .survey-section .ui-inputtextarea,
+        .survey-section .ui-selectonemenu {
+            border-radius: .375rem;
+        }
+
+        /*
+         * PrimeFaces selectOneMenu
+         */
+        .survey-section .ui-selectonemenu {
+            min-height: 38px;
+        }
+
+        /*
+         * Question cards
+         */
+        .question-card .ui-selectoneradio {
+            display: inline-flex !important;
+            width: auto !important;
+
+        }
+
+        .question-card .ui-selectoneradio td {
+            padding-right: 30px !important;
+            width: auto !important;
+        }
+
+        .question-card .ui-selectoneradio td {
+            padding-right: 0 !important;
+        }
+
+        .question-card > .ui-outputlabel,
+        .question-card > label {
+            color: #343a40;
+            font-size: .9rem;
+            font-weight: 600;
+            line-height: 1.45;
+            margin-bottom: .75rem;
+        }
+
+        /*
+         * Choice blocks
+         */
+        .choice-block {
+            background: #fafbfc;
+            border: 1px solid #edf0f2;
+            border-radius: .4rem;
+            padding: 1rem 1.15rem;
+            margin-bottom: 1rem;
+        }
+
+        .choice-block > .ui-outputlabel,
+        .choice-block > label {
+            display: block;
+            color: #343a40;
+            font-size: .88rem;
+            font-weight: 600;
+            margin-bottom: .75rem;
+        }
+
+        /*
+         * Radio buttons and checkboxes
+         */
+        .survey-section .ui-radiobutton,
+        .survey-section .ui-chkbox {
+            margin-right: .4rem;
+        }
+
+        .survey-section .ui-selectoneradio label,
+        .survey-section .ui-selectmanycheckbox label {
+            color: #495057;
+            font-size: .88rem;
+        }
+
+        .survey-section .ui-selectoneradio,
+        .survey-section .ui-selectmanycheckbox {
+            width: 100%;
+        }
+
+        /*
+         * Spacing around PrimeFaces responsive checkbox/radio layouts.
+         */
+        .survey-section .ui-selectoneradio td,
+        .survey-section .ui-selectmanycheckbox td {
+            padding: .35rem .75rem .35rem 0;
+        }
+
+        /*
+         * Progress
+         */
+        .section-progress {
+            margin-top: 2rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #6c757d;
+            font-size: .8rem;
+            margin-bottom: .45rem;
+        }
+
+        .progress-meta strong {
+            color: #8a1538;
+            font-weight: 700;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #8a1538;
+            border-radius: 20px;
+        }
+
+        .section-progress > p {
+            color: #9aa3ad;
+            font-size: .78rem;
+            margin-top: .5rem;
+            margin-bottom: 0;
+        }
+
+        /*
+         * Wizard footer
+         */
+        .wizard-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            border-top: 1px solid #eceef1;
+            margin-top: 1.5rem;
+            padding-top: 1.25rem;
+        }
+
+        .wizard-footer-progress {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            color: #8b95a1;
+            font-size: .82rem;
+        }
+
+        .wizard-footer-progress strong {
+            color: #8a1538;
+        }
+
+        .wizard-footer-actions {
+            display: flex;
+            gap: .6rem;
+            margin-left: auto;
+        }
+
+        .wizard-footer-actions .ui-button {
+            min-width: 120px;
+        }
+
+        /*
+         * Primary MOPH action
+         */
+        .wizard-next-button,
+        .wizard-submit-button {
+            background: #8a1538 !important;
+            border-color: #8a1538 !important;
+            color: #fff !important;
+        }
+
+        .wizard-next-button:hover,
+        .wizard-submit-button:hover {
+            background: #72112f !important;
+            border-color: #72112f !important;
+        }
+
+        /*
+         * Back / secondary button
+         */
+        .wizard-back-button {
+            background: #fff !important;
+            border-color: #ced4da !important;
+            color: #495057 !important;
+        }
+
+        /*
+         * Top navigation buttons
+         */
+        .survey-top-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /*
+         * PrimeFaces wizard hides its own default navigation.
+         */
+        .wellness-wizard .ui-wizard-navbar {
+            display: none !important;
+        }
+
+        /*
+         * Remove default PrimeFaces tab header because the mockup
+         * uses our own section/progress presentation.
+         */
+        .wellness-wizard .ui-wizard-step-titles {
+            display: none !important;
+        }
+
+        /*
+         * Messages
+         */
+        .validation-summary {
+            margin-bottom: 1rem;
+        }
+
+        /*
+         * Footer
+         */
+        .survey-page .footer {
+            margin-top: auto;
+        }
+
+        /*
+         * Mobile
+         */
+        @media (max-width: 991.98px) {
+
+            .survey {
+                padding: 0 1rem;
+            }
+
+            .prefill-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .form-grid.three,
+            .form-grid.four,
+            .form-grid.five {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 767.98px) {
+
+            .survey {
+                margin: 1rem auto;
+                padding: 0 .75rem;
+            }
+
+            .survey__card {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .survey__head {
+                flex-direction: column;
+            }
+
+            .survey-top-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .survey-top-actions .ui-button {
+                width: 100%;
+            }
+
+            .prefill-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .prefill-span-two {
+                grid-column: auto;
+            }
+
+            .form-grid.two,
+            .form-grid.three,
+            .form-grid.four,
+            .form-grid.five {
+                grid-template-columns: 1fr;
+            }
+
+            .wizard-footer {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .wizard-footer-progress {
+                justify-content: space-between;
+            }
+
+            .wizard-footer-actions {
+                width: 100%;
+            }
+
+            .wizard-footer-actions .ui-button {
+                flex: 1;
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+
+            .survey__card {
+                padding: 1.25rem 1rem;
+            }
+
+            .question-card,
+            .choice-block {
+                padding: 1rem;
+            }
+        }
+
+    </style>
+
+</h:head>
+
+<h:body styleClass="survey-page">
+
+    <!-- ============================================================
+         MOPH HEADER
+         Matches the supplied light.css mockup
+         ============================================================ -->
+
+    <nav class="navbar navbar-expand navbar-light navbar-bg">
+
+        <a class="sidebar-brand sidebar-brand__single-page"
+           href="#{request.contextPath}/wellness-start.xhtml">
+
+            <!-- Replace logo path if your actual logo is elsewhere -->
+            <div id="logo_hld">
+                <h:graphicImage styleClass="img-fluid" alt="Ministry of Public Health"
+                                value="/NCGP/faces/javax.faces.resources/MophTheam/img/Logo_moph_bilingual.svg" />
+            </div>
+
+            <span class="sidebar-brand__single-page-divider"></span>
+
+            <span class="align-middle d-block sidebar-brand__single-page-title">
+            Workplace Wellness Survey
+        </span>
+
+        </a>
+
+        <div class="navbar-collapse collapse">
+
+            <ul class="navbar-nav navbar-align">
+
+                <li class="nav-item">
+                    <a class="nav-flag link-primary"
+                       href="#"
+                       onclick="return false;">
+
+                        <span class="text-lg">عربي</span>
+
+                    </a>
+                </li>
+
+            </ul>
+
         </div>
 
-        <h:form id="wellnessForm">
-            <p:messages id="validationMessages"
-                        showDetail="true"
-                        closable="true"
-                        styleClass="validation-summary">
-                <p:autoUpdate/>
-            </p:messages>
-            <p:growl id="messages" showDetail="true">
-                <p:autoUpdate/>
-            </p:growl>
+    </nav>
 
-            <p:wizard id="wizard" widgetVar="wellnessWizard" styleClass="wellness-wizard" showNavBar="false">
-                <p:tab id="company" title="Company Profile">
-                    <section class="survey-section">
-                        <h2>Section 1: Company Profile</h2>
-                        <div class="prefill-card">
-                            <h3>Pre-filled information</h3>
-                            <div class="prefill-grid">
-                                <span>
-                                    <small>Reference ID</small>
-                                    <strong><h:outputText value="#{wellnessSurvey.referenceId}"/></strong>
-                                </span>
+
+    <!-- ============================================================
+         SURVEY CONTAINER
+         ============================================================ -->
+
+    <div class="survey">
+
+        <div class="survey__card">
+
+
+            <!-- ====================================================
+                 SURVEY HEADER
+                 ==================================================== -->
+
+            <div class="survey__head">
+
+                <div>
+
+                    <p class="survey__eyebrow">
+                        National Health Strategy 2024-2030
+                    </p>
+
+                    <h1 class="survey__title">
+                        Workplace Wellness Support and Monitoring Baseline Survey
+                    </h1>
+
+                    <p class="survey__subtitle">
+                        This survey assesses workplace wellness and
+                        health-promoting policies, activities, and initiatives
+                        within private sector organizations and companies.
+                    </p>
+
+                </div>
+
+
+                <button type="button"
+                        class="btn btn-outline-secondary btn-sm text-nowrap"
+                        onclick="toggleFullscreen()">
+
+                    <i class="align-middle me-1"
+                       data-feather="maximize"></i>
+
+                    <span>Fullscreen</span>
+
+                </button>
+
+            </div>
+
+
+            <hr class="survey__rule"/>
+
+
+            <!-- ====================================================
+                 TOP INFORMATION
+                 ==================================================== -->
+
+            <div class="survey__banner">
+
+                <div class="survey__banner-title">
+                    Workplace Wellness Baseline Survey
+                </div>
+
+                <div class="survey__banner-meta">
+                    Please complete all required fields.
+                    Your responses are treated confidentially and
+                    reported in aggregate form.
+                </div>
+
+            </div>
+
+
+
+
+            <!-- ====================================================
+                 MAIN FORM
+                 ==================================================== -->
+
+            <h:form id="wellnessForm">
+
+                <!-- Validation messages -->
+
+                <p:messages id="validationMessages"
+                            showDetail="true"
+                            closable="true"
+                            styleClass="validation-summary">
+
+                    <p:autoUpdate/>
+
+                </p:messages>
+
+
+                <!-- Growl -->
+
+                <p:growl id="messages"
+                         showDetail="true">
+
+                    <p:autoUpdate/>
+
+                </p:growl>
+
+
+                <!-- ==================================================
+                     WIZARD
+                     ================================================== -->
+
+                <p:wizard id="wizard"
+                          widgetVar="wellnessWizard"
+                          styleClass="wellness-wizard"
+                          showNavBar="false">
+
+
+                    <!-- =================================================
+                         SECTION 1
+                         COMPANY PROFILE
+                         ================================================= -->
+
+                    <p:tab id="company"
+                           title="Company Profile">
+
+                        <section class="survey-section">
+
+                            <p class="survey__eyebrow">
+                                Section 1
+                            </p>
+
+                            <h2>
+                                Company Profile
+                            </h2>
+
+
+                            <!-- COMPANY DETAILS -->
+
+                            <div class="prefill-card">
+                                <h3>Company details</h3>
+
+                                <div class="prefill-grid">
                                 <span>
                                     <small>Company name</small>
                                     <strong><h:outputText value="#{wellnessSurvey.displayCompanyName}"/></strong>
                                 </span>
-                                <span>
-                                    <small>Email address</small>
-                                    <strong><h:outputText value="#{wellnessSurvey.displayEmail}"/></strong>
-                                </span>
-                                <span>
-                                    <small>Date</small>
-                                    <strong><h:outputText value="#{wellnessSurvey.surveyOpenedOn}"/></strong>
-                                </span>
-                                <span>
-                                    <small>Phone number</small>
-                                    <strong><h:outputText value="#{wellnessSurvey.displayPhone}"/></strong>
-                                </span>
-                                <span class="prefill-span-two">
+
+                                    <span>
                                     <small>Address</small>
                                     <strong><h:outputText value="#{wellnessSurvey.displayAddress}"/></strong>
                                 </span>
-                                <span>
-                                    <small>Category</small>
-                                    <strong><h:outputText value="#{wellnessSurvey.surveyCategory}"/></strong>
-                                </span>
-                                <span>
-                                    <small>Submitted by</small>
-                                    <strong><h:outputText value="#{wellnessSurvey.submittedBy}"/></strong>
-                                </span>
-                            </div>
-                        </div>
 
-                        <h3>Focal point contact details</h3>
-                        <div class="form-grid three">
-                            <span class="field">
-                                <p:outputLabel for="focalCompany" value="Company name"/>
-                                <p:inputText id="focalCompany" value="#{wellnessSurvey.answers['focalCompany']}" required="true"/>
-                            </span>
+                                    <span>
+                                    <small>Email address</small>
+                                    <strong><h:outputText value="#{wellnessSurvey.displayEmail}"/></strong>
+                                </span>
+
+                                    <span>
+                                    <small>Phone number</small>
+                                    <strong><h:outputText value="#{wellnessSurvey.displayPhone}"/></strong>
+                                </span>
+                                </div>
+                            </div>
+
+
+                            <!-- FOCAL POINT -->
+
+                            <h3>
+                                Focal point contact details <span class="required-mark">*Required</span>
+                            </h3>
+
+                            <div class="form-grid three">
                             <span class="field">
                                 <p:outputLabel for="focalName" value="Name"/>
-                                <p:inputText id="focalName" value="#{wellnessSurvey.answers['focalName']}" required="true"/>
+                                <p:inputText id="focalName"
+                                             value="#{wellnessSurvey.answers['focalName']}"
+                                             placeholder="example"
+                                             required="true"/>
                             </span>
-                            <span class="field">
-                                <p:outputLabel for="jobTitle" value="Job title"/>
-                                <p:inputText id="jobTitle" value="#{wellnessSurvey.answers['jobTitle']}" required="true"/>
+
+                                <span class="field">
+                                <p:outputLabel for="jobTitle" value="Job Title"/>
+                                <p:inputText id="jobTitle"
+                                             value="#{wellnessSurvey.answers['jobTitle']}"
+                                             placeholder="example"
+                                             required="true"/>
                             </span>
-                            <span class="field">
+
+                                <span class="field">
                                 <p:outputLabel for="focalEmail" value="Email address"/>
-                                <p:inputText id="focalEmail" value="#{wellnessSurvey.answers['focalEmail']}" required="true"
+                                <p:inputText id="focalEmail"
+                                             value="#{wellnessSurvey.answers['focalEmail']}"
+                                             placeholder="example"
+                                             required="true"
                                              validatorMessage="Enter a valid email address, for example name@example.com.">
                                     <f:validateRegex pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"/>
                                 </p:inputText>
                             </span>
-                            <span class="field">
-                                <p:outputLabel for="officePhone" value="Office phone number"/>
-                                <p:inputText id="officePhone" value="#{wellnessSurvey.answers['officePhone']}" required="true"
-                                             validatorMessage="Enter a valid phone number using digits, spaces, +, - or brackets.">
-                                    <f:validateRegex pattern="^[+0-9][0-9 ()-]{6,24}$"/>
-                                </p:inputText>
-                            </span>
-                            <span class="field">
+
+                                <span class="field">
                                 <p:outputLabel for="mobilePhone" value="Mobile phone number"/>
-                                <p:inputText id="mobilePhone" value="#{wellnessSurvey.answers['mobilePhone']}" required="true"
+                                <p:inputText id="mobilePhone"
+                                             value="#{wellnessSurvey.answers['mobilePhone']}"
+                                             placeholder="example"
+                                             required="true"
                                              validatorMessage="Enter a valid mobile number using digits, spaces, +, - or brackets.">
                                     <f:validateRegex pattern="^[+0-9][0-9 ()-]{6,24}$"/>
                                 </p:inputText>
                             </span>
-                        </div>
 
-                        <div class="field">
-                            <p:outputLabel for="industry" value="Type of industry"/>
-                            <p:selectOneMenu id="industry" value="#{wellnessSurvey.answers['industry']}" filter="true" required="true">
-                                <f:selectItem itemLabel="Select industry" itemValue=""/>
-                                <f:selectItems value="#{wellnessSurvey.industries}"/>
-                            </p:selectOneMenu>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="industryOther" value="Other industry / company activities"/>
-                            <p:inputTextarea id="industryOther" rows="3" autoResize="false" value="#{wellnessSurvey.answers['industryOther']}" required="true"/>
-                        </div>
-
-                        <h3>Employment contracts</h3>
-                        <div class="form-grid four">
-                            <span class="field">
-                                <p:outputLabel for="fullTime" value="Full-time employees"/>
-                                <p:inputText id="fullTime" value="#{wellnessSurvey.answers['fullTime']}" required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
+                                <span class="field">
+                                <p:outputLabel for="officePhone" value="Office phone number"/>
+                                <p:inputText id="officePhone"
+                                             value="#{wellnessSurvey.answers['officePhone']}"
+                                             placeholder="example"
+                                             required="true"
+                                             validatorMessage="Enter a valid phone number using digits, spaces, +, - or brackets.">
+                                    <f:validateRegex pattern="^[+0-9][0-9 ()-]{6,24}$"/>
                                 </p:inputText>
                             </span>
+                            </div>
+
+
+                            <!-- INDUSTRY -->
+
+                            <div class="field">
+
+                                <p:outputLabel
+                                        for="industry"
+                                        value="Type of industry"/>
+
+                                <p:selectOneMenu
+                                        id="industry"
+                                        value="#{wellnessSurvey.answers['industry']}"
+                                        filter="true"
+                                        required="true">
+
+                                    <f:selectItem
+                                            itemLabel="Please select"
+                                            itemValue=""/>
+
+                                    <f:selectItems
+                                            value="#{wellnessSurvey.industries}"/>
+
+                                </p:selectOneMenu>
+
+                            </div>
+
+
+                            <!-- EMPLOYMENT -->
+
+                            <h3>
+                                Employment contracts
+                            </h3>
+
+                            <div class="form-grid four">
+
                             <span class="field">
-                                <p:outputLabel for="partTime" value="Part-time employees"/>
-                                <p:inputText id="partTime" value="#{wellnessSurvey.answers['partTime']}" required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
+
+                                <p:outputLabel
+                                        for="fullTime"
+                                        value="Full-time employees"/>
+
+                                <p:inputText
+                                        id="fullTime"
+                                        value="#{wellnessSurvey.answers['fullTime']}"
+                                        required="true"
+                                        validatorMessage="Enter a non-negative whole number.">
+
+                                    <f:validateRegex
+                                            pattern="^[0-9]+$"/>
+
                                 </p:inputText>
+
                             </span>
-                            <span class="field">
-                                <p:outputLabel for="contracted" value="Contracted/outsourced"/>
-                                <p:inputText id="contracted" value="#{wellnessSurvey.answers['contracted']}" required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
+
+
+                                <span class="field">
+
+                                <p:outputLabel
+                                        for="partTime"
+                                        value="Part-time employees"/>
+
+                                <p:inputText
+                                        id="partTime"
+                                        value="#{wellnessSurvey.answers['partTime']}"
+                                        required="true"
+                                        validatorMessage="Enter a non-negative whole number.">
+
+                                    <f:validateRegex
+                                            pattern="^[0-9]+$"/>
+
                                 </p:inputText>
+
                             </span>
-                            <span class="field">
-                                <p:outputLabel for="totalEmployees" value="Total employees"/>
-                                <p:inputText id="totalEmployees" value="#{wellnessSurvey.answers['totalEmployees']}" required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
+
+
+                                <span class="field">
+
+                                <p:outputLabel
+                                        for="contracted"
+                                        value="Contracted/outsourced"/>
+
+                                <p:inputText
+                                        id="contracted"
+                                        value="#{wellnessSurvey.answers['contracted']}"
+                                        required="true"
+                                        validatorMessage="Enter a non-negative whole number.">
+
+                                    <f:validateRegex
+                                            pattern="^[0-9]+$"/>
+
                                 </p:inputText>
+
                             </span>
-                        </div>
 
-                        <div class="choice-block">
-                            <p:outputLabel value="Contracted/outsourced service types"/>
-                            <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['outsourcedServices']}" layout="responsive" columns="4" required="true">
-                                <f:selectItems value="#{wellnessSurvey.outsourcedServices}"/>
-                            </p:selectManyCheckbox>
-                            <p:inputText placeholder="Other service" value="#{wellnessSurvey.answers['outsourcedOther']}"/>
-                        </div>
 
-                        <div class="choice-block">
-                            <p:outputLabel value="Main occupations in the company"/>
-                            <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['occupations']}" layout="responsive" columns="3" required="true">
-                                <f:selectItems value="#{wellnessSurvey.occupations}"/>
-                            </p:selectManyCheckbox>
-                            <p:inputText placeholder="Other occupation" value="#{wellnessSurvey.answers['occupationOther']}"/>
-                        </div>
+                                <span class="field">
 
-                        <h3>Employee demographics</h3>
-                        <div class="form-grid five">
-                            <span class="field"><p:outputLabel for="ageLt18" value="Less than 18"/><p:inputText id="ageLt18" value="#{wellnessSurvey.answers['ageLt18']}" required="true" validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText></span>
-                            <span class="field"><p:outputLabel for="age18" value="18 - 24"/><p:inputText id="age18" value="#{wellnessSurvey.answers['age18']}" required="true" validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText></span>
-                            <span class="field"><p:outputLabel for="age25" value="25 - 44"/><p:inputText id="age25" value="#{wellnessSurvey.answers['age25']}" required="true" validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText></span>
-                            <span class="field"><p:outputLabel for="age45" value="45 - 64"/><p:inputText id="age45" value="#{wellnessSurvey.answers['age45']}" required="true" validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText></span>
-                            <span class="field"><p:outputLabel for="age65" value="65 and older"/><p:inputText id="age65" value="#{wellnessSurvey.answers['age65']}" required="true" validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText></span>
-                            <span class="field"><p:outputLabel for="male" value="Males"/><p:inputText id="male" value="#{wellnessSurvey.answers['male']}" required="true" validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText></span>
-                            <span class="field"><p:outputLabel for="female" value="Females"/><p:inputText id="female" value="#{wellnessSurvey.answers['female']}" required="true" validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText></span>
-                            <span class="field"><p:outputLabel for="qatari" value="Qatari"/><p:inputText id="qatari" value="#{wellnessSurvey.answers['qatari']}" required="true" validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText></span>
-                            <span class="field"><p:outputLabel for="nonQatari" value="Non-Qatari"/><p:inputText id="nonQatari" value="#{wellnessSurvey.answers['nonQatari']}" required="true" validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText></span>
-                        </div>
+                                <p:outputLabel
+                                        for="totalEmployees"
+                                        value="Total employees"/>
 
-                        <div class="choice-block">
-                            <p:outputLabel value="Countries for non-Qatari employees"/>
-                            <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['countries']}" layout="responsive" columns="5" required="true">
-                                <f:selectItems value="#{wellnessSurvey.countries}"/>
-                            </p:selectManyCheckbox>
-                            <p:inputText placeholder="Other country" value="#{wellnessSurvey.answers['countryOther']}"/>
-                        </div>
+                                <p:inputText
+                                        id="totalEmployees"
+                                        value="#{wellnessSurvey.answers['totalEmployees']}"
+                                        required="true"
+                                        validatorMessage="Enter a non-negative whole number.">
 
-                        <div class="section-progress">
-                            <div class="progress-meta">
-                                <span>Section 1 of 4</span>
-                                <strong>25%</strong>
+                                    <f:validateRegex
+                                            pattern="^[0-9]+$"/>
+
+                                </p:inputText>
+
+                            </span>
+
                             </div>
-                            <div class="progress-track">
-                                <div class="progress-fill" style="width: 25%;"></div>
-                            </div>
-                            <p>Complete the company details, then continue.</p>
-                        </div>
 
-                        <div class="wizard-footer">
-                            <div class="wizard-footer-progress">
-                                <span>Section 1 of 4</span>
-                                <strong>25%</strong>
-                            </div>
-                            <div class="wizard-footer-actions wizard-footer-actions-end">
-                                <p:commandButton type="button"
-                                                 value="Next"
-                                                 icon="pi pi-arrow-right"
-                                                 iconPos="right"
-                                                 styleClass="wizard-next-button"
-                                                 onclick="PF('wellnessWizard').next();"/>
-                            </div>
-                        </div>
-                    </section>
-                </p:tab>
 
-                <p:tab id="ohs" title="Occupational Health and Safety">
-                    <section class="survey-section">
-                        <h2>Section 2: Occupational Health and Safety</h2>
-                        <div class="question-card">
-                            <p:outputLabel value="Does your company have a policy/document for employees' Occupational Health and Safety?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['ohsPolicy']}" layout="pageDirection" required="true">
-                                <f:selectItem itemLabel="Yes, occupational health and safety" itemValue="Yes, OHS"/>
-                                <f:selectItem itemLabel="Yes, occupational health only" itemValue="Yes, occupational health only"/>
-                                <f:selectItem itemLabel="Yes, occupational safety only" itemValue="Yes, occupational safety only"/>
-                                <f:selectItem itemLabel="No policy exists" itemValue="No"/>
-                                <p:ajax process="@this" update="ohsPolicyDetails"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <p:outputPanel id="ohsPolicyDetails" layout="block">
-                            <h:panelGroup layout="block" styleClass="choice-block" rendered="#{wellnessSurvey.answers['ohsPolicy'] ne 'No' and not empty wellnessSurvey.answers['ohsPolicy']}">
-                                <p:outputLabel value="Aspects covered by the policy/document"/>
-                                <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['ohsPolicyAspects']}" layout="responsive" columns="2" required="true">
-                                    <f:selectItems value="#{wellnessSurvey.ohsPolicyAspects}"/>
+                            <!-- OUTSOURCED SERVICES -->
+
+                            <div class="choice-block">
+
+                                <p:outputLabel
+                                        value="Contracted/outsourced service types"/>
+
+                                <p:selectManyCheckbox
+                                        id="outsourcedServices"
+                                        value="#{wellnessSurvey.multiAnswers['outsourcedServices']}"
+                                        layout="responsive"
+                                        columns="4"
+                                        required="true">
+
+                                    <f:selectItems
+                                            value="#{wellnessSurvey.outsourcedServices}"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="outsourcedOtherPanel"/>
+
                                 </p:selectManyCheckbox>
-                                <p:inputText placeholder="Other aspect" value="#{wellnessSurvey.answers['ohsPolicyOther']}"/>
-                            </h:panelGroup>
-                        </p:outputPanel>
 
-                        <div class="form-grid two">
-                            <div class="question-card">
-                                <p:outputLabel value="Designated responsible officer(s) for workplace health and safety?"/>
-                                <p:selectOneRadio value="#{wellnessSurvey.answers['responsibleOfficer']}" required="true">
-                                    <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                    <f:selectItem itemLabel="No" itemValue="No"/>
-                                </p:selectOneRadio>
+                                <p:outputPanel id="outsourcedOtherPanel"
+                                               layout="block">
+
+                                    <h:panelGroup
+                                            rendered="#{wellnessSurvey.isOtherSelected('outsourcedServices')}">
+
+                                        <label class="form-label text-muted mt-2">
+                                            Other · specify
+                                        </label>
+
+                                        <p:inputText
+                                                placeholder="Other service"
+                                                value="#{wellnessSurvey.answers['outsourcedOther']}"
+                                                required="true"/>
+
+                                    </h:panelGroup>
+
+                                </p:outputPanel>
+
                             </div>
-                            <div class="question-card">
-                                <p:outputLabel value="Special department/section/committee with dedicated staff?"/>
-                                <p:selectOneRadio value="#{wellnessSurvey.answers['ohsCommittee']}" layout="pageDirection" required="true">
-                                    <f:selectItem itemLabel="Yes, full time" itemValue="Yes, full time"/>
-                                    <f:selectItem itemLabel="Yes, part time" itemValue="Yes, part time"/>
-                                    <f:selectItem itemLabel="No" itemValue="No"/>
-                                </p:selectOneRadio>
+
+
+                            <!-- OCCUPATIONS -->
+
+                            <div class="choice-block">
+
+                                <p:outputLabel
+                                        value="Main occupations in the company"/>
+
+                                <p:selectManyCheckbox
+                                        id="occupations"
+                                        value="#{wellnessSurvey.multiAnswers['occupations']}"
+                                        layout="responsive"
+                                        columns="3"
+                                        required="true">
+
+                                    <f:selectItems
+                                            value="#{wellnessSurvey.occupations}"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="occupationOtherPanel"/>
+
+                                </p:selectManyCheckbox>
+
+                                <p:outputPanel id="occupationOtherPanel"
+                                               layout="block">
+
+                                    <h:panelGroup
+                                            rendered="#{wellnessSurvey.isOtherSelected('occupations')}">
+
+                                        <label class="form-label text-muted mt-2">
+                                            Other · specify
+                                        </label>
+
+                                        <p:inputText
+                                                placeholder="Other occupation"
+                                                value="#{wellnessSurvey.answers['occupationOther']}"
+                                                required="true"/>
+
+                                    </h:panelGroup>
+
+                                </p:outputPanel>
+
                             </div>
-                        </div>
 
-                        <div class="question-card">
-                            <p:outputLabel value="How often is health and safety discussed between employees and management?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['discussionFrequency']}" layout="responsive" columns="3" required="true">
-                                <f:selectItem itemLabel="Monthly" itemValue="Monthly"/>
-                                <f:selectItem itemLabel="Quarterly" itemValue="Quarterly"/>
-                                <f:selectItem itemLabel="Bi-annually" itemValue="Bi-annually"/>
-                                <f:selectItem itemLabel="Annually" itemValue="Annually"/>
-                                <f:selectItem itemLabel="Only when issues arise" itemValue="Only when issues arise"/>
-                                <f:selectItem itemLabel="Not at all" itemValue="Not at all"/>
-                            </p:selectOneRadio>
-                        </div>
 
-                        <div class="question-card">
-                            <p:outputLabel value="Does your company conduct working environment surveillance / risk assessment?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['riskAssessment']}" required="true">
-                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                                <p:ajax process="@this" update="riskDetails"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <p:outputPanel id="riskDetails" layout="block">
-                            <h:panelGroup layout="block" rendered="#{wellnessSurvey.answers['riskAssessment'] eq 'Yes'}">
-                                <div class="choice-block">
-                                    <p:outputLabel value="Hazards routinely evaluated"/>
-                                    <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['hazards']}" layout="responsive" columns="2" required="true">
-                                        <f:selectItems value="#{wellnessSurvey.hazards}"/>
-                                    </p:selectManyCheckbox>
-                                    <p:inputText placeholder="Other hazard" value="#{wellnessSurvey.answers['hazardOther']}"/>
+                            <!-- DEMOGRAPHICS -->
+
+                            <h3>
+                                Employee demographics
+                            </h3>
+
+                            <div class="form-grid five">
+
+                            <span class="field">
+                                <p:outputLabel for="ageLt18" value="Less than 18"/>
+                                <p:inputText id="ageLt18"
+                                             value="#{wellnessSurvey.answers['ageLt18']}"
+                                             required="true"
+                                             validatorMessage="Enter a non-negative whole number.">
+                                    <f:validateRegex pattern="^[0-9]+$"/>
+                                </p:inputText>
+                            </span>
+
+                                <span class="field">
+                                <p:outputLabel for="age18" value="18 - 24"/>
+                                <p:inputText id="age18"
+                                             value="#{wellnessSurvey.answers['age18']}"
+                                             required="true"
+                                             validatorMessage="Enter a non-negative whole number.">
+                                    <f:validateRegex pattern="^[0-9]+$"/>
+                                </p:inputText>
+                            </span>
+
+                                <span class="field">
+                                <p:outputLabel for="age25" value="25 - 44"/>
+                                <p:inputText id="age25"
+                                             value="#{wellnessSurvey.answers['age25']}"
+                                             required="true"
+                                             validatorMessage="Enter a non-negative whole number.">
+                                    <f:validateRegex pattern="^[0-9]+$"/>
+                                </p:inputText>
+                            </span>
+
+                                <span class="field">
+                                <p:outputLabel for="age45" value="45 - 64"/>
+                                <p:inputText id="age45"
+                                             value="#{wellnessSurvey.answers['age45']}"
+                                             required="true"
+                                             validatorMessage="Enter a non-negative whole number.">
+                                    <f:validateRegex pattern="^[0-9]+$"/>
+                                </p:inputText>
+                            </span>
+
+                                <span class="field">
+                                <p:outputLabel for="age65" value="65 and older"/>
+                                <p:inputText id="age65"
+                                             value="#{wellnessSurvey.answers['age65']}"
+                                             required="true"
+                                             validatorMessage="Enter a non-negative whole number.">
+                                    <f:validateRegex pattern="^[0-9]+$"/>
+                                </p:inputText>
+                            </span>
+
+                                <span class="field">
+                                <p:outputLabel for="male" value="Males"/>
+                                <p:inputText id="male"
+                                             value="#{wellnessSurvey.answers['male']}"
+                                             required="true"
+                                             validatorMessage="Enter a non-negative whole number.">
+                                    <f:validateRegex pattern="^[0-9]+$"/>
+                                </p:inputText>
+                            </span>
+
+                                <span class="field">
+                                <p:outputLabel for="female" value="Females"/>
+                                <p:inputText id="female"
+                                             value="#{wellnessSurvey.answers['female']}"
+                                             required="true"
+                                             validatorMessage="Enter a non-negative whole number.">
+                                    <f:validateRegex pattern="^[0-9]+$"/>
+                                </p:inputText>
+                            </span>
+
+                                <span class="field">
+                                <p:outputLabel for="qatari" value="Qatari"/>
+                                <p:inputText id="qatari"
+                                             value="#{wellnessSurvey.answers['qatari']}"
+                                             required="true"
+                                             validatorMessage="Enter a non-negative whole number.">
+                                    <f:validateRegex pattern="^[0-9]+$"/>
+                                </p:inputText>
+                            </span>
+
+                                <span class="field">
+                                <p:outputLabel for="nonQatari" value="Non-Qatari"/>
+                                <p:inputText id="nonQatari"
+                                             value="#{wellnessSurvey.answers['nonQatari']}"
+                                             required="true"
+                                             validatorMessage="Enter a non-negative whole number.">
+                                    <f:validateRegex pattern="^[0-9]+$"/>
+                                </p:inputText>
+                            </span>
+
+                            </div>
+
+
+                            <div class="choice-block">
+
+                                <p:outputLabel
+                                        value="Countries for non-Qatari employees"/>
+
+                                <p:selectManyCheckbox
+                                        id="countries"
+                                        value="#{wellnessSurvey.multiAnswers['countries']}"
+                                        layout="responsive"
+                                        columns="5"
+                                        required="true">
+
+                                    <f:selectItems
+                                            value="#{wellnessSurvey.countries}"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="countryOtherPanel"/>
+
+                                </p:selectManyCheckbox>
+
+                                <p:outputPanel id="countryOtherPanel"
+                                               layout="block">
+
+                                    <h:panelGroup
+                                            rendered="#{wellnessSurvey.isOtherSelected('countries')}">
+
+                                        <label class="form-label text-muted mt-2">
+                                            Other · specify
+                                        </label>
+
+                                        <p:inputText
+                                                placeholder="Other country"
+                                                value="#{wellnessSurvey.answers['countryOther']}"
+                                                required="true"/>
+
+                                    </h:panelGroup>
+
+                                </p:outputPanel>
+
+                            </div>
+
+
+                            <!-- PROGRESS -->
+
+                            <div class="section-progress">
+
+                                <div class="progress-meta">
+                                    <span>Section 1 of 4</span>
+                                    <strong>25%</strong>
                                 </div>
+
+                                <div class="progress-track">
+                                    <div class="progress-fill"
+                                         style="width:25%;"></div>
+                                </div>
+
+                                <p>
+                                    Complete the company details, then continue.
+                                </p>
+
+                            </div>
+
+
+                            <!-- FOOTER -->
+
+                            <div class="wizard-footer">
+
+                                <div class="wizard-footer-progress">
+                                    <span>Section 1 of 4</span>
+                                    <strong>25%</strong>
+                                </div>
+
+                                <div class="wizard-footer-actions">
+
+                                    <p:commandButton
+                                            type="button"
+                                            value="Next"
+                                            icon="pi pi-arrow-right"
+                                            iconPos="right"
+                                            styleClass="wizard-next-button"
+                                            onclick="PF('wellnessWizard').next();"/>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </p:tab>
+
+
+                    <!-- =================================================
+                         SECTION 2
+                         OCCUPATIONAL HEALTH AND SAFETY
+                         ================================================= -->
+
+                    <p:tab id="ohs"
+                           title="Occupational Health and Safety">
+
+                        <section class="survey-section">
+
+                            <p class="survey__eyebrow">
+                                Section 2
+                            </p>
+
+                            <h2>
+                                Occupational Health and Safety
+                            </h2>
+
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Does your company have a policy/document for employees' Occupational Health and Safety?"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['ohsPolicy']}"
+                                        layout="pageDirection"
+                                        required="true">
+
+                                    <f:selectItem
+                                            itemLabel="Yes, occupational health and safety"
+                                            itemValue="Yes, OHS"/>
+
+                                    <f:selectItem
+                                            itemLabel="Yes, occupational health only"
+                                            itemValue="Yes, occupational health only"/>
+
+                                    <f:selectItem
+                                            itemLabel="Yes, occupational safety only"
+                                            itemValue="Yes, occupational safety only"/>
+
+                                    <f:selectItem
+                                            itemLabel="No policy exists"
+                                            itemValue="No"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="ohsPolicyDetails"/>
+
+                                </p:selectOneRadio>
+
+                            </div>
+
+
+                            <p:outputPanel id="ohsPolicyDetails"
+                                           layout="block">
+
+                                <h:panelGroup
+                                        layout="block"
+                                        styleClass="choice-block"
+                                        rendered="#{wellnessSurvey.answers['ohsPolicy'] ne 'No' and not empty wellnessSurvey.answers['ohsPolicy']}">
+
+                                    <p:outputLabel
+                                            value="Aspects covered by the policy/document"/>
+
+                                    <p:selectManyCheckbox
+                                            id="ohsPolicyAspects"
+                                            value="#{wellnessSurvey.multiAnswers['ohsPolicyAspects']}"
+                                            layout="responsive"
+                                            columns="2"
+                                            required="true">
+
+                                        <f:selectItems
+                                                value="#{wellnessSurvey.ohsPolicyAspects}"/>
+
+                                        <p:ajax
+                                                process="@this"
+                                                update="ohsPolicyOtherPanel"/>
+
+                                    </p:selectManyCheckbox>
+
+                                    <p:outputPanel id="ohsPolicyOtherPanel"
+                                                   layout="block">
+
+                                        <h:panelGroup
+                                                rendered="#{wellnessSurvey.isOtherSelected('ohsPolicyAspects')}">
+
+                                            <label class="form-label text-muted mt-2">
+                                                Other · specify
+                                            </label>
+
+                                            <p:inputText
+                                                    placeholder="Other aspect"
+                                                    value="#{wellnessSurvey.answers['ohsPolicyOther']}"
+                                                    required="true"/>
+
+                                        </h:panelGroup>
+
+                                    </p:outputPanel>
+
+                                </h:panelGroup>
+
+                            </p:outputPanel>
+
+
+                            <div class="form-grid two">
+
                                 <div class="question-card">
-                                    <p:outputLabel value="Risk assessment frequency"/>
-                                    <p:selectOneRadio value="#{wellnessSurvey.answers['riskFrequency']}" layout="responsive" columns="5" required="true">
-                                        <f:selectItem itemLabel="Monthly" itemValue="Monthly"/>
-                                        <f:selectItem itemLabel="Quarterly" itemValue="Quarterly"/>
-                                        <f:selectItem itemLabel="Bi-annually" itemValue="Bi-annually"/>
-                                        <f:selectItem itemLabel="Annually" itemValue="Annually"/>
-                                        <f:selectItem itemLabel="Only when issues arise" itemValue="Only when issues arise"/>
-                                    </p:selectOneRadio>
-                                </div>
-                            </h:panelGroup>
-                        </p:outputPanel>
 
-                        <div class="question-card">
-                            <p:outputLabel value="Does your Company have established program and procedures for identifying, assessing, evaluating risks and determining control measures?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['riskProgram']}" required="true">
-                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                                <p:ajax process="@this" update="riskProgramDetails"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <p:outputPanel id="riskProgramDetails" layout="block">
-                            <h:panelGroup layout="block" styleClass="question-card" rendered="#{wellnessSurvey.answers['riskProgram'] eq 'Yes'}">
-                                <p:outputLabel value="Are the working environment assessments / risk assessments documented in written form?"/>
-                                <p:selectOneRadio value="#{wellnessSurvey.answers['riskDocumented']}" required="true">
+                                    <p:outputLabel
+                                            value="Designated responsible officer(s) for workplace health and safety?"/>
+
+                                    <p:selectOneRadio
+                                            value="#{wellnessSurvey.answers['responsibleOfficer']}"
+                                            required="true">
+
+                                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    </p:selectOneRadio>
+
+                                </div>
+
+
+                                <div class="question-card">
+
+                                    <p:outputLabel
+                                            value="Special department/section/committee with dedicated staff?"/>
+
+                                    <p:selectOneRadio
+                                            value="#{wellnessSurvey.answers['ohsCommittee']}"
+                                            layout="pageDirection"
+                                            required="true">
+
+                                        <f:selectItem
+                                                itemLabel="Yes, full time"
+                                                itemValue="Yes, full time"/>
+
+                                        <f:selectItem
+                                                itemLabel="Yes, part time"
+                                                itemValue="Yes, part time"/>
+
+                                        <f:selectItem
+                                                itemLabel="No"
+                                                itemValue="No"/>
+
+                                    </p:selectOneRadio>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="How often is health and safety discussed between employees and management?"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['discussionFrequency']}"
+                                        layout="pageDirection"
+                                        columns="3"
+                                        required="true">
+
+                                    <f:selectItem itemLabel="Monthly" itemValue="Monthly"/>
+                                    <f:selectItem itemLabel="Quarterly" itemValue="Quarterly"/>
+                                    <f:selectItem itemLabel="Bi-annually" itemValue="Bi-annually"/>
+                                    <f:selectItem itemLabel="Annually" itemValue="Annually"/>
+                                    <f:selectItem itemLabel="Only when issues arise" itemValue="Only when issues arise"/>
+                                    <f:selectItem itemLabel="Not at all" itemValue="Not at all"/>
+
+                                </p:selectOneRadio>
+
+                            </div>
+
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Does your company conduct working environment surveillance / risk assessment?"/>
+
+                                <p:selectOneRadio  layout="lineDirection"
+                                                   value="#{wellnessSurvey.answers['riskAssessment']}"
+                                                   required="true">
+
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                     <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="riskDetails"/>
+
                                 </p:selectOneRadio>
-                            </h:panelGroup>
-                        </p:outputPanel>
 
-                        <div class="question-card">
-                            <p:outputLabel value="Does your company have records of Hygiene surveillance, such as monitoring of noise level or indoor air quality?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['hygieneRecords']}" required="true">
-                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                            </p:selectOneRadio>
-                        </div>
-
-                        <div class="question-card">
-                            <p:outputLabel value="Has your company developed and implemented Occupational Health and Safety training plan?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['trainingPlan']}" layout="pageDirection" required="true">
-                                <f:selectItem itemLabel="Developed and implemented" itemValue="Developed and implemented"/>
-                                <f:selectItem itemLabel="Developed but not implemented" itemValue="Developed but not implemented"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                                <p:ajax process="@this" update="trainingDetails"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <p:outputPanel id="trainingDetails" layout="block">
-                            <h:panelGroup layout="block" styleClass="choice-block" rendered="#{wellnessSurvey.answers['trainingPlan'] ne 'No' and not empty wellnessSurvey.answers['trainingPlan']}">
-                                <p:outputLabel value="Included in the OHS training plan"/>
-                                <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['ohsTrainingItems']}" layout="responsive" columns="2" required="true">
-                                    <f:selectItems value="#{wellnessSurvey.ohsTrainingItems}"/>
-                                </p:selectManyCheckbox>
-                                <p:inputText placeholder="Other training item" value="#{wellnessSurvey.answers['trainingOther']}"/>
-                            </h:panelGroup>
-                        </p:outputPanel>
-
-                        <div class="section-progress">
-                            <div class="progress-meta">
-                                <span>Section 2 of 4</span>
-                                <strong>50%</strong>
                             </div>
-                            <div class="progress-track">
-                                <div class="progress-fill" style="width: 50%;"></div>
-                            </div>
-                            <p>Occupational health and safety details are almost halfway done.</p>
-                        </div>
 
-                        <div class="wizard-footer">
-                            <div class="wizard-footer-progress">
-                                <span>Section 2 of 4</span>
-                                <strong>50%</strong>
-                            </div>
-                            <div class="wizard-footer-actions">
-                                <p:commandButton type="button"
-                                                 value="Back"
-                                                 icon="pi pi-arrow-left"
-                                                 styleClass="ui-button-secondary wizard-back-button"
-                                                 onclick="PF('wellnessWizard').back();"/>
-                                <p:commandButton type="button"
-                                                 value="Next"
-                                                 icon="pi pi-arrow-right"
-                                                 iconPos="right"
-                                                 styleClass="wizard-next-button"
-                                                 onclick="PF('wellnessWizard').next();"/>
-                            </div>
-                        </div>
-                    </section>
-                </p:tab>
 
-                <p:tab id="medical" title="Medical Examination">
-                    <section class="survey-section">
-                        <h2>Section 3: Health Assessment and Medical Examination</h2>
-                        <div class="form-grid three">
-                            <div class="question-card"><p:outputLabel value="First aid boxes"/><p:selectOneRadio value="#{wellnessSurvey.answers['firstAidBoxes']}" required="true"><f:selectItem itemLabel="Yes" itemValue="Yes"/><f:selectItem itemLabel="No" itemValue="No"/></p:selectOneRadio></div>
-                            <div class="question-card"><p:outputLabel value="First aid unit"/><p:selectOneRadio value="#{wellnessSurvey.answers['firstAidUnit']}" required="true"><f:selectItem itemLabel="Yes" itemValue="Yes"/><f:selectItem itemLabel="No" itemValue="No"/></p:selectOneRadio></div>
-                            <div class="question-card"><p:outputLabel value="Company clinic"/><p:selectOneRadio value="#{wellnessSurvey.answers['companyClinic']}" required="true"><f:selectItem itemLabel="Yes" itemValue="Yes"/><f:selectItem itemLabel="No" itemValue="No"/></p:selectOneRadio></div>
-                            <div class="question-card"><p:outputLabel value="General practitioner"/><p:selectOneRadio value="#{wellnessSurvey.answers['generalPractitioner']}" required="true"><f:selectItem itemLabel="Yes" itemValue="Yes"/><f:selectItem itemLabel="No" itemValue="No"/></p:selectOneRadio></div>
-                            <div class="question-card"><p:outputLabel value="Specialist occupational physician"/><p:selectOneRadio value="#{wellnessSurvey.answers['occupationalPhysician']}" required="true"><f:selectItem itemLabel="Yes" itemValue="Yes"/><f:selectItem itemLabel="No" itemValue="No"/></p:selectOneRadio></div>
-                            <div class="question-card"><p:outputLabel value="Occupational health nurse"/><p:selectOneRadio value="#{wellnessSurvey.answers['occupationalNurse']}" required="true"><f:selectItem itemLabel="Yes" itemValue="Yes"/><f:selectItem itemLabel="No" itemValue="No"/></p:selectOneRadio></div>
-                        </div>
-                        <div class="question-card">
-                            <p:outputLabel value="Pre-employment health examination and assessment before assignment"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['preEmploymentExam']}" layout="responsive" columns="3" required="true">
-                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                                <f:selectItem itemLabel="Other" itemValue="Other"/>
-                            </p:selectOneRadio>
-                            <p:inputText placeholder="Other detail" value="#{wellnessSurvey.answers['preEmploymentOther']}"/>
-                        </div>
-                        <div class="question-card">
-                            <p:outputLabel value="Periodic medical examinations for employees"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['periodicExam']}" layout="responsive" columns="4" required="true">
-                                <f:selectItem itemLabel="Yes, for all employees" itemValue="Yes, all employees"/>
-                                <f:selectItem itemLabel="Yes, for hazardous jobs" itemValue="Yes, hazardous jobs"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                                <f:selectItem itemLabel="Other" itemValue="Other"/>
-                            </p:selectOneRadio>
-                            <p:inputText placeholder="Other detail" value="#{wellnessSurvey.answers['periodicExamOther']}"/>
-                        </div>
-                        <div class="question-card">
-                            <p:outputLabel value="Lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['lifestyleSurveys']}" required="true">
-                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                            </p:selectOneRadio>
-                        </div>
+                            <p:outputPanel id="riskDetails"
+                                           layout="block">
 
-                        <div class="section-progress">
-                            <div class="progress-meta">
-                                <span>Section 3 of 4</span>
-                                <strong>75%</strong>
-                            </div>
-                            <div class="progress-track">
-                                <div class="progress-fill" style="width: 75%;"></div>
-                            </div>
-                            <p>Medical examination details are nearly complete.</p>
-                        </div>
+                                <h:panelGroup
+                                        layout="block"
+                                        rendered="#{wellnessSurvey.answers['riskAssessment'] eq 'Yes'}">
 
-                        <div class="wizard-footer">
-                            <div class="wizard-footer-progress">
-                                <span>Section 3 of 4</span>
-                                <strong>75%</strong>
-                            </div>
-                            <div class="wizard-footer-actions">
-                                <p:commandButton type="button"
-                                                 value="Back"
-                                                 icon="pi pi-arrow-left"
-                                                 styleClass="ui-button-secondary wizard-back-button"
-                                                 onclick="PF('wellnessWizard').back();"/>
-                                <p:commandButton type="button"
-                                                 value="Next"
-                                                 icon="pi pi-arrow-right"
-                                                 iconPos="right"
-                                                 styleClass="wizard-next-button"
-                                                 onclick="PF('wellnessWizard').next();"/>
-                            </div>
-                        </div>
-                    </section>
-                </p:tab>
+                                    <div class="choice-block">
 
-                <p:tab id="wellness" title="Health Promotion">
-                    <section class="survey-section">
-                        <h2>Section 4: Health Promotion / Workplace Wellness</h2>
-                        <div class="question-card">
-                            <p:outputLabel value="Does your company have workplace health promotion / wellness policy or policies?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['wellnessPolicy']}" layout="pageDirection" required="true">
-                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                <f:selectItem itemLabel="In the process of developing" itemValue="In process"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                                <p:ajax process="@this" update="wellnessPolicyDetails"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <p:outputPanel id="wellnessPolicyDetails" layout="block">
-                            <h:panelGroup layout="block" styleClass="choice-block" rendered="#{wellnessSurvey.answers['wellnessPolicy'] eq 'Yes'}">
-                                <p:outputLabel value="Elements covered by the wellness policy"/>
-                                <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['wellnessPolicyElements']}" layout="responsive" columns="5" required="true">
-                                    <f:selectItems value="#{wellnessSurvey.wellnessElements}"/>
-                                </p:selectManyCheckbox>
-                                <p:inputText placeholder="Other element" value="#{wellnessSurvey.answers['wellnessPolicyOther']}"/>
-                            </h:panelGroup>
-                        </p:outputPanel>
+                                        <p:outputLabel
+                                                value="Hazards routinely evaluated"/>
 
-                        <div class="question-card">
-                            <p:outputLabel value="Does your company have a workplace health promotion / wellness program?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['wellnessProgram']}" layout="pageDirection" required="true">
-                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                <f:selectItem itemLabel="In the process of developing" itemValue="In process"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                                <p:ajax process="@this" update="programDetails"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <p:outputPanel id="programDetails" layout="block">
-                            <h:panelGroup layout="block" rendered="#{wellnessSurvey.answers['wellnessProgram'] eq 'Yes'}">
-                                <div class="choice-block">
-                                    <p:outputLabel value="Components / strategies included in the program"/>
-                                    <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['wellnessStrategies']}" layout="responsive" columns="2" required="true">
-                                        <f:selectItems value="#{wellnessSurvey.wellnessStrategies}"/>
-                                    </p:selectManyCheckbox>
-                                </div>
-                                <div class="choice-block">
-                                    <p:outputLabel value="Responsible body for the wellness program"/>
-                                    <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['wellnessOwners']}" layout="responsive" columns="2" required="true">
-                                        <f:selectItems value="#{wellnessSurvey.wellnessOwners}"/>
-                                    </p:selectManyCheckbox>
-                                    <p:inputText placeholder="Other responsible body" value="#{wellnessSurvey.answers['wellnessOwnerOther']}"/>
-                                </div>
-                                <div class="choice-block">
-                                    <p:outputLabel value="Elements of the workplace wellness program"/>
-                                    <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['wellnessProgramElements']}" layout="responsive" columns="5" required="true">
-                                        <f:selectItems value="#{wellnessSurvey.wellnessElements}"/>
-                                    </p:selectManyCheckbox>
-                                    <p:inputText placeholder="Other element" value="#{wellnessSurvey.answers['wellnessProgramOther']}"/>
-                                </div>
-                            </h:panelGroup>
-                        </p:outputPanel>
+                                        <p:selectManyCheckbox
+                                                id="hazards"
+                                                value="#{wellnessSurvey.multiAnswers['hazards']}"
+                                                layout="responsive"
+                                                columns="2"
+                                                required="true">
 
-                        <div class="choice-block">
-                            <p:outputLabel value="Methods of communicating healthy behaviors to employees"/>
-                            <p:selectManyCheckbox value="#{wellnessSurvey.multiAnswers['communicationMethods']}" layout="responsive" columns="3" required="true">
-                                <f:selectItems value="#{wellnessSurvey.communicationMethods}"/>
-                            </p:selectManyCheckbox>
-                            <p:inputText placeholder="Other communication method" value="#{wellnessSurvey.answers['communicationOther']}"/>
-                        </div>
+                                            <f:selectItems
+                                                    value="#{wellnessSurvey.hazards}"/>
 
-                        <div class="question-card">
-                            <p:outputLabel value="Does your company provide healthy food and beverages for the company employees free of charge?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['freeHealthyFood']}" layout="pageDirection" required="true">
-                                <f:selectItem itemLabel="Yes, all food and beverages are healthy" itemValue="All healthy"/>
-                                <f:selectItem itemLabel="Yes, some food and beverages are healthy" itemValue="Some healthy"/>
-                                <f:selectItem itemLabel="Company does not provide free food and beverages" itemValue="Not provided"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <div class="question-card">
-                            <p:outputLabel value="Does your company have cafeteria/canteen?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['cafeteria']}" layout="pageDirection" required="true">
-                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                                <p:ajax process="@this" update="cafeteriaDetails"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <p:outputPanel id="cafeteriaDetails" layout="block">
-                            <h:panelGroup layout="block" styleClass="question-card" rendered="#{wellnessSurvey.answers['cafeteria'] eq 'Yes'}">
-                                <p:outputLabel value="Does the cafeteria/canteen promote healthy food options?"/>
-                                <p:selectOneRadio value="#{wellnessSurvey.answers['cafeteriaPromotion']}" layout="pageDirection" required="true">
-                                    <f:selectItem itemLabel="Yes, designated area/shelf for healthier foods and snacks" itemValue="Designated area"/>
-                                    <f:selectItem itemLabel="Yes, offering better prices" itemValue="Better prices"/>
-                                    <f:selectItem itemLabel="Yes, attractive packaging" itemValue="Attractive packaging"/>
-                                    <f:selectItem itemLabel="No, does not promote healthy food options" itemValue="No"/>
+                                            <p:ajax
+                                                    process="@this"
+                                                    update="hazardOtherPanel"/>
+
+                                        </p:selectManyCheckbox>
+
+                                        <p:outputPanel id="hazardOtherPanel"
+                                                       layout="block">
+
+                                            <h:panelGroup
+                                                    rendered="#{wellnessSurvey.isOtherSelected('hazards')}">
+
+                                                <label class="form-label text-muted mt-2">
+                                                    Other · specify
+                                                </label>
+
+                                                <p:inputText
+                                                        placeholder="Other hazard"
+                                                        value="#{wellnessSurvey.answers['hazardOther']}"
+                                                        required="true"/>
+
+                                            </h:panelGroup>
+
+                                        </p:outputPanel>
+
+                                    </div>
+
+
+                                    <div class="question-card">
+
+                                        <p:outputLabel
+                                                value="Risk assessment frequency"/>
+
+                                        <p:selectOneRadio
+                                                value="#{wellnessSurvey.answers['riskFrequency']}"
+                                                layout="responsive"
+                                                columns="5"
+                                                required="true">
+
+                                            <f:selectItem itemLabel="Monthly" itemValue="Monthly"/>
+                                            <f:selectItem itemLabel="Quarterly" itemValue="Quarterly"/>
+                                            <f:selectItem itemLabel="Bi-annually" itemValue="Bi-annually"/>
+                                            <f:selectItem itemLabel="Annually" itemValue="Annually"/>
+                                            <f:selectItem itemLabel="Only when issues arise" itemValue="Only when issues arise"/>
+
+                                        </p:selectOneRadio>
+
+                                    </div>
+
+                                </h:panelGroup>
+
+                            </p:outputPanel>
+
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Does your Company have established program and procedures for identifying, assessing, evaluating risks and determining control measures?"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['riskProgram']}"
+                                        required="true">
+
+                                    <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                    <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="riskProgramDetails"/>
+
                                 </p:selectOneRadio>
-                            </h:panelGroup>
-                        </p:outputPanel>
 
-                        <div class="question-card">
-                            <p:outputLabel value="Access to on-site physical activity facilities"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['physicalActivityFacilities']}" layout="responsive" columns="3" required="true">
-                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                <f:selectItem itemLabel="In the process of providing access" itemValue="In process"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <div class="question-card">
-                            <p:outputLabel value="Does your company ban tobacco use?"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['tobaccoBan']}" layout="pageDirection" required="true">
-                                <f:selectItem itemLabel="Use of tobacco is not permitted within the Company at any time" itemValue="Not permitted anytime"/>
-                                <f:selectItem itemLabel="Use of tobacco is not permitted on Company premises, including parking lots" itemValue="Not permitted on premises"/>
-                                <f:selectItem itemLabel="Use of tobacco is only allowed in designated smoking areas" itemValue="Designated areas"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                            </p:selectOneRadio>
-                        </div>
-                        <div class="question-card">
-                            <p:outputLabel value="Counseling / mental health support to employees"/>
-                            <p:selectOneRadio value="#{wellnessSurvey.answers['mentalHealthSupport']}" required="true">
-                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                                <f:selectItem itemLabel="No" itemValue="No"/>
-                            </p:selectOneRadio>
-                        </div>
+                            </div>
 
-                        <div class="section-progress final-progress">
-                            <div class="progress-meta">
-                                <span>Section 4 of 4</span>
-                                <strong>100%</strong>
-                            </div>
-                            <div class="progress-track">
-                                <div class="progress-fill" style="width: 100%;"></div>
-                            </div>
-                            <p>Review your answers, then submit.</p>
-                        </div>
 
-                        <div class="wizard-footer">
-                            <div class="wizard-footer-progress">
-                                <span>Section 4 of 4</span>
-                                <strong>100%</strong>
+                            <p:outputPanel id="riskProgramDetails"
+                                           layout="block">
+
+                                <h:panelGroup
+                                        layout="block"
+                                        styleClass="question-card"
+                                        rendered="#{wellnessSurvey.answers['riskProgram'] eq 'Yes'}">
+
+                                    <p:outputLabel
+                                            value="Are the working environment assessments / risk assessments documented in written form?"/>
+
+                                    <p:selectOneRadio
+                                            value="#{wellnessSurvey.answers['riskDocumented']}"
+                                            required="true">
+
+                                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    </p:selectOneRadio>
+
+                                </h:panelGroup>
+
+                            </p:outputPanel>
+
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Does your company have records of Hygiene surveillance, such as monitoring of noise level or indoor air quality?"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['hygieneRecords']}"
+                                        required="true">
+
+                                    <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                    <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                </p:selectOneRadio>
+
                             </div>
-                            <div class="wizard-footer-actions">
-                                <p:commandButton type="button"
-                                                 value="Back"
-                                                 icon="pi pi-arrow-left"
-                                                 styleClass="ui-button-secondary wizard-back-button"
-                                                 onclick="PF('wellnessWizard').back();"/>
-                                <p:commandButton value="Submit Survey"
-                                                 icon="pi pi-check"
-                                                 action="#{wellnessSurvey.submit}"
-                                                 ajax="false"
-                                                 styleClass="ui-button-success wizard-submit-button"/>
-                                <p:commandButton value="Clear"
-                                                 icon="pi pi-refresh"
-                                                 action="#{wellnessSurvey.reset}"
-                                                 ajax="false"
-                                                 immediate="true"
-                                                 styleClass="ui-button-secondary"/>
+
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Has your company developed and implemented Occupational Health and Safety training plan?"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['trainingPlan']}"
+                                        layout="pageDirection"
+                                        required="true">
+
+                                    <f:selectItem
+                                            itemLabel="Developed and implemented"
+                                            itemValue="Developed and implemented"/>
+
+                                    <f:selectItem
+                                            itemLabel="Developed but not implemented"
+                                            itemValue="Developed but not implemented"/>
+
+                                    <f:selectItem
+                                            itemLabel="No"
+                                            itemValue="No"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="trainingDetails"/>
+
+                                </p:selectOneRadio>
+
                             </div>
-                        </div>
-                    </section>
-                </p:tab>
-            </p:wizard>
-        </h:form>
+
+
+                            <p:outputPanel id="trainingDetails"
+                                           layout="block">
+
+                                <h:panelGroup
+                                        layout="block"
+                                        styleClass="choice-block"
+                                        rendered="#{wellnessSurvey.answers['trainingPlan'] ne 'No' and not empty wellnessSurvey.answers['trainingPlan']}">
+
+                                    <p:outputLabel
+                                            value="Included in the OHS training plan"/>
+
+                                    <p:selectManyCheckbox
+                                            id="ohsTrainingItems"
+                                            value="#{wellnessSurvey.multiAnswers['ohsTrainingItems']}"
+                                            layout="responsive"
+                                            columns="2"
+                                            required="true">
+
+                                        <f:selectItems
+                                                value="#{wellnessSurvey.ohsTrainingItems}"/>
+
+                                        <p:ajax
+                                                process="@this"
+                                                update="trainingOtherPanel"/>
+
+                                    </p:selectManyCheckbox>
+
+                                    <p:outputPanel id="trainingOtherPanel"
+                                                   layout="block">
+
+                                        <h:panelGroup
+                                                rendered="#{wellnessSurvey.isOtherSelected('ohsTrainingItems')}">
+
+                                            <label class="form-label text-muted mt-2">
+                                                Other · specify
+                                            </label>
+
+                                            <p:inputText
+                                                    placeholder="Other training item"
+                                                    value="#{wellnessSurvey.answers['trainingOther']}"
+                                                    required="true"/>
+
+                                        </h:panelGroup>
+
+                                    </p:outputPanel>
+
+                                </h:panelGroup>
+
+                            </p:outputPanel>
+
+
+                            <!-- PROGRESS -->
+
+                            <div class="section-progress">
+
+                                <div class="progress-meta">
+                                    <span>Section 2 of 4</span>
+                                    <strong>50%</strong>
+                                </div>
+
+                                <div class="progress-track">
+                                    <div class="progress-fill"
+                                         style="width:50%;"></div>
+                                </div>
+
+                                <p>
+                                    Occupational health and safety details are almost halfway done.
+                                </p>
+
+                            </div>
+
+
+                            <!-- FOOTER -->
+
+                            <div class="wizard-footer">
+
+                                <div class="wizard-footer-progress">
+                                    <span>Section 2 of 4</span>
+                                    <strong>50%</strong>
+                                </div>
+
+                                <div class="wizard-footer-actions">
+
+                                    <p:commandButton
+                                            type="button"
+                                            value="Back"
+                                            icon="pi pi-arrow-left"
+                                            styleClass="ui-button-secondary wizard-back-button"
+                                            onclick="PF('wellnessWizard').back();"/>
+
+                                    <p:commandButton
+                                            type="button"
+                                            value="Next"
+                                            icon="pi pi-arrow-right"
+                                            iconPos="right"
+                                            styleClass="wizard-next-button"
+                                            onclick="PF('wellnessWizard').next();"/>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </p:tab>
+
+
+                    <!-- =================================================
+                         SECTION 3
+                         MEDICAL EXAMINATION
+                         ================================================= -->
+
+                    <p:tab id="medical"
+                           title="Medical Examination">
+
+                        <section class="survey-section">
+
+                            <p class="survey__eyebrow">
+                                Section 3
+                            </p>
+
+                            <h2>
+                                Health Assessment and Medical Examination
+                            </h2>
+
+
+                            <div class="form-grid three">
+
+                                <div class="question-card">
+
+                                    <p:outputLabel value="First aid boxes"/>
+
+                                    <p:selectOneRadio
+                                            value="#{wellnessSurvey.answers['firstAidBoxes']}"
+                                            required="true">
+
+                                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    </p:selectOneRadio>
+
+                                </div>
+
+
+                                <div class="question-card">
+
+                                    <p:outputLabel value="First aid unit"/>
+
+                                    <p:selectOneRadio
+                                            value="#{wellnessSurvey.answers['firstAidUnit']}"
+                                            required="true">
+
+                                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    </p:selectOneRadio>
+
+                                </div>
+
+
+                                <div class="question-card">
+
+                                    <p:outputLabel value="Company clinic"/>
+
+                                    <p:selectOneRadio
+                                            value="#{wellnessSurvey.answers['companyClinic']}"
+                                            required="true">
+
+                                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    </p:selectOneRadio>
+
+                                </div>
+
+
+                                <div class="question-card">
+
+                                    <p:outputLabel value="General practitioner"/>
+
+                                    <p:selectOneRadio
+                                            value="#{wellnessSurvey.answers['generalPractitioner']}"
+                                            required="true">
+
+                                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    </p:selectOneRadio>
+
+                                </div>
+
+
+                                <div class="question-card">
+
+                                    <p:outputLabel value="Specialist occupational physician"/>
+
+                                    <p:selectOneRadio
+                                            value="#{wellnessSurvey.answers['occupationalPhysician']}"
+                                            required="true">
+
+                                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    </p:selectOneRadio>
+
+                                </div>
+
+
+                                <div class="question-card">
+
+                                    <p:outputLabel value="Occupational health nurse"/>
+
+                                    <p:selectOneRadio
+                                            value="#{wellnessSurvey.answers['occupationalNurse']}"
+                                            required="true">
+
+                                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    </p:selectOneRadio>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Pre-employment health examination and assessment before assignment"/>
+
+                                <p:selectOneRadio
+                                        id="preEmploymentExam"
+                                        value="#{wellnessSurvey.answers['preEmploymentExam']}"
+                                        layout="responsive"
+                                        columns="3"
+                                        required="true">
+
+                                    <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                    <f:selectItem itemLabel="No" itemValue="No"/>
+                                    <f:selectItem itemLabel="Other" itemValue="Other"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="preEmploymentOtherPanel"/>
+
+                                </p:selectOneRadio>
+
+                                <p:outputPanel id="preEmploymentOtherPanel"
+                                               layout="block">
+
+                                    <h:panelGroup
+                                            rendered="#{wellnessSurvey.answers['preEmploymentExam'] eq 'Other'}">
+
+                                        <label class="form-label text-muted mt-2">
+                                            Other · specify
+                                        </label>
+
+                                        <p:inputText
+                                                placeholder="Other detail"
+                                                value="#{wellnessSurvey.answers['preEmploymentOther']}"
+                                                required="true"/>
+
+                                    </h:panelGroup>
+
+                                </p:outputPanel>
+
+                            </div>
+
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Periodic medical examinations for employees"/>
+
+                                <p:selectOneRadio
+                                        id="periodicExam"
+                                        value="#{wellnessSurvey.answers['periodicExam']}"
+                                        layout="responsive"
+                                        columns="4"
+                                        required="true">
+
+                                    <f:selectItem
+                                            itemLabel="Yes, for all employees"
+                                            itemValue="Yes, all employees"/>
+
+                                    <f:selectItem
+                                            itemLabel="Yes, for hazardous jobs"
+                                            itemValue="Yes, hazardous jobs"/>
+
+                                    <f:selectItem
+                                            itemLabel="No"
+                                            itemValue="No"/>
+
+                                    <f:selectItem
+                                            itemLabel="Other"
+                                            itemValue="Other"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="periodicExamOtherPanel"/>
+
+                                </p:selectOneRadio>
+
+                                <p:outputPanel id="periodicExamOtherPanel"
+                                               layout="block">
+
+                                    <h:panelGroup
+                                            rendered="#{wellnessSurvey.answers['periodicExam'] eq 'Other'}">
+
+                                        <label class="form-label text-muted mt-2">
+                                            Other · specify
+                                        </label>
+
+                                        <p:inputText
+                                                placeholder="Other detail"
+                                                value="#{wellnessSurvey.answers['periodicExamOther']}"
+                                                required="true"/>
+
+                                    </h:panelGroup>
+
+                                </p:outputPanel>
+
+                            </div>
+
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['lifestyleSurveys']}"
+                                        required="true">
+
+                                    <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                    <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                </p:selectOneRadio>
+
+                            </div>
+
+
+                            <div class="section-progress">
+
+                                <div class="progress-meta">
+                                    <span>Section 3 of 4</span>
+                                    <strong>75%</strong>
+                                </div>
+
+                                <div class="progress-track">
+                                    <div class="progress-fill"
+                                         style="width:75%;"></div>
+                                </div>
+
+                                <p>
+                                    Medical examination details are nearly complete.
+                                </p>
+
+                            </div>
+
+
+                            <!-- FOOTER -->
+
+                            <div class="wizard-footer">
+
+                                <div class="wizard-footer-progress">
+                                    <span>Section 3 of 4</span>
+                                    <strong>75%</strong>
+                                </div>
+
+                                <div class="wizard-footer-actions">
+
+                                    <p:commandButton
+                                            type="button"
+                                            value="Back"
+
+                                            styleClass="btn btn-dark"
+                                            onclick="PF('wellnessWizard').back();"/>
+
+                                    <p:commandButton
+                                            type="button"
+                                            value="Next"
+                                            icon="pi pi-arrow-right"
+                                            iconPos="right"
+                                            styleClass="wizard-next-button"
+                                            onclick="PF('wellnessWizard').next();"/>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </p:tab>
+
+
+                    <!-- =================================================
+                         SECTION 4
+                         WORKPLACE WELLNESS
+                         ================================================= -->
+
+                    <p:tab id="wellness"
+                           title="Health Promotion">
+
+                        <section class="survey-section">
+
+                            <p class="survey__eyebrow">
+                                Section 4
+                            </p>
+
+                            <h2>
+                                Health Promotion / Workplace Wellness
+                            </h2>
+
+
+                            <!-- WELLNESS POLICY -->
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Does your company have workplace health promotion / wellness policy or policies?"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['wellnessPolicy']}"
+                                        layout="pageDirection"
+                                        required="true">
+
+                                    <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+
+                                    <f:selectItem
+                                            itemLabel="In the process of developing"
+                                            itemValue="In process"/>
+
+                                    <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="wellnessPolicyDetails"/>
+
+                                </p:selectOneRadio>
+
+                            </div>
+
+
+                            <p:outputPanel id="wellnessPolicyDetails"
+                                           layout="block">
+
+                                <h:panelGroup
+                                        layout="block"
+                                        styleClass="choice-block"
+                                        rendered="#{wellnessSurvey.answers['wellnessPolicy'] eq 'Yes'}">
+
+                                    <p:outputLabel
+                                            value="Elements covered by the wellness policy"/>
+
+                                    <p:selectManyCheckbox
+                                            id="wellnessPolicyElements"
+                                            value="#{wellnessSurvey.multiAnswers['wellnessPolicyElements']}"
+                                            layout="responsive"
+                                            columns="5"
+                                            required="true">
+
+                                        <f:selectItems
+                                                value="#{wellnessSurvey.wellnessElements}"/>
+
+                                        <p:ajax
+                                                process="@this"
+                                                update="wellnessPolicyOtherPanel"/>
+
+                                    </p:selectManyCheckbox>
+
+                                    <p:outputPanel id="wellnessPolicyOtherPanel"
+                                                   layout="block">
+
+                                        <h:panelGroup
+                                                rendered="#{wellnessSurvey.isOtherSelected('wellnessPolicyElements')}">
+
+                                            <label class="form-label text-muted mt-2">
+                                                Other · specify
+                                            </label>
+
+                                            <p:inputText
+                                                    placeholder="Other element"
+                                                    value="#{wellnessSurvey.answers['wellnessPolicyOther']}"
+                                                    required="true"/>
+
+                                        </h:panelGroup>
+
+                                    </p:outputPanel>
+
+                                </h:panelGroup>
+
+                            </p:outputPanel>
+
+
+                            <!-- WELLNESS PROGRAM -->
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Does your company have a workplace health promotion / wellness program?"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['wellnessProgram']}"
+                                        layout="pageDirection"
+                                        required="true">
+
+                                    <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+
+                                    <f:selectItem
+                                            itemLabel="In the process of developing"
+                                            itemValue="In process"/>
+
+                                    <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="programDetails"/>
+
+                                </p:selectOneRadio>
+
+                            </div>
+
+
+                            <p:outputPanel id="programDetails"
+                                           layout="block">
+
+                                <h:panelGroup
+                                        layout="block"
+                                        rendered="#{wellnessSurvey.answers['wellnessProgram'] eq 'Yes'}">
+
+
+                                    <div class="choice-block">
+
+                                        <p:outputLabel
+                                                value="Components / strategies included in the program"/>
+
+                                        <p:selectManyCheckbox
+                                                value="#{wellnessSurvey.multiAnswers['wellnessStrategies']}"
+                                                layout="responsive"
+                                                columns="2"
+                                                required="true">
+
+                                            <f:selectItems
+                                                    value="#{wellnessSurvey.wellnessStrategies}"/>
+
+                                        </p:selectManyCheckbox>
+
+                                    </div>
+
+
+                                    <div class="choice-block">
+
+                                        <p:outputLabel
+                                                value="Responsible body for the wellness program"/>
+
+                                        <p:selectManyCheckbox
+                                                id="wellnessOwners"
+                                                value="#{wellnessSurvey.multiAnswers['wellnessOwners']}"
+                                                layout="responsive"
+                                                columns="2"
+                                                required="true">
+
+                                            <f:selectItems
+                                                    value="#{wellnessSurvey.wellnessOwners}"/>
+
+                                            <p:ajax
+                                                    process="@this"
+                                                    update="wellnessOwnerOtherPanel"/>
+
+                                        </p:selectManyCheckbox>
+
+                                        <p:outputPanel id="wellnessOwnerOtherPanel"
+                                                       layout="block">
+
+                                            <h:panelGroup
+                                                    rendered="#{wellnessSurvey.isOtherSelected('wellnessOwners')}">
+
+                                                <label class="form-label text-muted mt-2">
+                                                    Other · specify
+                                                </label>
+
+                                                <p:inputText
+                                                        placeholder="Other responsible body"
+                                                        value="#{wellnessSurvey.answers['wellnessOwnerOther']}"
+                                                        required="true"/>
+
+                                            </h:panelGroup>
+
+                                        </p:outputPanel>
+
+                                    </div>
+
+
+                                    <div class="choice-block">
+
+                                        <p:outputLabel
+                                                value="Elements of the workplace wellness program"/>
+
+                                        <p:selectManyCheckbox
+                                                id="wellnessProgramElements"
+                                                value="#{wellnessSurvey.multiAnswers['wellnessProgramElements']}"
+                                                layout="responsive"
+                                                columns="5"
+                                                required="true">
+
+                                            <f:selectItems
+                                                    value="#{wellnessSurvey.wellnessElements}"/>
+
+                                            <p:ajax
+                                                    process="@this"
+                                                    update="wellnessProgramOtherPanel"/>
+
+                                        </p:selectManyCheckbox>
+
+                                        <p:outputPanel id="wellnessProgramOtherPanel"
+                                                       layout="block">
+
+                                            <h:panelGroup
+                                                    rendered="#{wellnessSurvey.isOtherSelected('wellnessProgramElements')}">
+
+                                                <label class="form-label text-muted mt-2">
+                                                    Other · specify
+                                                </label>
+
+                                                <p:inputText
+                                                        placeholder="Other element"
+                                                        value="#{wellnessSurvey.answers['wellnessProgramOther']}"
+                                                        required="true"/>
+
+                                            </h:panelGroup>
+
+                                        </p:outputPanel>
+
+                                    </div>
+
+
+                                </h:panelGroup>
+
+                            </p:outputPanel>
+
+
+                            <!-- COMMUNICATION -->
+
+                            <div class="choice-block">
+
+                                <p:outputLabel
+                                        value="Methods of communicating healthy behaviors to employees"/>
+
+                                <p:selectManyCheckbox
+                                        id="communicationMethods"
+                                        value="#{wellnessSurvey.multiAnswers['communicationMethods']}"
+                                        layout="responsive"
+                                        columns="3"
+                                        required="true">
+
+                                    <f:selectItems
+                                            value="#{wellnessSurvey.communicationMethods}"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="communicationOtherPanel"/>
+
+                                </p:selectManyCheckbox>
+
+                                <p:outputPanel id="communicationOtherPanel"
+                                               layout="block">
+
+                                    <h:panelGroup
+                                            rendered="#{wellnessSurvey.isOtherSelected('communicationMethods')}">
+
+                                        <label class="form-label text-muted mt-2">
+                                            Other · specify
+                                        </label>
+
+                                        <p:inputText
+                                                placeholder="Other communication method"
+                                                value="#{wellnessSurvey.answers['communicationOther']}"
+                                                required="true"/>
+
+                                    </h:panelGroup>
+
+                                </p:outputPanel>
+
+                            </div>
+
+
+                            <!-- HEALTHY FOOD -->
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Does your company provide healthy food and beverages for the company employees free of charge?"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['freeHealthyFood']}"
+                                        layout="pageDirection"
+                                        required="true">
+
+                                    <f:selectItem
+                                            itemLabel="Yes, all food and beverages are healthy"
+                                            itemValue="All healthy"/>
+
+                                    <f:selectItem
+                                            itemLabel="Yes, some food and beverages are healthy"
+                                            itemValue="Some healthy"/>
+
+                                    <f:selectItem
+                                            itemLabel="Company does not provide free food and beverages"
+                                            itemValue="Not provided"/>
+
+                                </p:selectOneRadio>
+
+                            </div>
+
+
+                            <!-- CAFETERIA -->
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Does your company have cafeteria/canteen?"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['cafeteria']}"
+                                        layout="pageDirection"
+                                        required="true">
+
+                                    <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                    <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                    <p:ajax
+                                            process="@this"
+                                            update="cafeteriaDetails"/>
+
+                                </p:selectOneRadio>
+
+                            </div>
+
+
+                            <p:outputPanel id="cafeteriaDetails"
+                                           layout="block">
+
+                                <h:panelGroup
+                                        layout="block"
+                                        styleClass="question-card"
+                                        rendered="#{wellnessSurvey.answers['cafeteria'] eq 'Yes'}">
+
+                                    <p:outputLabel
+                                            value="Does the cafeteria/canteen promote healthy food options?"/>
+
+                                    <p:selectOneRadio
+                                            value="#{wellnessSurvey.answers['cafeteriaPromotion']}"
+                                            layout="pageDirection"
+                                            required="true">
+
+                                        <f:selectItem
+                                                itemLabel="Yes, designated area/shelf for healthier foods and snacks"
+                                                itemValue="Designated area"/>
+
+                                        <f:selectItem
+                                                itemLabel="Yes, offering better prices"
+                                                itemValue="Better prices"/>
+
+                                        <f:selectItem
+                                                itemLabel="Yes, attractive packaging"
+                                                itemValue="Attractive packaging"/>
+
+                                        <f:selectItem
+                                                itemLabel="No, does not promote healthy food options"
+                                                itemValue="No"/>
+
+                                    </p:selectOneRadio>
+
+                                </h:panelGroup>
+
+                            </p:outputPanel>
+
+
+                            <!-- PHYSICAL ACTIVITY -->
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Access to on-site physical activity facilities"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['physicalActivityFacilities']}"
+                                        layout="responsive"
+                                        columns="3"
+                                        required="true">
+
+                                    <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+
+                                    <f:selectItem
+                                            itemLabel="In the process of providing access"
+                                            itemValue="In process"/>
+
+                                    <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                </p:selectOneRadio>
+
+                            </div>
+
+
+                            <!-- TOBACCO -->
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Does your company ban tobacco use?"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['tobaccoBan']}"
+                                        layout="pageDirection"
+                                        required="true">
+
+                                    <f:selectItem
+                                            itemLabel="Use of tobacco is not permitted within the Company at any time"
+                                            itemValue="Not permitted anytime"/>
+
+                                    <f:selectItem
+                                            itemLabel="Use of tobacco is not permitted on Company premises, including parking lots"
+                                            itemValue="Not permitted on premises"/>
+
+                                    <f:selectItem
+                                            itemLabel="Use of tobacco is only allowed in designated smoking areas"
+                                            itemValue="Designated areas"/>
+
+                                    <f:selectItem
+                                            itemLabel="No"
+                                            itemValue="No"/>
+
+                                </p:selectOneRadio>
+
+                            </div>
+
+
+                            <!-- MENTAL HEALTH -->
+
+                            <div class="question-card">
+
+                                <p:outputLabel
+                                        value="Counseling / mental health support to employees"/>
+
+                                <p:selectOneRadio
+                                        value="#{wellnessSurvey.answers['mentalHealthSupport']}"
+                                        required="true">
+
+                                    <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                    <f:selectItem itemLabel="No" itemValue="No"/>
+
+                                </p:selectOneRadio>
+
+                            </div>
+
+
+                            <!-- FINAL PROGRESS -->
+
+                            <div class="section-progress final-progress">
+
+                                <div class="progress-meta">
+
+                                <span>
+                                    Section 4 of 4
+                                </span>
+
+                                    <strong>
+                                        100%
+                                    </strong>
+
+                                </div>
+
+                                <div class="progress-track">
+
+                                    <div class="progress-fill"
+                                         style="width:100%;"></div>
+
+                                </div>
+
+                                <p>
+                                    Review your answers, then submit.
+                                </p>
+
+                            </div>
+
+
+                            <!-- FINAL ACTIONS -->
+
+                            <div class="wizard-footer">
+
+                                <div class="wizard-footer-progress">
+
+                                <span>
+                                    Section 4 of 4
+                                </span>
+
+                                    <strong>
+                                        100%
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="wizard-footer-actions">
+
+                                    <p:commandButton
+                                            type="button"
+                                            value="Back"
+                                            icon="pi pi-arrow-left"
+                                            styleClass="ui-button-secondary wizard-back-button"
+                                            onclick="PF('wellnessWizard').back();"/>
+
+
+                                    <p:commandButton
+                                            value="Submit Survey"
+                                            icon="pi pi-check"
+                                            action="#{wellnessSurvey.submit}"
+                                            ajax="false"
+                                            styleClass="wizard-submit-button"/>
+
+
+                                    <p:commandButton
+                                            value="Clear"
+                                            icon="pi pi-refresh"
+                                            action="#{wellnessSurvey.reset}"
+                                            ajax="false"
+                                            immediate="true"
+                                            styleClass="ui-button-secondary"/>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </p:tab>
+
+                </p:wizard>
+
+            </h:form>
+
+        </div>
+
     </div>
+
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+
+    <footer class="footer">
+
+        <div class="container-fluid">
+
+            <div class="row text-muted">
+
+                <div class="col-6 text-start">
+
+                    <ul class="list-inline">
+
+                        <li class="list-inline-item">
+                            <a class="text-muted" href="#">
+                                Support
+                            </a>
+                        </li>
+
+                        <li class="list-inline-item">
+                            <a class="text-muted" href="#">
+                                Help Center
+                            </a>
+                        </li>
+
+                        <li class="list-inline-item">
+                            <a class="text-muted" href="#">
+                                Privacy
+                            </a>
+                        </li>
+
+                        <li class="list-inline-item">
+                            <a class="text-muted" href="#">
+                                Terms of Service
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="col-6 text-end">
+
+                    <p class="mb-0">
+                        © 2026 Copyright - Ministry of Public Health
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ============================================================
+         FULLSCREEN SCRIPT
+         ============================================================ -->
+
+    <script>
+
+        function toggleFullscreen() {
+
+            if (!document.fullscreenElement) {
+
+                document.documentElement
+                    .requestFullscreen()
+                    .catch(function () {
+                        // Browser does not allow fullscreen.
+                    });
+
+            } else {
+
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+
+            }
+
+        }
+
+        document.addEventListener(
+            "fullscreenchange",
+            function () {
+
+                var label =
+                    document.querySelector(
+                        ".survey__head .js-fullscreen-label"
+                    );
+
+                if (!label) {
+                    return;
+                }
+
+                if (document.fullscreenElement) {
+                    label.textContent = "Exit fullscreen";
+                } else {
+                    label.textContent = "Fullscreen";
+                }
+
+            }
+        );
+
+    </script>
+
 </h:body>
+
 </html>

@@ -123,6 +123,19 @@ public class WellnessSurveyBean implements Serializable {
         return getProgressPercent(Long.valueOf(1L));
     }
 
+    public boolean isOtherSelected(String key) {
+        String[] selectedValues = multiAnswers.get(key);
+        if (selectedValues == null) {
+            return false;
+        }
+        for (String selectedValue : selectedValues) {
+            if ("Other".equals(selectedValue)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String submit() {
         if (!isEmployeeTotalValid()) {
             FacesContext.getCurrentInstance().validationFailed();
