@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      lang="#{schoolHealthSurvey.lang}"
+      dir="#{schoolHealthSurvey.dir}">
+<f:view locale="#{schoolHealthSurvey.locale}">
+<h:head>
+    <f:loadBundle basename="com.kiptoo2000.survey.i18n.messages" var="msg"/>
+    <title>#{msg['schoolHealth.brand']}</title>
+    <style type="text/css">
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f7f8fa; color: #343a40; }
+        .survey-shell { width: min(1100px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 48px; }
+        .stage-card { max-width: 920px; margin: 24px auto 0; padding: 36px; background: #fff; border: 1px solid #eceef1; border-radius: .5rem; box-shadow: 0 12px 30px rgba(31, 45, 61, .08); }
+        .eyebrow { color: #8a1538; font-size: .78rem; font-weight: 700; letter-spacing: .06em; margin: 0 0 .5rem; text-transform: uppercase; }
+        h1 { color: #8a1538; font-size: 1.8rem; margin: 0 0 .75rem; }
+        h2 { color: #343a40; font-size: 1.1rem; margin: 1.5rem 0 .75rem; }
+        .intro { color: #5f6b7a; font-size: 1rem; line-height: 1.6; margin: 0 0 1rem; }
+        .note { background: #f6f7f9; border: 1px solid #eceef1; border-radius: .4rem; color: #495057; line-height: 1.55; padding: 1rem 1.25rem; }
+        .summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .summary div { background: #fafbfc; border: 1px solid #edf0f2; border-radius: .4rem; padding: 1rem; }
+        .summary span { color: #8b95a1; display: block; font-size: .78rem; margin-bottom: .25rem; }
+        .summary strong { color: #343a40; display: block; }
+        .actions { display: flex; gap: .75rem; justify-content: center; margin-top: 1.75rem; }
+        .top-actions { justify-content: flex-end; margin-top: 0; }
+        .start-button { background: #8a1538 !important; border-color: #8a1538 !important; color: #fff !important; min-width: 160px; }
+        @media (max-width: 767.98px) { .stage-card { padding: 1.25rem; } .summary { grid-template-columns: 1fr; } .actions { flex-direction: column; } }
+    </style>
+</h:head>
+<h:body>
+    <main class="survey-shell">
+        <h:form id="languageForm">
+            <div class="actions top-actions">
+                <p:commandButton value="#{schoolHealthSurvey.arabic ? msg['schoolHealth.switchEnglish'] : msg['schoolHealth.switchArabic']}"
+                                 action="#{schoolHealthSurvey.toggleLanguage}"
+                                 ajax="false"
+                                 styleClass="ui-button-secondary"/>
+            </div>
+        </h:form>
+        <section class="stage-card">
+            <p class="eyebrow">#{msg['schoolHealth.department']}</p>
+            <h1>#{msg['schoolHealth.title']}</h1>
+            <p class="intro">
+                The Health Promotion Department at the Ministry of Public Health is conducting a mapping exercise
+                to identify school health promotion programs and initiatives implemented in schools across Qatar.
+            </p>
+
+            <div class="summary">
+                <div><span>Format</span><strong>One questionnaire per program</strong></div>
+                <div><span>Sections</span><strong>Seven guided sections</strong></div>
+                <div><span>Estimated time</span><strong>10 - 15 minutes</strong></div>
+            </div>
+
+            <h2>Instructions</h2>
+            <div class="note">
+                If you are implementing more than one school health promoting program or initiative, please complete
+                a separate questionnaire for each program or initiative. Answer all questions in relation to the
+                specific program, initiative, or activity being described. Use the questionnaire navigation buttons
+                to move forward and backward, and submit only once you are comfortable with your responses.
+            </div>
+
+            <div class="note" style="margin-top:1rem;">
+                For inquiries, contact HPS@MOPH.GOV.QA or 44077458. Your participation is highly appreciated.
+            </div>
+
+            <h:form id="schoolHealthStartForm">
+                <div class="actions">
+                    <p:commandButton value="#{msg['schoolHealth.startSurvey']}"
+                                     icon="pi pi-play"
+                                     action="#{schoolHealthSurvey.beginSurvey}"
+                                     ajax="false"
+                                     styleClass="start-button"/>
+                    <p:button value="#{msg['schoolHealth.home']}"
+                              icon="pi pi-home"
+                              outcome="index"
+                              styleClass="ui-button-secondary"/>
+                </div>
+            </h:form>
+        </section>
+    </main>
+</h:body>
+</f:view>
+</html>
+
