@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 public class WellnessSurveyRepository implements Serializable {
 
@@ -24,7 +25,11 @@ public class WellnessSurveyRepository implements Serializable {
             WellnessResponse response = new WellnessResponse();
             response.setCompanyName(value(answers, "companyName"));
             response.setEmail(value(answers, "email"));
-            response.setPhone(value(answers, "phone"));
+            response.setPhone(contactPhone(answers));
+
+            if (hasDuplicateContact(entityManager, response.getEmail(), response.getPhone())) {
+                throw new DuplicateSurveySubmissionException("This email address or mobile phone number has already submitted the workplace wellness survey.");
+            }
 
             for (Map.Entry<String, String> entry : answers.entrySet()) {
                 String answerValue = trim(entry.getValue());
@@ -119,6 +124,40 @@ public class WellnessSurveyRepository implements Serializable {
 
     private static String value(Map<String, String> answers, String key) {
         return answers.containsKey(key) ? trim(answers.get(key)) : null;
+    }
+
+    private boolean hasDuplicateContact(EntityManager entityManager, String email, String phone) {
+        boolean hasEmail = !trim(email).isEmpty();
+        boolean hasPhone = !trim(phone).isEmpty();
+        if (!hasEmail && !hasPhone) {
+            return false;
+        }
+
+        StringBuilder jpql = new StringBuilder("SELECT COUNT(r) FROM WellnessResponse r WHERE ");
+        if (hasEmail) {
+            jpql.append("LOWER(r.email) = LOWER(:email)");
+        }
+        if (hasPhone) {
+            if (hasEmail) {
+                jpql.append(" OR ");
+            }
+            jpql.append("r.phone = :phone OR EXISTS (SELECT a FROM WellnessAnswer a WHERE a.response = r AND a.questionKey = :mobilePhoneKey AND a.answerValue = :phone)");
+        }
+
+        TypedQuery<Long> query = entityManager.createQuery(jpql.toString(), Long.class);
+        if (hasEmail) {
+            query.setParameter("email", email);
+        }
+        if (hasPhone) {
+            query.setParameter("phone", phone);
+            query.setParameter("mobilePhoneKey", "mobilePhone");
+        }
+        return query.getSingleResult() > 0;
+    }
+
+    private static String contactPhone(Map<String, String> answers) {
+        String mobilePhone = value(answers, "mobilePhone");
+        return !trim(mobilePhone).isEmpty() ? mobilePhone : value(answers, "phone");
     }
 
     private static String trim(String value) {

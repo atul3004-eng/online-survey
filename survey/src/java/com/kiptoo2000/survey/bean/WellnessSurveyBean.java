@@ -2,6 +2,7 @@ package com.kiptoo2000.survey.bean;
 
 import com.kiptoo2000.survey.model.WellnessAnswer;
 import com.kiptoo2000.survey.model.WellnessResponse;
+import com.kiptoo2000.survey.repository.DuplicateSurveySubmissionException;
 import com.kiptoo2000.survey.repository.WellnessSurveyRepository;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -152,6 +153,12 @@ public class WellnessSurveyBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Survey saved",
                             "Response #" + savedResponseId + " was saved to the database."));
+        } catch (DuplicateSurveySubmissionException ex) {
+            FacesContext.getCurrentInstance().validationFailed();
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Duplicate submission",
+                            "This email address or mobile phone number has already been used for this survey."));
+            return null;
         } catch (RuntimeException ex) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Save failed",

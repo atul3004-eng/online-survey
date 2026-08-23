@@ -1,5 +1,6 @@
 package com.kiptoo2000.survey.bean;
 
+import com.kiptoo2000.survey.repository.DuplicateSurveySubmissionException;
 import com.kiptoo2000.survey.repository.SchoolHealthSurveyRepository;
 import com.kiptoo2000.survey.repository.SchoolHealthSurveyRepository.OptionRow;
 import java.io.Serializable;
@@ -137,6 +138,12 @@ public class SchoolHealthSurveyBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Survey saved",
                             "Response #" + savedResponseId + " was saved to the database."));
+        } catch (DuplicateSurveySubmissionException ex) {
+            FacesContext.getCurrentInstance().validationFailed();
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Duplicate submission",
+                            "This email address or mobile phone number has already been used for this survey."));
+            return null;
         } catch (RuntimeException ex) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Save failed",

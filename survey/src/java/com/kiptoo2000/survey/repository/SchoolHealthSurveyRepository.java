@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 public class SchoolHealthSurveyRepository implements Serializable {
 
@@ -32,6 +33,10 @@ public class SchoolHealthSurveyRepository implements Serializable {
             response.setInstitutionName(value(answers, "institutionName"));
             response.setContactEmail(value(answers, "contactEmail"));
             response.setContactPhone(value(answers, "contactPhone"));
+
+            if (hasDuplicateContact(entityManager, response.getContactEmail(), response.getContactPhone())) {
+                throw new DuplicateSurveySubmissionException("This email address or mobile phone number has already submitted the school health survey.");
+            }
 
             for (Map.Entry<String, String> entry : answers.entrySet()) {
                 String answerValue = trim(entry.getValue());
@@ -194,6 +199,34 @@ public class SchoolHealthSurveyRepository implements Serializable {
 
     private static String value(Map<String, String> answers, String key) {
         return answers.containsKey(key) ? trim(answers.get(key)) : null;
+    }
+
+    private boolean hasDuplicateContact(EntityManager entityManager, String email, String phone) {
+        boolean hasEmail = !trim(email).isEmpty();
+        boolean hasPhone = !trim(phone).isEmpty();
+        if (!hasEmail && !hasPhone) {
+            return false;
+        }
+
+        StringBuilder jpql = new StringBuilder("SELECT COUNT(r) FROM SchoolHealthResponse r WHERE ");
+        if (hasEmail) {
+            jpql.append("LOWER(r.contactEmail) = LOWER(:email)");
+        }
+        if (hasPhone) {
+            if (hasEmail) {
+                jpql.append(" OR ");
+            }
+            jpql.append("r.contactPhone = :phone");
+        }
+
+        TypedQuery<Long> query = entityManager.createQuery(jpql.toString(), Long.class);
+        if (hasEmail) {
+            query.setParameter("email", email);
+        }
+        if (hasPhone) {
+            query.setParameter("phone", phone);
+        }
+        return query.getSingleResult() > 0;
     }
 
     private static String trim(String value) {
