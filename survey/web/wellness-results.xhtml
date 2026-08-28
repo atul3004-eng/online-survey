@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Workplace Wellness Survey Results</title>
+    <link rel="stylesheet" href="styles.css"/>
+</h:head>
+<h:body styleClass="wellness-page">
+    <div class="wellness-shell">
+        <header class="wellness-header">
+            <div>
+                <p class="eyebrow">Saved responses</p>
+                <h1>Workplace Wellness Survey Results</h1>
+                <p class="intro">Review submitted workplace wellness baseline survey responses from the database.</p>
+            </div>
+            <div class="header-panel">
+                <span>Database View</span>
+                <strong>Master response + answer rows</strong>
+            </div>
+        </header>
+
+        <h:form id="resultsForm">
+            <div class="wellness-wizard">
+                <div class="actions top-actions">
+                    <p:button value="New Survey" icon="pi pi-plus" outcome="wellness"/>
+                    <p:button value="Home" icon="pi pi-home" outcome="index"/>
+                    <p:commandButton value="Download Full Excel"
+                                     icon="pi pi-download"
+                                     ajax="false"
+                                     actionListener="#{wellnessSurvey.downloadFullResultsExcel}"/>
+                </div>
+
+                <p:dataTable id="responsesTable"
+                             value="#{wellnessSurvey.savedResponses}"
+                             var="row"
+                             emptyMessage="No workplace wellness responses have been saved yet."
+                             paginator="true"
+                             rows="10"
+                             reflow="true"
+                             styleClass="results-table">
+                    <p:column headerText="ID" styleClass="id-column">
+                        <h:outputText value="#{row.id}"/>
+                    </p:column>
+                    <p:column headerText="Company">
+                        <h:outputText value="#{row.companyName}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{row.email}"/>
+                    </p:column>
+                    <p:column headerText="Phone">
+                        <h:outputText value="#{row.phone}"/>
+                    </p:column>
+                    <p:column headerText="Submitted On">
+                        <h:outputText value="#{row.submittedOn}">
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Action" styleClass="action-column">
+                        <p:commandButton value="View"
+                                         icon="pi pi-eye"
+                                         action="#{wellnessSurvey.viewSavedResponse(row.id)}"
+                                         update=":resultsForm:selectedResponsePanelWrapper"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+
+            <h:panelGroup id="selectedResponsePanelWrapper" layout="block">
+                <p:outputPanel id="selectedResponsePanel" layout="block" styleClass="result-panel"
+                               rendered="#{not empty wellnessSurvey.selectedResponse}">
+                    <h2>
+                        Response #<h:outputText value="#{wellnessSurvey.selectedResponse.id}"/>
+                        -
+                        <h:outputText value="#{wellnessSurvey.selectedResponse.companyName}"/>
+                    </h2>
+                    <p>
+                        Submitted on
+                        <strong>
+                            <h:outputText value="#{wellnessSurvey.selectedResponse.submittedOn}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm"/>
+                            </h:outputText>
+                        </strong>
+                    </p>
+
+                    <p:dataTable value="#{wellnessSurvey.selectedAnswers}"
+                                 var="answer"
+                                 reflow="true"
+                                 rowGroupMode="subheader"
+                                 groupBy="#{answer.sectionName}"
+                                 sortBy="#{answer.displayOrder}"
+                                 styleClass="answers-table">
+                        <p:headerRow groupBy="#{answer.sectionName}">
+                            <p:column colspan="2">
+                                <h:outputText value="#{answer.sectionName}"/>
+                            </p:column>
+                        </p:headerRow>
+                        <p:column headerText="Question">
+                            <h:outputText value="#{answer.questionLabel}"/>
+                        </p:column>
+                        <p:column headerText="Answer">
+                            <h:outputText value="#{answer.answerValue}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:outputPanel>
+            </h:panelGroup>
+        </h:form>
+    </div>
+</h:body>
+</html>

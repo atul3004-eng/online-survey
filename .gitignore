@@ -1,0 +1,26 @@
+# Maven build output
+target/
+target-*/
+*/target/
+*/target-*/
+
+# NetBeans build output
+build/
+dist/
+*/build/
+*/dist/
+
+# Java compiled files and archives
+*.class
+*.war
+*.ear
+*.jar
+
+# IDE local metadata
+.idea/workspace.xml
+*.iml
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+*.log

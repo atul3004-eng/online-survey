@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Example persistence.xml for production Oracle datasource usage.
+  Replace java:/jdbc/SurveyDS with your WebLogic or GlassFish JNDI name.
+-->
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="surveyPU" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>java:/jdbc/SurveyDS</jta-data-source>
+
+        <class>com.kiptoo2000.survey.model.Topic</class>
+        <class>com.kiptoo2000.survey.model.Question</class>
+        <class>com.kiptoo2000.survey.model.AnswerMaster</class>
+        <class>com.kiptoo2000.survey.model.AnswerDetail</class>
+        <class>com.kiptoo2000.survey.model.AnswerDetailId</class>
+        <class>com.kiptoo2000.survey.model.WellnessResponse</class>
+        <class>com.kiptoo2000.survey.model.WellnessAnswer</class>
+
+        <properties>
+            <property name="eclipselink.target-database" value="Oracle"/>
+            <property name="eclipselink.logging.level" value="INFO"/>
+        </properties>
+    </persistence-unit>
+</persistence>

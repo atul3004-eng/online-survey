@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>School Health Initiatives Survey Complete</title>
+    <style type="text/css">
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f7f8fa; color: #343a40; }
+        .survey-shell { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0; }
+        .stage-card { background: #fff; border: 1px solid #eceef1; border-radius: .5rem; box-shadow: 0 12px 30px rgba(31,45,61,.08); padding: 40px 36px; text-align: center; }
+        .icon { align-items: center; background: #8a1538; border-radius: 50%; color: #fff; display: inline-flex; font-size: 2rem; height: 72px; justify-content: center; margin-bottom: 1.25rem; width: 72px; }
+        h1 { color: #8a1538; font-size: 1.7rem; margin: 0 0 .75rem; }
+        .intro { color: #5f6b7a; line-height: 1.6; margin: 0 0 1.25rem; }
+        .note { background: #f6f7f9; border: 1px solid #eceef1; border-radius: .4rem; display: inline-block; padding: 1rem 1.25rem; }
+        .actions { display: flex; gap: .75rem; justify-content: center; margin-top: 1.75rem; }
+        .primary { background: #8a1538 !important; border-color: #8a1538 !important; color: #fff !important; min-width: 140px; }
+        @media (max-width: 575.98px) { .stage-card { padding: 1.25rem; } .actions { flex-direction: column; } }
+    </style>
+</h:head>
+<h:body>
+    <main class="survey-shell">
+        <section class="stage-card">
+            <h:panelGroup rendered="#{schoolHealthSurvey.submitted}">
+                <div class="icon">✓</div>
+                <h1>Thank you, your survey has been submitted</h1>
+                <p class="intro">Your school health promotion mapping response has been received successfully.</p>
+                <div class="note">
+                    Response <strong>#<h:outputText value="#{schoolHealthSurvey.savedResponseId}"/></strong>
+                    was saved on
+                    <strong><h:outputText value="#{schoolHealthSurvey.submittedOn}"/></strong>.
+                </div>
+                <h:form>
+                    <div class="actions">
+                        <p:commandButton value="Done"
+                                         icon="pi pi-check"
+                                         action="#{schoolHealthSurvey.reset}"
+                                         ajax="false"
+                                         styleClass="primary"/>
+                        <p:button value="Home" icon="pi pi-home" outcome="index" styleClass="ui-button-secondary"/>
+                    </div>
+                </h:form>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{not schoolHealthSurvey.submitted}">
+                <h1>No completed submission found</h1>
+                <p class="intro">This page is shown after a successful school health survey submission.</p>
+                <div class="actions">
+                    <p:button value="Go to Start Page"
+                              icon="pi pi-arrow-right"
+                              outcome="school-health-start"
+                              styleClass="primary"/>
+                </div>
+            </h:panelGroup>
+        </section>
+    </main>
+</h:body>
+</html>

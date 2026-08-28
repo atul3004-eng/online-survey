@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/admin.xhtml">
+    <ui:define name="content">
+        <section class="row g-4 mt-1">
+            <div class="col-12 col-xl-4">
+                <p:outputPanel id="topicEditor">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <div class="mb-4">
+                                <h2 class="h4 mb-2">Topic CRUD</h2>
+                                <p class="text-muted mb-0">Create, update, browse, and delete topics from one screen.</p>
+                            </div>
+                            <h:form id="topicForm">
+                                <div class="mb-3">
+                                    <p:outputLabel for="title" value="Topic Title" styleClass="form-label fw-semibold"/>
+                                    <p:inputText id="title" value="#{topicBean.currentTopic.title}" required="true" requiredMessage="Topic title is required." maxlength="255" styleClass="w-100"/>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <p:commandButton value="#{topicBean.currentTopic.id == null ? 'Create Topic' : 'Update Topic'}"
+                                                     action="#{topicBean.save}"
+                                                     update=":topicEditor :tableForm:topicTable :messages"/>
+                                    <p:commandButton value="Clear" action="#{topicBean.resetForm}" process="@this" resetValues="true" update=":topicEditor" styleClass="p-button-outlined"/>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </p:outputPanel>
+            </div>
+
+            <div class="col-12 col-xl-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="mb-4">
+                            <h2 class="h4 mb-2">Topics</h2>
+                            <p class="text-muted mb-0">Jump into question CRUD or review the result summary for each topic.</p>
+                        </div>
+                        <h:form id="tableForm">
+                            <p:dataTable id="topicTable" value="#{topicBean.topics}" var="topic" paginator="true" rows="8"
+                                         emptyMessage="No topics found yet." rowKey="#{topic.id}">
+                                <p:column headerText="Title" sortBy="#{topic.title}">
+                                    <h:outputText value="#{topic.title}"/>
+                                </p:column>
+                                <p:column headerText="Added On" sortBy="#{topic.addedOn}">
+                                    <h:outputText value="#{topic.addedOn}">
+                                        <f:convertDateTime pattern="yyyy-MM-dd HH:mm"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Added By" sortBy="#{topic.createdBy}">
+                                    <h:outputText value="#{topic.createdBy}"/>
+                                </p:column>
+                                <p:column headerText="Actions" styleClass="action-column">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <h:link outcome="/topics.xhtml" value="Edit" styleClass="btn btn-outline-primary btn-sm">
+                                            <f:param name="editId" value="#{topic.id}"/>
+                                        </h:link>
+                                        <h:link outcome="/questions.xhtml" value="Questions" styleClass="btn btn-outline-secondary btn-sm">
+                                            <f:param name="topicId" value="#{topic.id}"/>
+                                        </h:link>
+                                        <h:link outcome="/results.xhtml" value="Results" styleClass="btn btn-outline-info btn-sm">
+                                            <f:param name="topicId" value="#{topic.id}"/>
+                                        </h:link>
+                                        <p:commandButton value="Delete" action="#{topicBean.delete(topic)}"
+                                                         process="@this"
+                                                         update="topicTable :topicEditor :messages"
+                                                         styleClass="p-button-danger p-button-sm">
+                                            <p:confirm header="Delete topic" message="Delete this topic and all related questions?" icon="pi pi-exclamation-triangle"/>
+                                        </p:commandButton>
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes p-button-danger"/>
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no p-button-outlined"/>
+                            </p:confirmDialog>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>
