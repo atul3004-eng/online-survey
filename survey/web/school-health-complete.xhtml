@@ -30,7 +30,10 @@
                     was saved on
                     <strong><h:outputText value="#{schoolHealthSurvey.submittedOn}"/></strong>.
                 </div>
+                <p>Keep your private return code to reopen this submission: <strong><h:outputText value="#{schoolHealthSurvey.resumeToken}"/></strong></p>
                 <h:form>
+                    <p:messages/>
+                    <p:commandButton value="Print / Download Completed Questionnaire" icon="pi pi-download" action="#{schoolHealthSurvey.downloadCompleted}" ajax="false"/>
                     <div class="actions">
                         <p:commandButton value="Done"
                                          icon="pi pi-check"

@@ -30,56 +30,134 @@
     </style>
 </h:head>
 <h:body>
-    <main class="survey-shell">
-        <h:form id="languageForm">
-            <div class="actions top-actions">
-                <p:commandButton value="#{schoolHealthSurvey.arabic ? msg['schoolHealth.switchEnglish'] : msg['schoolHealth.switchArabic']}"
-                                 action="#{schoolHealthSurvey.toggleLanguage}"
-                                 ajax="false"
-                                 styleClass="ui-button-secondary"/>
-            </div>
-        </h:form>
-        <section class="stage-card">
-            <p class="eyebrow">#{msg['schoolHealth.department']}</p>
-            <h1>#{msg['schoolHealth.title']}</h1>
-            <p class="intro">
-                The Health Promotion Department at the Ministry of Public Health is conducting a mapping exercise
-                to identify school health promotion programs and initiatives implemented in schools across Qatar.
-            </p>
+    <div class="survey">
+        <div class="survey__card">
 
-            <div class="summary">
-                <div><span>Format</span><strong>One questionnaire per program</strong></div>
-                <div><span>Sections</span><strong>Seven guided sections</strong></div>
-                <div><span>Estimated time</span><strong>10 - 15 minutes</strong></div>
-            </div>
+            <div class="survey__head">
+                <div>
+                    <p class="survey__eyebrow">
+                        #{msg['schoolHealth.department']}
+                    </p>
 
-            <h2>Instructions</h2>
-            <div class="note">
-                If you are implementing more than one school health promoting program or initiative, please complete
-                a separate questionnaire for each program or initiative. Answer all questions in relation to the
-                specific program, initiative, or activity being described. Use the questionnaire navigation buttons
-                to move forward and backward, and submit only once you are comfortable with your responses.
+                    <h2 class="survey__title">
+                        #{msg['schoolHealth.title']}
+                    </h2>
+
+                    <p class="survey__subtitle">
+                        A mapping exercise to identify school health promotion programs
+                        and initiatives across the State of Qatar.
+                    </p>
+                </div>
+
+                <button type="button"
+                        class="btn btn-outline-secondary btn-sm text-nowrap js-fullscreen"
+                        onclick="toggleFullscreen()">
+                    <i class="align-middle me-1" data-feather="maximize"></i>
+                    <span class="js-fullscreen-label">Fullscreen</span>
+                </button>
             </div>
 
-            <div class="note" style="margin-top:1rem;">
-                For inquiries, contact HPS@MOPH.GOV.QA or 44077458. Your participation is highly appreciated.
+            <hr class="survey__rule"/>
+
+            <section class="mb-4">
+                <h5 class="survey__section-title">Background</h5>
+
+                <p class="mb-0">
+                    This questionnaire is shared with relevant ministries, institutions,
+                    and MoPH departments to support coordination, alignment, and future
+                    planning. It collects information on existing or planned school health
+                    promotion programs, initiatives, or activities — and any related
+                    policies, guidelines, or documents.
+                </p>
+            </section>
+
+            <section class="mb-4">
+                <h5 class="survey__section-title">Instructions</h5>
+
+                <ul class="survey__steps">
+                    <li class="survey__step-item">
+                        <span class="survey__step-num">1</span>
+                        <span>
+                        If you are implementing more than one program or initiative,
+                        complete a separate questionnaire for each. Answer all questions
+                        only in relation to the specific program being described.
+                    </span>
+                    </li>
+
+                    <li class="survey__step-item">
+                        <span class="survey__step-num">2</span>
+                        <span>
+                        Move forward and backward using the navigation buttons in the
+                        questionnaire — do not use your browser’s back and forward arrows.
+                    </span>
+                    </li>
+
+                    <li class="survey__step-item">
+                        <span class="survey__step-num">3</span>
+                        <span>
+                        Once you are comfortable with all your responses, click Submit
+                        at the end of the questionnaire.
+                    </span>
+                    </li>
+
+                    <li class="survey__step-item">
+                        <span class="survey__step-num">4</span>
+                        <span>
+                        This questionnaire contains seven sections, and every question
+                        should be answered.
+                    </span>
+                    </li>
+
+                    <li class="survey__step-item">
+                        <span class="survey__step-num">5</span>
+                        <span>
+                        It takes about 10–15 minutes to complete.
+                    </span>
+                    </li>
+                </ul>
+            </section>
+
+            <div class="survey__callout mb-4">
+                <p class="survey__callout-label">
+                    Questions about this questionnaire?
+                </p>
+
+                <p class="survey__callout-value">
+                    HPS@MOPH.GOV.QA
+                    &#160;·&#160;
+                    4407 7458
+                </p>
             </div>
 
             <h:form id="schoolHealthStartForm">
-                <div class="actions">
-                    <p:commandButton value="#{msg['schoolHealth.startSurvey']}"
-                                     icon="pi pi-play"
-                                     action="#{schoolHealthSurvey.beginSurvey}"
-                                     ajax="false"
-                                     styleClass="start-button"/>
-                    <p:button value="#{msg['schoolHealth.home']}"
-                              icon="pi pi-home"
-                              outcome="index"
-                              styleClass="ui-button-secondary"/>
-                </div>
+                <p:messages/>
+                <p>Resume a draft or reopen a submitted survey using your private return code.</p>
+                <p:inputText value="#{schoolHealthSurvey.returnCode}" placeholder="Private return code" styleClass="form-control mb-2"/>
+                <p:commandButton value="Reopen Survey" action="#{schoolHealthSurvey.reopen}" ajax="false" styleClass="btn btn-outline-secondary w-100 mb-3"/>
+
+
+                <p:commandButton
+                        value="#{msg['schoolHealth.startSurvey']}"
+                        icon="pi pi-play"
+                        action="#{schoolHealthSurvey.beginSurvey}"
+                        ajax="false"
+                        styleClass="btn btn-primary btn-lg w-100 mb-2"/>
+
+                <p:commandButton
+                        value="Print a blank copy (PDF)"
+                        icon="pi pi-print"
+                        action="#{schoolHealthSurvey.downloadBlank}"
+                        ajax="false"
+                        styleClass="btn btn-outline-secondary w-100 mb-3"/>
+
             </h:form>
-        </section>
-    </main>
+
+            <p class="survey__intro-note">
+                Your participation is highly appreciated.
+            </p>
+
+        </div>
+    </div>
 </h:body>
 </f:view>
 </html>

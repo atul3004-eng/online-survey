@@ -26,6 +26,23 @@ public class SchoolHealthResponse implements Serializable {
     @Column(name = "response_id")
     private Long id;
 
+    @Column(name = "status", nullable = false, length = 20)
+    private String status = "SUBMITTED";
+    @Column(name = "resume_token", unique = true, length = 64)
+    private String resumeToken;
+    @Column(name = "response_locale", nullable = false, length = 2)
+    private String responseLocale = "en";
+    @javax.persistence.Version
+    @Column(name = "version", nullable = false)
+    private long version;
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+    public String getResumeToken() { return resumeToken; }
+    public void setResumeToken(String token) { this.resumeToken = token; }
+    public String getResponseLocale() { return responseLocale; }
+    public void setResponseLocale(String locale) { this.responseLocale = locale; }
+
     @Column(name = "institution_name")
     private String institutionName;
 
@@ -36,7 +53,7 @@ public class SchoolHealthResponse implements Serializable {
     private String contactPhone;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "submitted_on", nullable = false)
+    @Column(name = "submitted_on")
     private Date submittedOn;
 
     @OneToMany(mappedBy = "response", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -44,7 +61,7 @@ public class SchoolHealthResponse implements Serializable {
 
     @PrePersist
     public void onCreate() {
-        if (submittedOn == null) {
+        if (submittedOn == null && "SUBMITTED".equals(status)) {
             submittedOn = new Date();
         }
     }

@@ -4,6 +4,8 @@ import com.kiptoo2000.survey.repository.DuplicateSurveySubmissionException;
 import com.kiptoo2000.survey.repository.SchoolHealthSurveyRepository;
 import com.kiptoo2000.survey.repository.SchoolHealthSurveyRepository.OptionRow;
 import java.io.Serializable;
+import com.kiptoo2000.survey.model.SchoolHealthResponse;
+import com.kiptoo2000.survey.model.SchoolHealthAnswer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +26,89 @@ public class SchoolHealthSurveyBean implements Serializable {
     private final SchoolHealthSurveyRepository schoolHealthSurveyRepository = new SchoolHealthSurveyRepository();
     private final Map<String, String> answers = new LinkedHashMap<String, String>();
     private final Map<String, String[]> multiAnswers = new LinkedHashMap<String, String[]>();
+    private String resumeToken = java.util.UUID.randomUUID().toString();
+    private static final List<String> MULTI_KEYS = Arrays.asList("humanResources","infrastructureSupport","preparatoryGrades","primaryGrades","secondaryGrades","targetPopulation","targetedTopics");
+    private String returnCode;
+    public String getReturnCode() { return returnCode; }
+    public void setReturnCode(String code) { returnCode = code == null ? null : code.trim(); }
+    public String getResumeToken() { return resumeToken; }
+    public boolean isSavingDraft() {
+        return "true".equals(FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestParameterMap().get("saveDraft"));
+    }
+    public String saveDraft() {
+        try {
+            savedResponseId = schoolHealthSurveyRepository.save(savedResponseId, resumeToken, answers, multiAnswers, locale, true);
+            returnCode = resumeToken;
+            message(FacesMessage.SEVERITY_INFO, "Draft saved. Keep your private return code to continue later.");
+        } catch (RuntimeException ex) {
+            message(FacesMessage.SEVERITY_ERROR, "Draft could not be saved. Please try again.");
+        }
+        return null;
+    }
+    public String reopen() {
+        try {
+            SchoolHealthResponse response = schoolHealthSurveyRepository.findByToken(returnCode);
+            if (response == null) {
+                message(FacesMessage.SEVERITY_ERROR, "No survey found for this return code.");
+                return null;
+            }
+            answers.clear(); multiAnswers.clear();
+            Map<String, List<String>> selections = new LinkedHashMap<String, List<String>>();
+            for (SchoolHealthAnswer answer : response.getAnswers()) {
+                String key = answer.getQuestionKey();
+                if (MULTI_KEYS.contains(key)) {
+                    if (!selections.containsKey(key)) { selections.put(key, new ArrayList<String>()); }
+                    selections.get(key).add(answer.getAnswerValue());
+                } else { answers.put(key, answer.getAnswerValue()); }
+            }
+            for (Map.Entry<String, List<String>> entry : selections.entrySet()) {
+                multiAnswers.put(entry.getKey(), entry.getValue().toArray(new String[0]));
+            }
+            savedResponseId = response.getId(); resumeToken = response.getResumeToken();
+            locale = response.getResponseLocale();
+            submitted = "SUBMITTED".equals(response.getStatus());
+            submittedOn = response.getSubmittedOn() == null ? null
+                    : new SimpleDateFormat("yyyy-MM-dd HH:mm").format(response.getSubmittedOn());
+            return (submitted ? "school-health-complete" : "school-health") + "?faces-redirect=true";
+        } catch (RuntimeException ex) {
+            message(FacesMessage.SEVERITY_ERROR, "Survey could not be loaded. Please try again.");
+            return null;
+        }
+    }
+    private void message(FacesMessage.Severity severity, String text) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, text, ""));
+    }
+    public void downloadBlank() {
+        try (java.io.InputStream in = getClass().getResourceAsStream("/docs/school-health-questionnaire.pdf")) {
+            if (in == null) { throw new java.io.IOException("Missing blank questionnaire"); }
+            java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+            byte[] buffer = new byte[8192]; int count;
+            while ((count = in.read(buffer)) != -1) { out.write(buffer, 0, count); }
+            sendPdf(out.toByteArray(), "school-health-questionnaire.pdf");
+        } catch (Exception ex) { message(FacesMessage.SEVERITY_ERROR, "Questionnaire download failed. Please try again."); }
+    }
+    public void downloadCompleted() {
+        try {
+            SchoolHealthResponse response = schoolHealthSurveyRepository.findByToken(resumeToken);
+            if (response == null || !"SUBMITTED".equals(response.getStatus())) {
+                message(FacesMessage.SEVERITY_ERROR, "Submit the survey before downloading the completed questionnaire.");
+                return;
+            }
+            byte[] pdf = new com.kiptoo2000.survey.pdf.SchoolHealthPdf().generate(response,
+                    schoolHealthSurveyRepository.questionnaire(response.getResponseLocale()), this);
+            sendPdf(pdf, "school-health-completed-" + response.getId() + ".pdf");
+        } catch (Exception ex) { message(FacesMessage.SEVERITY_ERROR, "Completed questionnaire download failed. Please try again."); }
+    }
+    private void sendPdf(byte[] bytes, String filename) throws java.io.IOException {
+        FacesContext faces = FacesContext.getCurrentInstance();
+        javax.faces.context.ExternalContext context = faces.getExternalContext();
+        context.responseReset(); context.setResponseContentType("application/pdf");
+        context.setResponseHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+        context.setResponseHeader("Cache-Control", "no-store");
+        context.setResponseContentLength(bytes.length);
+        context.getResponseOutputStream().write(bytes); faces.responseComplete();
+    }
     private Long savedResponseId;
     private boolean submitted;
     private String submittedOn;
@@ -122,6 +207,8 @@ public class SchoolHealthSurveyBean implements Serializable {
     }
 
     public String beginSurvey() {
+        resumeToken = java.util.UUID.randomUUID().toString();
+        returnCode = null;
         answers.clear();
         multiAnswers.clear();
         submitted = false;
@@ -132,7 +219,7 @@ public class SchoolHealthSurveyBean implements Serializable {
 
     public String submit() {
         try {
-            savedResponseId = schoolHealthSurveyRepository.save(answers, multiAnswers, locale);
+            savedResponseId = schoolHealthSurveyRepository.save(savedResponseId, resumeToken, answers, multiAnswers, locale, false);
             submitted = true;
             submittedOn = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
             FacesContext.getCurrentInstance().addMessage(null,
@@ -154,6 +241,8 @@ public class SchoolHealthSurveyBean implements Serializable {
     }
 
     public String reset() {
+        resumeToken = java.util.UUID.randomUUID().toString();
+        returnCode = null;
         answers.clear();
         multiAnswers.clear();
         submitted = false;

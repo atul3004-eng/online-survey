@@ -16,6 +16,13 @@ import javax.persistence.TypedQuery;
 
 public class SchoolHealthSurveyRepository implements Serializable {
 
+    private transient javax.persistence.EntityManagerFactory factory;
+    public SchoolHealthSurveyRepository() { }
+    public SchoolHealthSurveyRepository(javax.persistence.EntityManagerFactory factory) { this.factory = factory; }
+    private EntityManager createEntityManager() {
+        return factory == null ? JpaUtility.createEntityManager() : factory.createEntityManager();
+    }
+
     private static final Map<String, FieldMeta> FIELD_META = createFieldMeta();
     private static final Map<String, String> AR_FIELD_LABELS = createArabicFieldLabels();
 
@@ -24,17 +31,32 @@ public class SchoolHealthSurveyRepository implements Serializable {
     }
 
     public Long save(Map<String, String> answers, Map<String, String[]> multiAnswers, String locale) {
-        EntityManager entityManager = JpaUtility.createEntityManager();
+        return save(null, java.util.UUID.randomUUID().toString(), answers, multiAnswers, locale, false);
+    }
+
+    public Long save(Long id, String token, Map<String, String> answers,
+            Map<String, String[]> multiAnswers, String locale, boolean draft) {
+        EntityManager entityManager = createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
 
-            SchoolHealthResponse response = new SchoolHealthResponse();
+            SchoolHealthResponse response = id == null ? new SchoolHealthResponse()
+                    : entityManager.find(SchoolHealthResponse.class, id, javax.persistence.LockModeType.PESSIMISTIC_WRITE);
+            if (response == null || (id != null && (!token.equals(response.getResumeToken())
+                    || !"DRAFT".equals(response.getStatus())))) {
+                throw new IllegalStateException("Response is unavailable or already submitted.");
+            }
+            response.setResumeToken(token);
+            response.setStatus(draft ? "DRAFT" : "SUBMITTED");
+            response.setResponseLocale(normalizeLocale(locale));
+            response.setSubmittedOn(draft ? null : new java.util.Date());
+            response.getAnswers().clear();
             response.setInstitutionName(value(answers, "institutionName"));
             response.setContactEmail(value(answers, "contactEmail"));
             response.setContactPhone(value(answers, "contactPhone"));
 
-            if (hasDuplicateContact(entityManager, response.getContactEmail(), response.getContactPhone())) {
+            if (!draft && hasDuplicateContact(entityManager, response.getContactEmail(), response.getContactPhone(), id)) {
                 throw new DuplicateSurveySubmissionException("This email address or mobile phone number has already submitted the school health survey.");
             }
 
@@ -70,8 +92,28 @@ public class SchoolHealthSurveyRepository implements Serializable {
         }
     }
 
+    public SchoolHealthResponse findByToken(String token) {
+        if (token == null || !token.matches("[a-f0-9-]{36}")) { return null; }
+        EntityManager em = createEntityManager();
+        try {
+            List<SchoolHealthResponse> rows = em.createQuery(
+                    "SELECT r FROM SchoolHealthResponse r WHERE r.resumeToken = :token", SchoolHealthResponse.class)
+                    .setParameter("token", token).getResultList();
+            if (rows.isEmpty()) { return null; }
+            SchoolHealthResponse response = rows.get(0);
+            response.getAnswers().size();
+            return response;
+        } finally { em.close(); }
+    }
+
+    public List<SchoolHealthAnswer> questionnaire(String locale) {
+        List<SchoolHealthAnswer> rows = new ArrayList<SchoolHealthAnswer>();
+        for (String key : FIELD_META.keySet()) { rows.add(answer(key, "", locale)); }
+        return rows;
+    }
+
     public String findQuestionText(String questionKey, String locale) {
-        EntityManager entityManager = JpaUtility.createEntityManager();
+        EntityManager entityManager = createEntityManager();
         try {
             String text = findQuestionText(entityManager, questionKey, normalizeLocale(locale));
             if (text == null && !"en".equals(normalizeLocale(locale))) {
@@ -86,7 +128,7 @@ public class SchoolHealthSurveyRepository implements Serializable {
     }
 
     public List<OptionRow> findOptions(String optionGroup, String locale) {
-        EntityManager entityManager = JpaUtility.createEntityManager();
+        EntityManager entityManager = createEntityManager();
         try {
             List<OptionRow> rows = findOptions(entityManager, optionGroup, normalizeLocale(locale));
             if (rows.isEmpty() && !"en".equals(normalizeLocale(locale))) {
@@ -151,7 +193,7 @@ public class SchoolHealthSurveyRepository implements Serializable {
     }
 
     private String sectionName(String key, String locale, FieldMeta meta) {
-        EntityManager entityManager = JpaUtility.createEntityManager();
+        EntityManager entityManager = createEntityManager();
         try {
             String section = findSectionName(entityManager, key, normalizeLocale(locale));
             if (section == null && !"en".equals(normalizeLocale(locale))) {
@@ -201,14 +243,14 @@ public class SchoolHealthSurveyRepository implements Serializable {
         return answers.containsKey(key) ? trim(answers.get(key)) : null;
     }
 
-    private boolean hasDuplicateContact(EntityManager entityManager, String email, String phone) {
+    private boolean hasDuplicateContact(EntityManager entityManager, String email, String phone, Long id) {
         boolean hasEmail = !trim(email).isEmpty();
         boolean hasPhone = !trim(phone).isEmpty();
         if (!hasEmail && !hasPhone) {
             return false;
         }
 
-        StringBuilder jpql = new StringBuilder("SELECT COUNT(r) FROM SchoolHealthResponse r WHERE ");
+        StringBuilder jpql = new StringBuilder("SELECT COUNT(r) FROM SchoolHealthResponse r WHERE r.status = 'SUBMITTED' AND (:id IS NULL OR r.id <> :id) AND (");
         if (hasEmail) {
             jpql.append("LOWER(r.contactEmail) = LOWER(:email)");
         }
@@ -219,7 +261,9 @@ public class SchoolHealthSurveyRepository implements Serializable {
             jpql.append("r.contactPhone = :phone");
         }
 
+        jpql.append(")");
         TypedQuery<Long> query = entityManager.createQuery(jpql.toString(), Long.class);
+        query.setParameter("id", id);
         if (hasEmail) {
             query.setParameter("email", email);
         }
