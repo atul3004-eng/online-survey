@@ -182,6 +182,17 @@ public class SchoolHealthSurveyBean implements Serializable {
     }
 
     public List<SelectItem> options(String group) {
+        // Keep the updated bilingual infrastructure choices available with older database seeds.
+        if ("infrastructureSupports".equals(group)) {
+            java.util.ResourceBundle labels = java.util.ResourceBundle.getBundle(
+                    "com.kiptoo2000.survey.i18n.messages", new java.util.Locale(locale));
+            List<SelectItem> items = new ArrayList<SelectItem>();
+            for (String label : getInfrastructureSupports()) {
+                String code = optionCode(label);
+                items.add(new SelectItem(code, labels.getString("schoolHealth.infrastructure." + code)));
+            }
+            return items;
+        }
         List<OptionRow> rows = schoolHealthSurveyRepository.findOptions(group, locale);
         if (rows.isEmpty()) {
             rows = fallbackOptions(group);
@@ -308,7 +319,7 @@ public class SchoolHealthSurveyBean implements Serializable {
     }
 
     public List<String> getInfrastructureSupports() {
-        return Arrays.asList("School Clinics", "Mobile Units", "Digital Platforms", "Training Centers", "Other");
+        return Arrays.asList("Educational materials", "School Clinics", "Mobile Units", "Digital Platforms", "Training Centers", "Other");
     }
 
     private String normalizeLocale(String locale) {

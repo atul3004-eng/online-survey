@@ -11,6 +11,21 @@ import com.kiptoo2000.survey.pdf.*;
 import com.lowagie.text.pdf.PdfReader;
 
 public class SchoolHealthSurveyTest {
+    @Test public void infrastructureChoicesAndOtherSelectionInBothLanguages() {
+        SchoolHealthSurveyBean bean = new SchoolHealthSurveyBean();
+        for (String locale : Arrays.asList("en", "ar")) {
+            bean.setLocale(locale);
+            java.util.List<javax.faces.model.SelectItem> options = bean.options("infrastructureSupports");
+            assertEquals(6, options.size());
+            assertEquals("educational_materials", options.get(0).getValue());
+            assertEquals("other", options.get(5).getValue());
+            bean.getMultiAnswers().put("infrastructureSupport", new String[]{"school_clinics", "other"});
+            assertTrue(bean.isOtherSelected("infrastructureSupport"));
+            bean.getMultiAnswers().put("infrastructureSupport", new String[]{"school_clinics"});
+            assertFalse(bean.isOtherSelected("infrastructureSupport"));
+        }
+    }
+
     @Test public void draftLifecycleAndCompletedPdf() throws Exception {
         SchoolHealthSurveyRepository repository = new SchoolHealthSurveyRepository(javax.persistence.Persistence.createEntityManagerFactory("schoolHealthTestPU"));
         String token = UUID.randomUUID().toString();
