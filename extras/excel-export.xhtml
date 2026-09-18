@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <!-- Include outside an existing h:form. If already inside one, remove this form wrapper. -->
+    <h:form id="excelExportForm">
+        <h:panelGroup id="exportState" layout="block">
+            <p:commandButton value="Generate Excel"
+                             action="#{excelController.startEventExcelThread}"
+                             process="@this" update="exportState"
+                             disabled="#{excelController.exportInProgress}"
+                             oncomplete="PF('applicantExportPoll').start()"/>
+            <h:panelGroup layout="block">
+                <h:outputText value="#{excelController.status}"/>
+                <h:outputText value=" Elapsed: #{excelController.formattedTime}"
+                              rendered="#{excelController.generationRequested}"/>
+            </h:panelGroup>
+            <p:progressBar value="#{excelController.progress}" labelTemplate="{value}%"
+                           rendered="#{excelController.exportInProgress or excelController.exportReady}"/>
+            <p:commandButton value="Download Excel" ajax="false"
+                             action="#{excelController.download}"
+                             rendered="#{excelController.exportReady}"/>
+            <!-- Read the state after each update, including completion and failure. -->
+            <h:inputHidden id="running" value="#{excelController.exportInProgress}"/>
+        </h:panelGroup>
+        <p:poll widgetVar="applicantExportPoll" interval="2" autoStart="false"
+                process="@this" update="exportState" global="false"
+                listener="#{excelController.checkExportReady}"
+                oncomplete="if (document.querySelector('[id$=&quot;:excelExportForm:running&quot;], [id=&quot;excelExportForm:running&quot;]').value !== 'true') PF('applicantExportPoll').stop()"/>
+    </h:form>
+</ui:composition>
