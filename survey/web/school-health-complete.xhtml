@@ -25,6 +25,10 @@
                 <div class="icon">✓</div>
                 <h1>Thank you, your survey has been submitted</h1>
                 <p class="intro">Your school health promotion mapping response has been received successfully.</p>
+                <h:panelGroup layout="block" rendered="#{not empty schoolHealthSurvey.confirmationEmailMessage}"
+                              dir="#{schoolHealthSurvey.dir}">
+                    <p><h:outputText value="#{schoolHealthSurvey.confirmationEmailMessage}"/></p>
+                </h:panelGroup>
                 <div class="note">
                     Response <strong>#<h:outputText value="#{schoolHealthSurvey.savedResponseId}"/></strong>
                     was saved on

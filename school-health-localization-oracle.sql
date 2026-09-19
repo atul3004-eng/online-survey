@@ -68,7 +68,7 @@ INSERT ALL
   INTO OPTIONS (DESCRIPTION, DESCRIPTION_AR, OPTION_TYPE) VALUES ('Government','حكومية','institutionTypes')
   INTO OPTIONS (DESCRIPTION, DESCRIPTION_AR, OPTION_TYPE) VALUES ('Semi-Governmental','شبه حكومية','institutionTypes')
   INTO OPTIONS (DESCRIPTION, DESCRIPTION_AR, OPTION_TYPE) VALUES ('Private','خاصة','institutionTypes')
-  INTO OPTIONS (DESCRIPTION, DESCRIPTION_AR, OPTION_TYPE) VALUES ('NGO','منظمة غير حكومية','institutionTypes')
+  INTO OPTIONS (DESCRIPTION, DESCRIPTION_AR, OPTION_TYPE) VALUES ('Non-Governmental Organization (NGO)','منظمة غير حكومية','institutionTypes')
   INTO OPTIONS (DESCRIPTION, DESCRIPTION_AR, OPTION_TYPE) VALUES ('Other','خيارات إضافية','institutionTypes')
   INTO OPTIONS (DESCRIPTION, DESCRIPTION_AR, OPTION_TYPE) VALUES ('Ongoing','جارٍ التنفيذ','statusOptions')
   INTO OPTIONS (DESCRIPTION, DESCRIPTION_AR, OPTION_TYPE) VALUES ('Planned','مخطط له','statusOptions')

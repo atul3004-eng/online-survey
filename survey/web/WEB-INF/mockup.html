@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="abc Survey Template — Section 2">
+    <title>Survey Template · Section 2 | abc</title>
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link href="css/light.css" rel="stylesheet">
+</head>
+
+<body class="survey-page">
+<nav class="navbar navbar-expand navbar-light navbar-bg">
+    <a class="sidebar-brand sidebar-brand__single-page" href="index.html">
+        <img class="mw-100" src="img/Logo_abc_bilingual.svg" alt="abc">
+        <span class="sidebar-brand__single-page-divider"></span>
+        <span class="align-middle d-block sidebar-brand__single-page-title">Application Title</span>
+    </a>
+    <div class="navbar-collapse collapse">
+        <ul class="navbar-nav navbar-align">
+            <a class="nav-flag link-primary" href="#">
+                <span class="text-lg">عربي</span>
+            </a>
+        </ul>
+    </div>
+</nav>
+
+<div class="survey">
+    <div class="survey__card">
+        <div class="survey__head">
+            <div>
+                <h2 class="survey__title">Survey Template</h2>
+                <p class="survey__subtitle">Single-screen layout · reusable question components</p>
+            </div>
+            <button type="button" class="btn btn-outline-secondary btn-sm text-nowrap js-fullscreen" onclick="toggleFullscreen()">
+                <i class="align-middle me-1" data-feather="maximize"></i> <span class="js-fullscreen-label">Fullscreen</span>
+            </button>
+        </div>
+
+        <hr class="survey__rule">
+
+        <div class="survey__banner">
+            <h5 class="survey__banner-title">Section 2 · Choice inputs</h5>
+            <p class="survey__banner-meta">Radio groups, checkbox grid &amp; rating scale</p>
+        </div>
+
+        <form onsubmit="event.preventDefault(); window.location='survey-section-3.html';">
+
+            <div class="survey__question">
+                <p class="survey__q-title"><span class="survey__q-num">8.</span> Radio group — single choice <span class="survey__required">*Required</span></p>
+                <div class="mt-2">
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="q8" id="q8a" checked><label class="form-check-label" for="q8a">Option 1</label></div>
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="q8" id="q8b"><label class="form-check-label" for="q8b">Option 2</label></div>
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="q8" id="q8c"><label class="form-check-label" for="q8c">Option 3</label></div>
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="q8" id="q8d"><label class="form-check-label" for="q8d">Option 4</label></div>
+                </div>
+            </div>
+
+            <div class="survey__question">
+                <div class="d-flex justify-content-between align-items-start">
+                    <p class="survey__q-title mb-0"><span class="survey__q-num">9.</span> Checkbox grid — check all that apply <span class="survey__required">*Required</span></p>
+                    <span class="survey__check-all">check all that apply</span>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6 col-md-4 col-xl-3"><div class="form-check"><input class="form-check-input" type="checkbox" id="q9a" checked><label class="form-check-label" for="q9a">Item A</label></div></div>
+                    <div class="col-6 col-md-4 col-xl-3"><div class="form-check"><input class="form-check-input" type="checkbox" id="q9b" checked><label class="form-check-label" for="q9b">Item B</label></div></div>
+                    <div class="col-6 col-md-4 col-xl-3"><div class="form-check"><input class="form-check-input" type="checkbox" id="q9c"><label class="form-check-label" for="q9c">Item C</label></div></div>
+                    <div class="col-6 col-md-4 col-xl-3"><div class="form-check"><input class="form-check-input" type="checkbox" id="q9d"><label class="form-check-label" for="q9d">Item D</label></div></div>
+                    <div class="col-6 col-md-4 col-xl-3"><div class="form-check"><input class="form-check-input" type="checkbox" id="q9e"><label class="form-check-label" for="q9e">Item E</label></div></div>
+                    <div class="col-6 col-md-4 col-xl-3"><div class="form-check"><input class="form-check-input" type="checkbox" id="q9f" checked><label class="form-check-label" for="q9f">Item F</label></div></div>
+                    <div class="col-6 col-md-4 col-xl-3"><div class="form-check"><input class="form-check-input" type="checkbox" id="q9g" checked><label class="form-check-label" for="q9g">Item G</label></div></div>
+                    <div class="col-6 col-md-4 col-xl-3"><div class="form-check"><input class="form-check-input" type="checkbox" id="q9h"><label class="form-check-label" for="q9h">Item H</label></div></div>
+                </div>
+                <label class="form-label text-muted mt-2">Other · specify</label>
+                <input type="text" class="form-control" placeholder="example">
+            </div>
+
+            <div class="survey__question">
+                <p class="survey__q-title"><span class="survey__q-num">10.</span> Yes / No question <span class="survey__required">*Required</span></p>
+                <div class="mt-2">
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="q10" id="q10y" checked><label class="form-check-label" for="q10y">Yes</label></div>
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="q10" id="q10n"><label class="form-check-label" for="q10n">No</label></div>
+                </div>
+            </div>
+
+            <div class="survey__question">
+                <p class="survey__q-title"><span class="survey__q-num">11.</span> Radio — three options <span class="survey__required">*Required</span></p>
+                <div class="mt-2">
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="q11" id="q11a"><label class="form-check-label" for="q11a">Choice one</label></div>
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="q11" id="q11b" checked><label class="form-check-label" for="q11b">Choice two</label></div>
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="q11" id="q11c"><label class="form-check-label" for="q11c">Choice three</label></div>
+                </div>
+            </div>
+
+            <div class="survey__question">
+                <p class="survey__q-title"><span class="survey__q-num">12.</span> Rating scale (vertical radio) <span class="survey__required">*Required</span></p>
+                <div class="mt-2">
+                    <div class="form-check"><input class="form-check-input" type="radio" name="q12" id="q12a"><label class="form-check-label" for="q12a">Never</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="q12" id="q12b" checked><label class="form-check-label" for="q12b">Rarely</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="q12" id="q12c"><label class="form-check-label" for="q12c">Sometimes</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="q12" id="q12d"><label class="form-check-label" for="q12d">Often</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="q12" id="q12e"><label class="form-check-label" for="q12e">Always</label></div>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="survey__footer" data-section="2" data-total="3">
+            <div class="survey__footer-main">
+                <span class="survey__step"></span>
+                <div class="progress survey__progress-bar">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width:0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span class="survey__progress-pct"></span>
+            </div>
+            <div class="survey__actions">
+                <a href="survey-section-1.html" class="btn btn-dark">Back</a>
+                <a href="survey-section-3.html" class="btn btn-primary">Next</a>
+            </div>
+            <p class="survey__save-note">Your answers are saved as you go.</p>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row text-muted">
+            <div class="col-6 text-start">
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a class="text-muted" href="#">Support</a></li>
+                    <li class="list-inline-item"><a class="text-muted" href="#">Help Center</a></li>
+                    <li class="list-inline-item"><a class="text-muted" href="#">Privacy</a></li>
+                    <li class="list-inline-item"><a class="text-muted" href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="col-6 text-end"><p class="mb-0">&copy; 2026 Copyright - tettst</p></div>
+        </div>
+    </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+    if (window.feather) feather.replace();
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); }
+        else if (document.exitFullscreen) { document.exitFullscreen(); }
+    }
+    function syncFullscreenUI() {
+        var fs = !!document.fullscreenElement;
+        document.querySelectorAll('.js-fullscreen').forEach(function (btn) {
+            var label = btn.querySelector('.js-fullscreen-label');
+            if (label) label.textContent = fs ? 'Exit full screen' : 'Fullscreen';
+            var icon = btn.querySelector('svg, [data-feather]');
+            if (icon) {
+                var i = document.createElement('i');
+                i.className = 'align-middle me-1';
+                i.setAttribute('data-feather', fs ? 'minimize' : 'maximize');
+                icon.replaceWith(i);
+            }
+        });
+        if (window.feather) feather.replace();
+    }
+    document.addEventListener('fullscreenchange', syncFullscreenUI);
+    document.querySelectorAll('.survey__footer[data-section]').forEach(function (f) {
+        var section = parseInt(f.dataset.section, 10) || 0;
+        var total = parseInt(f.dataset.total, 10) || 1;
+        var pct = Math.round((section / total) * 100);
+        var bar = f.querySelector('.survey__progress-bar .progress-bar');
+        if (bar) { bar.style.width = pct + '%'; bar.setAttribute('aria-valuenow', pct); }
+        var step = f.querySelector('.survey__step');
+        if (step) step.textContent = 'Section ' + section + ' of ' + total;
+        var label = f.querySelector('.survey__progress-pct');
+        if (label) label.textContent = pct + '%';
+    });
+</script>
+
+</body>
+
+</html>

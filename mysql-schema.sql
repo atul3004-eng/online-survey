@@ -100,3 +100,92 @@ SELECT @remote_survey_id, questionid,
   END
 FROM questions
 WHERE topicid = @remote_topic_id;
+
+CREATE TABLE IF NOT EXISTS workplace_wellness_response (
+  response_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  company_name VARCHAR(255),
+  email VARCHAR(255),
+  phone VARCHAR(100),
+  submitted_on DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS workplace_wellness_answer (
+  answer_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  response_id BIGINT NOT NULL,
+  section_name VARCHAR(150) NOT NULL,
+  question_key VARCHAR(100) NOT NULL,
+  question_label VARCHAR(500) NOT NULL,
+  answer_value VARCHAR(2000) NOT NULL,
+  display_order INT NOT NULL,
+  CONSTRAINT fk_workplace_wellness_answer_response
+    FOREIGN KEY (response_id) REFERENCES workplace_wellness_response(response_id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS school_health_response (
+  response_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  institution_name VARCHAR(255),
+  contact_email VARCHAR(255),
+  contact_phone VARCHAR(100),
+  submitted_on DATETIME NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'SUBMITTED',
+  resume_token VARCHAR(64) UNIQUE,
+  response_locale VARCHAR(2) NOT NULL DEFAULT 'en',
+  version BIGINT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS school_health_answer (
+  answer_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  response_id BIGINT NOT NULL,
+  section_name VARCHAR(150) NOT NULL,
+  question_key VARCHAR(100) NOT NULL,
+  question_label VARCHAR(500) NOT NULL,
+  answer_value VARCHAR(4000) NOT NULL,
+  display_order INT NOT NULL,
+  CONSTRAINT fk_school_health_answer_response
+    FOREIGN KEY (response_id) REFERENCES school_health_response(response_id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS school_health_question_text (
+  question_key VARCHAR(100) NOT NULL,
+  locale_code VARCHAR(10) NOT NULL,
+  section_name VARCHAR(150) NOT NULL,
+  question_label VARCHAR(500) NOT NULL,
+  PRIMARY KEY (question_key, locale_code)
+);
+
+CREATE TABLE IF NOT EXISTS school_health_option_text (
+  option_group VARCHAR(100) NOT NULL,
+  option_value VARCHAR(100) NOT NULL,
+  locale_code VARCHAR(10) NOT NULL,
+  option_label VARCHAR(500) NOT NULL,
+  display_order INT NOT NULL,
+  PRIMARY KEY (option_group, option_value, locale_code)
+);
+
+CREATE TABLE IF NOT EXISTS SURVEY_DETAILS (
+  ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+  EVENT_UUID VARCHAR(100),
+  SURVEY_HEADING_ID BIGINT,
+  SURVEY_HEADING VARCHAR(255),
+  SURVEY_QNS VARCHAR(1000),
+  FIELD_TYPE VARCHAR(50),
+  IS_MANDATORY BOOLEAN NOT NULL DEFAULT FALSE,
+  FIELD_OPTION VARCHAR(100),
+  REQUIRED_MESSAGE VARCHAR(500),
+  PRE_SURVEY BOOLEAN NOT NULL DEFAULT FALSE,
+  POST_SURVEY BOOLEAN NOT NULL DEFAULT FALSE,
+  CORRECT_ANSWER_ID BIGINT,
+  SURVEY_HEADING_AR VARCHAR(255),
+  SURVEY_QNS_AR VARCHAR(1000),
+  REQUIRED_MESSAGE_AR VARCHAR(500)
+);
+
+CREATE TABLE IF NOT EXISTS OPTIONS (
+  ID INT AUTO_INCREMENT PRIMARY KEY,
+  DESCRIPTION VARCHAR(500),
+  DESCRIPTION_AR VARCHAR(500),
+  EVENT_UUID VARCHAR(100),
+  OPTION_TYPE VARCHAR(100)
+);

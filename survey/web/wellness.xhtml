@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+     >
 
 <h:head>
 
@@ -53,9 +57,9 @@
          * Keep the mockup's centered card.
          */
         .survey {
-            max-width: 1100px;
+            max-width: 1000px;
             width: 100%;
-            margin: 2rem auto;
+            margin: 2.5rem auto;
         }
 
         .survey__card {
@@ -70,17 +74,23 @@
         }
 
         .survey__title {
-            color: #8a1538;
+            color: #212529;
+            font-size: 1.5rem;
+        }
+
+        .survey__head .survey__eyebrow {
+            display: none;
+        }
+
+        .survey__subtitle {
+            font-size: .95rem;
         }
 
         /*
          * Section heading
          */
-        .survey-section > h2 {
-            color: #8a1538;
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
+        .survey-section > .survey__banner {
+            margin-bottom: 1rem;
         }
 
         /*
@@ -105,17 +115,18 @@
          * Pre-filled information
          */
         .prefill-card {
-            background: #f6f7f9;
-            border: 1px solid #eceef1;
-            border-radius: .4rem;
-            padding: 1rem 1.25rem;
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid #f0f1f4;
+            border-radius: 0;
+            padding: 1.25rem 0;
             margin-bottom: 1.5rem;
         }
 
         .prefill-card h3 {
-            color: #8a1538;
+            color: #212529;
             font-size: .95rem;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 1rem;
         }
 
@@ -174,6 +185,144 @@
         }
 
         /*
+         * Employee demographics matrices
+         */
+        .demographics-matrix {
+            margin-bottom: 1.75rem;
+        }
+
+        .demographics-matrix__title {
+            color: #212529;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 .75rem;
+        }
+
+        .demographics-matrix__required {
+            color: #dc3545;
+            font-size: .75rem;
+            font-weight: 400;
+            margin-left: .5rem;
+        }
+
+        .demographics-table-wrap {
+            border: 1px solid #d9dee3;
+            border-radius: .4rem;
+            overflow: hidden;
+        }
+
+        .demographics-table {
+            border-collapse: collapse;
+            margin: 0;
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .demographics-table th,
+        .demographics-table td {
+            border-bottom: 1px solid #e9ecef;
+            padding: .45rem 1rem;
+            vertical-align: middle;
+        }
+
+        .demographics-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .demographics-table th {
+            background: #f5f5f5;
+            color: #495057;
+            font-size: .75rem;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        .demographics-table th:last-child,
+        .demographics-table td:last-child {
+            width: 180px;
+        }
+
+        .demographics-table td:first-child {
+            color: #495057;
+            font-size: .9rem;
+        }
+
+        .demographics-table td:first-child .ui-outputlabel {
+            font-size: .9rem;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .demographics-table .ui-inputfield {
+            margin: 0;
+            width: 100%;
+        }
+
+        .employment-table-wrap {
+            margin-bottom: 1.25rem;
+        }
+
+        .demographics-heading {
+            display: none;
+        }
+
+        .question-stack {
+            display: block;
+            margin-bottom: 0;
+        }
+
+        .matrix-question-title {
+            color: #212529 !important;
+            font-size: .95rem !important;
+            font-weight: 600 !important;
+            margin: 1.25rem 0 .75rem !important;
+        }
+
+        .matrix-question-title::after {
+            color: #c0173a;
+            content: "  *Required";
+            font-size: .72rem;
+            font-weight: 400;
+            margin-left: .4rem;
+        }
+
+        .medical-matrix {
+            border: 1px solid #d9dee3;
+            border-radius: .4rem;
+            display: block;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+        }
+
+        .medical-matrix .question-card {
+            align-items: center;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 240px;
+            padding: .7rem 1rem;
+        }
+
+        .medical-matrix .question-card:last-child {
+            border-bottom: 0;
+        }
+
+        .medical-matrix .question-card > .ui-outputlabel {
+            margin: 0;
+        }
+
+        .medical-matrix .question-card > .ui-outputlabel::after {
+            content: none;
+        }
+
+        .medical-matrix .ui-selectoneradio {
+            justify-self: stretch;
+        }
+
+        .medical-matrix .ui-selectoneradio tbody {
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        /*
          * Fields
          */
         .field {
@@ -189,6 +338,20 @@
             font-size: .85rem;
             font-weight: 600;
             margin-bottom: .4rem;
+        }
+
+        .field > .ui-outputlabel {
+            align-items: baseline;
+            display: flex;
+            line-height: 1.3;
+        }
+
+        .field .ui-outputlabel-rfi {
+            color: #c0173a;
+            font-size: .72rem;
+            font-weight: 400;
+            margin-left: .3rem;
+            vertical-align: baseline;
         }
 
         /*
@@ -215,22 +378,72 @@
             min-height: 38px;
         }
 
+        /* Bootstrap's form-select arrow duplicates the PrimeFaces trigger. */
+        .survey-section .ui-selectonemenu.form-select {
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: none !important;
+            padding: 0 !important;
+        }
+
+        .survey-section .ui-selectonemenu.form-select .ui-selectonemenu-label {
+            line-height: 1.5;
+            padding: .45rem .75rem;
+        }
+
+        .survey-section .ui-selectonemenu.form-select .ui-selectonemenu-trigger {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            width: 2.5rem;
+        }
+
         /*
          * Question cards
          */
         .question-card .ui-selectoneradio {
-            display: inline-flex !important;
-            width: auto !important;
-
-        }
-
-        .question-card .ui-selectoneradio td {
-            padding-right: 30px !important;
+            display: inline-table !important;
             width: auto !important;
         }
 
+        .question-card .ui-selectoneradio tbody {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem 1.5rem;
+        }
+
+        .question-card .ui-selectoneradio tr {
+            display: flex;
+            width: auto;
+        }
+
         .question-card .ui-selectoneradio td {
-            padding-right: 0 !important;
+            padding: 0 !important;
+            vertical-align: middle;
+            width: auto !important;
+        }
+
+        .question-card .ui-selectoneradio .ui-g,
+        .question-card .ui-selectoneradio .ui-grid-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem 1.5rem;
+        }
+
+        .question-card .ui-selectoneradio .ui-g > div,
+        .question-card .ui-selectoneradio .ui-grid-row > div {
+            flex: 0 0 auto;
+            padding: 0;
+            width: auto;
+        }
+
+        .question-card {
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid #f0f1f4;
+            border-radius: 0;
+            margin: 0;
+            padding: 1.25rem 0;
         }
 
         .question-card > .ui-outputlabel,
@@ -242,15 +455,25 @@
             margin-bottom: .75rem;
         }
 
+        .question-card > .ui-outputlabel::after,
+        .choice-block > .ui-outputlabel::after {
+            color: #c0173a;
+            content: "  *Required";
+            font-size: .72rem;
+            font-weight: 400;
+            margin-left: .4rem;
+        }
+
         /*
          * Choice blocks
          */
         .choice-block {
-            background: #fafbfc;
-            border: 1px solid #edf0f2;
-            border-radius: .4rem;
-            padding: 1rem 1.15rem;
-            margin-bottom: 1rem;
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid #f0f1f4;
+            border-radius: 0;
+            padding: 1.25rem 0;
+            margin: 0;
         }
 
         .choice-block > .ui-outputlabel,
@@ -262,6 +485,10 @@
             margin-bottom: .75rem;
         }
 
+        .choice-block .ui-inputtext {
+            margin-top: .35rem;
+        }
+
         /*
          * Radio buttons and checkboxes
          */
@@ -270,10 +497,57 @@
             margin-right: .4rem;
         }
 
+        .survey-section .ui-radiobutton {
+            align-items: center;
+            display: inline-flex !important;
+            vertical-align: middle;
+        }
+
+        .survey-section .ui-radiobutton-box {
+            align-items: center;
+            box-sizing: border-box;
+            display: inline-flex !important;
+            flex: 0 0 18px;
+            height: 18px;
+            justify-content: center;
+            max-height: 18px;
+            max-width: 18px;
+            min-height: 18px;
+            min-width: 18px;
+            padding: 0 !important;
+            width: 18px;
+            border-radius: 50%;
+        }
+
+        .survey-section .ui-radiobutton-icon {
+            float: none !important;
+            margin: 0 !important;
+            position: static !important;
+            transform: none !important;
+        }
+
+        .survey-section .ui-radiobutton-box.ui-state-active {
+            background: #8a1538 !important;
+            border-color: #8a1538 !important;
+            height: 18px !important;
+            width: 18px !important;
+        }
+
+        .survey-section .ui-radiobutton-box.ui-state-active .ui-radiobutton-icon,
+        .survey-section .ui-radiobutton-box.ui-state-active .ui-icon-bullet {
+            background: #fff !important;
+            background-image: none !important;
+            border-radius: 50%;
+            display: block !important;
+            height: 8px !important;
+            width: 8px !important;
+        }
+
         .survey-section .ui-selectoneradio label,
         .survey-section .ui-selectmanycheckbox label {
             color: #495057;
             font-size: .88rem;
+            line-height: 1.35;
         }
 
         .survey-section .ui-selectoneradio,
@@ -286,15 +560,61 @@
          */
         .survey-section .ui-selectoneradio td,
         .survey-section .ui-selectmanycheckbox td {
-            padding: .35rem .75rem .35rem 0;
+            padding: .35rem 1.25rem .35rem 0;
+            vertical-align: middle;
+        }
+
+        .survey-section .ui-selectmanycheckbox .ui-chkbox,
+        .survey-section .ui-selectmanycheckbox label {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Keep the country choices aligned like the other checkbox groups. */
+        .survey-section .countries-checkboxes {
+            table-layout: auto;
+            width: 100%;
+        }
+
+        .survey-section .countries-checkboxes tbody,
+        .survey-section .countries-checkboxes .ui-g {
+            align-items: center;
+            display: flex !important;
+            flex-wrap: wrap;
+            gap: .65rem 1.5rem;
+            width: 100%;
+        }
+
+        .survey-section .countries-checkboxes tr,
+        .survey-section .countries-checkboxes .ui-grid-row {
+            display: contents;
+        }
+
+        .survey-section .countries-checkboxes td,
+        .survey-section .countries-checkboxes .ui-g > div,
+        .survey-section .countries-checkboxes .ui-grid-row > div {
+            align-items: center;
+            display: flex !important;
+            flex: 0 0 auto !important;
+            padding: 0 !important;
+            vertical-align: middle;
+            width: auto !important;
+        }
+
+        .survey-section .countries-checkboxes .ui-chkbox,
+        .survey-section .countries-checkboxes label {
+            display: inline-block;
+            margin-bottom: 0;
+            vertical-align: middle;
         }
 
         /*
          * Progress
          */
         .section-progress {
-            margin-top: 2rem;
-            margin-bottom: 1.25rem;
+            float: left;
+            margin: 2rem 0 0;
+            width: 320px;
         }
 
         .progress-meta {
@@ -340,13 +660,14 @@
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            border-top: 1px solid #eceef1;
+            border-top: 0;
             margin-top: 1.5rem;
             padding-top: 1.25rem;
+            min-height: 82px;
         }
 
         .wizard-footer-progress {
-            display: flex;
+            display: none;
             align-items: center;
             gap: .5rem;
             color: #8b95a1;
@@ -365,6 +686,17 @@
 
         .wizard-footer-actions .ui-button {
             min-width: 120px;
+        }
+
+        .wizard-footer-actions .ui-button-icon-left,
+        .wizard-footer-actions .ui-button-icon-right {
+            display: none;
+        }
+
+        .wizard-footer-actions .ui-button-text-icon-left .ui-button-text,
+        .wizard-footer-actions .ui-button-text-icon-right .ui-button-text {
+            padding-left: 1em;
+            padding-right: 1em;
         }
 
         /*
@@ -387,9 +719,9 @@
          * Back / secondary button
          */
         .wizard-back-button {
-            background: #fff !important;
-            border-color: #ced4da !important;
-            color: #495057 !important;
+            background: #495057 !important;
+            border-color: #495057 !important;
+            color: #fff !important;
         }
 
         /*
@@ -423,6 +755,35 @@
          */
         .validation-summary {
             margin-bottom: 1rem;
+        }
+
+        .field-message {
+            background: transparent !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            color: #c0173a;
+            display: block;
+            font-size: .75rem;
+            line-height: 1.35;
+            margin-top: .35rem;
+            padding: 0 !important;
+        }
+
+        .field-message .ui-message-error-icon,
+        .field-message .ui-message-warn-icon,
+        .field-message .ui-message-info-icon,
+        .field-message .ui-message-fatal-icon {
+            display: none !important;
+        }
+
+        .field-message .ui-message-error-detail,
+        .field-message .ui-message-error-summary,
+        .field-message .ui-message-warn-detail,
+        .field-message .ui-message-warn-summary {
+            color: #c0173a !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
         /*
@@ -494,6 +855,17 @@
             .wizard-footer {
                 flex-direction: column;
                 align-items: stretch;
+                min-height: 0;
+            }
+
+            .section-progress {
+                float: none;
+                width: 100%;
+            }
+
+            .medical-matrix .question-card {
+                grid-template-columns: 1fr;
+                gap: .65rem;
             }
 
             .wizard-footer-progress {
@@ -519,6 +891,16 @@
             .question-card,
             .choice-block {
                 padding: 1rem;
+            }
+
+            .demographics-table th,
+            .demographics-table td {
+                padding: .45rem .65rem;
+            }
+
+            .demographics-table th:last-child,
+            .demographics-table td:last-child {
+                width: 135px;
             }
         }
     </style>
@@ -594,13 +976,11 @@
                     </p>
 
                     <h1 class="survey__title">
-                        Workplace Wellness Support and Monitoring Baseline Survey
+                        Workplace Wellness Support &amp; Monitoring
                     </h1>
 
                     <p class="survey__subtitle">
-                        This survey assesses workplace wellness and
-                        health-promoting policies, activities, and initiatives
-                        within private sector organizations and companies.
+                        Baseline survey · National Health Strategy (NHS) 2024–2030
                     </p>
 
                 </div>
@@ -624,27 +1004,6 @@
 
 
             <!-- ====================================================
-                 TOP INFORMATION
-                 ==================================================== -->
-
-            <div class="survey__banner">
-
-                <div class="survey__banner-title">
-                    Workplace Wellness Baseline Survey
-                </div>
-
-                <div class="survey__banner-meta">
-                    Please complete all required fields.
-                    Your responses are treated confidentially and
-                    reported in aggregate form.
-                </div>
-
-            </div>
-
-
-
-
-            <!-- ====================================================
                  MAIN FORM
                  ==================================================== -->
 
@@ -655,21 +1014,12 @@
                 <p:messages id="validationMessages"
                             showDetail="true"
                             closable="true"
+                            globalOnly="true"
                             styleClass="validation-summary">
 
                     <p:autoUpdate/>
 
                 </p:messages>
-
-
-                <!-- Growl -->
-
-                <p:growl id="messages"
-                         showDetail="true">
-
-                    <p:autoUpdate/>
-
-                </p:growl>
 
 
                 <!-- ==================================================
@@ -692,13 +1042,10 @@
 
                         <section class="survey-section">
 
-                            <p class="survey__eyebrow">
-                                Section 1
-                            </p>
-
-                            <h2>
-                                Company Profile
-                            </h2>
+                            <div class="survey__banner">
+                                <div class="survey__banner-title">Section 1 - Company Profile</div>
+                                <div class="survey__banner-meta">Organizational details, workforce &amp; employment statistics · 11 questions</div>
+                            </div>
 
 
                             <!-- COMPANY DETAILS -->
@@ -736,54 +1083,60 @@
                                 Focal point contact details <span class="required-mark">*Required</span>
                             </h3>
 
-                            <div class="form-grid three">
+                            <div class="form-grid two">
                             <span class="field">
                                 <p:outputLabel for="focalName" value="Name"/>
-                                <p:inputText id="focalName"
+                                <p:inputText label="Name" id="focalName"
                                              value="#{wellnessSurvey.answers['focalName']}"
                                              placeholder="example"
-                                             required="true"/>
+                                             styleClass="form-control"
+                                             required="true" requiredMessage="Name is required."/>
+<p:message for="focalName" display="text" styleClass="field-message"/>
                             </span>
 
                                 <span class="field">
                                 <p:outputLabel for="jobTitle" value="Job Title"/>
-                                <p:inputText id="jobTitle"
+                                <p:inputText label="Job Title" styleClass="form-control" id="jobTitle"
                                              value="#{wellnessSurvey.answers['jobTitle']}"
                                              placeholder="example"
-                                             required="true"/>
+                                             required="true" requiredMessage="Job Title is required."/>
+<p:message for="jobTitle" display="text" styleClass="field-message"/>
                             </span>
 
                                 <span class="field">
                                 <p:outputLabel for="focalEmail" value="Email address"/>
-                                <p:inputText id="focalEmail"
+                                <p:inputText label="Email address" styleClass="form-control" id="focalEmail"
                                              value="#{wellnessSurvey.answers['focalEmail']}"
                                              placeholder="example"
-                                             required="true"
+                                             required="true" requiredMessage="Email address is required."
                                              validatorMessage="Enter a valid email address, for example name@example.com.">
                                     <f:validateRegex pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"/>
                                 </p:inputText>
-                            </span>
-
-                                <span class="field">
-                                <p:outputLabel for="mobilePhone" value="Mobile phone number"/>
-                                <p:inputText id="mobilePhone"
-                                             value="#{wellnessSurvey.answers['mobilePhone']}"
-                                             placeholder="example"
-                                             required="true"
-                                             validatorMessage="Enter a valid mobile number using digits, spaces, +, - or brackets.">
-                                    <f:validateRegex pattern="^[+0-9][0-9 ()-]{6,24}$"/>
-                                </p:inputText>
+<p:message for="focalEmail" display="text" styleClass="field-message"/>
                             </span>
 
                                 <span class="field">
                                 <p:outputLabel for="officePhone" value="Office phone number"/>
-                                <p:inputText id="officePhone"
+                                <p:inputText label="Office phone number" styleClass="form-control" id="officePhone"
                                              value="#{wellnessSurvey.answers['officePhone']}"
                                              placeholder="example"
-                                             required="true"
+                                             required="true" requiredMessage="Office phone number is required."
                                              validatorMessage="Enter a valid phone number using digits, spaces, +, - or brackets.">
                                     <f:validateRegex pattern="^[+0-9][0-9 ()-]{6,24}$"/>
                                 </p:inputText>
+<p:message for="officePhone" display="text" styleClass="field-message"/>
+                            </span>
+
+                                <span class="field">
+                                <p:outputLabel for="mobilePhone" value="Mobile phone number"/>
+                                <p:inputText label="Mobile phone number" styleClass="form-control" id="mobilePhone"
+                                             value="#{wellnessSurvey.answers['mobilePhone']}"
+                                             placeholder="example"
+                                             required="true" requiredMessage="Mobile phone number is required."
+                                             validatorMessage="Enter a valid mobile number using digits, spaces, +, - or brackets.">
+                                    <f:validateRegex pattern="^[+0-9][0-9 ()-]{6,24}$"/>
+                                </p:inputText>
+<p:message for="mobilePhone" display="text" styleClass="field-message"/>
                             </span>
                             </div>
 
@@ -796,11 +1149,11 @@
                                         for="industry"
                                         value="Type of industry"/>
 
-                                <p:selectOneMenu
+                                <p:selectOneMenu label="Type of industry" styleClass="form-select"
                                         id="industry"
                                         value="#{wellnessSurvey.answers['industry']}"
                                         filter="true"
-                                        required="true">
+                                        required="true" requiredMessage="Type of industry - please select an option.">
 
                                     <f:selectItem
                                             itemLabel="Please select"
@@ -814,6 +1167,7 @@
                                             update="industryOtherPanel"/>
 
                                 </p:selectOneMenu>
+<p:message for="industry" display="text" styleClass="field-message"/>
 
                                 <p:outputPanel id="industryOtherPanel"
                                                layout="block">
@@ -825,10 +1179,11 @@
                                             Other · specify
                                         </label>
 
-                                        <p:inputText
+                                        <p:inputText label="Other - specify" id="industryOther" styleClass="form-control"
                                                 placeholder="Other industry / company activities"
                                                 value="#{wellnessSurvey.answers['industryOther']}"
-                                                required="true"/>
+                                                required="true" requiredMessage="Other - specify is required."/>
+<p:message for="industryOther" display="text" styleClass="field-message"/>
 
                                     </h:panelGroup>
 
@@ -840,90 +1195,23 @@
                             <!-- EMPLOYMENT -->
 
                             <h3>
-                                Employment contracts
+                                Employment contracts <span class="required-mark">*Required</span>
                             </h3>
 
-                            <div class="form-grid four">
-
-                            <span class="field">
-
-                                <p:outputLabel
-                                        for="fullTime"
-                                        value="Full-time employees"/>
-
-                                <p:inputText
-                                        id="fullTime"
-                                        value="#{wellnessSurvey.answers['fullTime']}"
-                                        required="true"
-                                        validatorMessage="Enter a non-negative whole number.">
-
-                                    <f:validateRegex
-                                            pattern="^[0-9]+$"/>
-
-                                </p:inputText>
-
-                            </span>
-
-
-                                <span class="field">
-
-                                <p:outputLabel
-                                        for="partTime"
-                                        value="Part-time employees"/>
-
-                                <p:inputText
-                                        id="partTime"
-                                        value="#{wellnessSurvey.answers['partTime']}"
-                                        required="true"
-                                        validatorMessage="Enter a non-negative whole number.">
-
-                                    <f:validateRegex
-                                            pattern="^[0-9]+$"/>
-
-                                </p:inputText>
-
-                            </span>
-
-
-                                <span class="field">
-
-                                <p:outputLabel
-                                        for="contracted"
-                                        value="Contracted/outsourced"/>
-
-                                <p:inputText
-                                        id="contracted"
-                                        value="#{wellnessSurvey.answers['contracted']}"
-                                        required="true"
-                                        validatorMessage="Enter a non-negative whole number.">
-
-                                    <f:validateRegex
-                                            pattern="^[0-9]+$"/>
-
-                                </p:inputText>
-
-                            </span>
-
-
-                                <span class="field">
-
-                                <p:outputLabel
-                                        for="totalEmployees"
-                                        value="Total employees"/>
-
-                                <p:inputText
-                                        id="totalEmployees"
-                                        value="#{wellnessSurvey.answers['totalEmployees']}"
-                                        required="true"
-                                        validatorMessage="Enter a non-negative whole number.">
-
-                                    <f:validateRegex
-                                            pattern="^[0-9]+$"/>
-
-                                </p:inputText>
-
-                            </span>
-
+                            <div class="demographics-table-wrap employment-table-wrap">
+                                <table class="demographics-table">
+                                    <thead><tr><th scope="col">Type of contract</th><th scope="col">Number of employees</th></tr></thead>
+                                    <tbody>
+                                        <tr><td><p:outputLabel for="fullTime" value="Total full-time employees"/></td><td><p:inputText label="Total full-time employees" styleClass="form-control" id="fullTime" placeholder="example" value="#{wellnessSurvey.answers['fullTime']}" required="true" requiredMessage="Total full-time employees is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="fullTime" display="text" styleClass="field-message"/></td></tr>
+                                        <tr><td><p:outputLabel for="partTime" value="Total part-time employees"/></td><td><p:inputText label="Total part-time employees" styleClass="form-control" id="partTime" placeholder="example" value="#{wellnessSurvey.answers['partTime']}" required="true" requiredMessage="Total part-time employees is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="partTime" display="text" styleClass="field-message"/></td></tr>
+                                        <tr><td><p:outputLabel for="contracted" value="Total contracted / outsourced employees"/></td><td><p:inputText label="Total contracted / outsourced employees" styleClass="form-control" id="contracted" placeholder="example" value="#{wellnessSurvey.answers['contracted']}" required="true" requiredMessage="Total contracted / outsourced employees is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="contracted" display="text" styleClass="field-message"/></td></tr>
+                                        <tr><td><p:outputLabel for="totalEmployees" value="Total number of employees (all types)"/></td><td><p:inputText label="Total number of employees (all types)" styleClass="form-control" id="totalEmployees" placeholder="example" value="#{wellnessSurvey.answers['totalEmployees']}" required="true" requiredMessage="Total number of employees (all types) is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="totalEmployees" display="text" styleClass="field-message"/></td></tr>
+                                    </tbody>
+                                </table>
                             </div>
 
 
@@ -934,12 +1222,12 @@
                                 <p:outputLabel
                                         value="Contracted/outsourced service types"/>
 
-                                <p:selectManyCheckbox
+                                <p:selectManyCheckbox label="Contracted/outsourced service types"
                                         id="outsourcedServices"
                                         value="#{wellnessSurvey.multiAnswers['outsourcedServices']}"
                                         layout="responsive"
                                         columns="4"
-                                        required="true">
+                                        required="true" requiredMessage="Contracted/outsourced service types - please select at least one option.">
 
                                     <f:selectItems
                                             value="#{wellnessSurvey.outsourcedServices}"/>
@@ -949,6 +1237,7 @@
                                             update="outsourcedOtherPanel"/>
 
                                 </p:selectManyCheckbox>
+<p:message for="outsourcedServices" display="text" styleClass="field-message"/>
 
                                 <p:outputPanel id="outsourcedOtherPanel"
                                                layout="block">
@@ -960,10 +1249,11 @@
                                             Other · specify
                                         </label>
 
-                                        <p:inputText
+                                        <p:inputText label="Other - specify" id="outsourcedOther" styleClass="form-control"
                                                 placeholder="Other service"
                                                 value="#{wellnessSurvey.answers['outsourcedOther']}"
-                                                required="true"/>
+                                                required="true" requiredMessage="Other - specify is required."/>
+<p:message for="outsourcedOther" display="text" styleClass="field-message"/>
 
                                     </h:panelGroup>
 
@@ -979,12 +1269,12 @@
                                 <p:outputLabel
                                         value="Main occupations in the company"/>
 
-                                <p:selectManyCheckbox
+                                <p:selectManyCheckbox label="Main occupations in the company"
                                         id="occupations"
                                         value="#{wellnessSurvey.multiAnswers['occupations']}"
                                         layout="responsive"
                                         columns="3"
-                                        required="true">
+                                        required="true" requiredMessage="Main occupations in the company - please select at least one option.">
 
                                     <f:selectItems
                                             value="#{wellnessSurvey.occupations}"/>
@@ -994,6 +1284,7 @@
                                             update="occupationOtherPanel"/>
 
                                 </p:selectManyCheckbox>
+<p:message for="occupations" display="text" styleClass="field-message"/>
 
                                 <p:outputPanel id="occupationOtherPanel"
                                                layout="block">
@@ -1005,10 +1296,11 @@
                                             Other · specify
                                         </label>
 
-                                        <p:inputText
+                                        <p:inputText label="Other - specify" id="occupationOther" styleClass="form-control"
                                                 placeholder="Other occupation"
                                                 value="#{wellnessSurvey.answers['occupationOther']}"
-                                                required="true"/>
+                                                required="true" requiredMessage="Other - specify is required."/>
+<p:message for="occupationOther" display="text" styleClass="field-message"/>
 
                                     </h:panelGroup>
 
@@ -1019,116 +1311,88 @@
 
                             <!-- DEMOGRAPHICS -->
 
-                            <h3>
+                            <h3 class="demographics-heading">
                                 Employee demographics
                             </h3>
 
-                            <div class="form-grid five">
+                            <section class="demographics-matrix">
+                                <h4 class="demographics-matrix__title">
+                                    Number of employees by age group
+                                    <span class="demographics-matrix__required">*Required</span>
+                                </h4>
+                                <div class="demographics-table-wrap">
+                                    <table class="demographics-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Age group</th>
+                                                <th scope="col">Number of employees</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td><p:outputLabel for="ageLt18" value="Less than 18 years"/></td><td><p:inputText label="Less than 18 years" styleClass="form-control" id="ageLt18" placeholder="example" value="#{wellnessSurvey.answers['ageLt18']}" required="true" requiredMessage="Less than 18 years is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="ageLt18" display="text" styleClass="field-message"/></td></tr>
+                                            <tr><td><p:outputLabel for="age18" value="18 - 24"/></td><td><p:inputText label="18 - 24" styleClass="form-control" id="age18" placeholder="example" value="#{wellnessSurvey.answers['age18']}" required="true" requiredMessage="18 - 24 is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="age18" display="text" styleClass="field-message"/></td></tr>
+                                            <tr><td><p:outputLabel for="age25" value="25 - 44"/></td><td><p:inputText label="25 - 44" styleClass="form-control" id="age25" placeholder="example" value="#{wellnessSurvey.answers['age25']}" required="true" requiredMessage="25 - 44 is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="age25" display="text" styleClass="field-message"/></td></tr>
+                                            <tr><td><p:outputLabel for="age45" value="45 - 64"/></td><td><p:inputText label="45 - 64" styleClass="form-control" id="age45" placeholder="example" value="#{wellnessSurvey.answers['age45']}" required="true" requiredMessage="45 - 64 is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="age45" display="text" styleClass="field-message"/></td></tr>
+                                            <tr><td><p:outputLabel for="age65" value="65 and older"/></td><td><p:inputText label="65 and older" styleClass="form-control" id="age65" placeholder="example" value="#{wellnessSurvey.answers['age65']}" required="true" requiredMessage="65 and older is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="age65" display="text" styleClass="field-message"/></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
 
-                            <span class="field">
-                                <p:outputLabel for="ageLt18" value="Less than 18"/>
-                                <p:inputText id="ageLt18"
-                                             value="#{wellnessSurvey.answers['ageLt18']}"
-                                             required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
-                                </p:inputText>
-                            </span>
+                            <section class="demographics-matrix">
+                                <h4 class="demographics-matrix__title">
+                                    Number of employees by gender
+                                    <span class="demographics-matrix__required">*Required</span>
+                                </h4>
+                                <div class="demographics-table-wrap">
+                                    <table class="demographics-table">
+                                        <thead><tr><th scope="col">Gender</th><th scope="col">Number of employees</th></tr></thead>
+                                        <tbody>
+                                            <tr><td><p:outputLabel for="male" value="Males"/></td><td><p:inputText label="Males" styleClass="form-control" id="male" placeholder="example" value="#{wellnessSurvey.answers['male']}" required="true" requiredMessage="Males is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="male" display="text" styleClass="field-message"/></td></tr>
+                                            <tr><td><p:outputLabel for="female" value="Females"/></td><td><p:inputText label="Females" styleClass="form-control" id="female" placeholder="example" value="#{wellnessSurvey.answers['female']}" required="true" requiredMessage="Females is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="female" display="text" styleClass="field-message"/></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
 
-                                <span class="field">
-                                <p:outputLabel for="age18" value="18 - 24"/>
-                                <p:inputText id="age18"
-                                             value="#{wellnessSurvey.answers['age18']}"
-                                             required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
-                                </p:inputText>
-                            </span>
-
-                                <span class="field">
-                                <p:outputLabel for="age25" value="25 - 44"/>
-                                <p:inputText id="age25"
-                                             value="#{wellnessSurvey.answers['age25']}"
-                                             required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
-                                </p:inputText>
-                            </span>
-
-                                <span class="field">
-                                <p:outputLabel for="age45" value="45 - 64"/>
-                                <p:inputText id="age45"
-                                             value="#{wellnessSurvey.answers['age45']}"
-                                             required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
-                                </p:inputText>
-                            </span>
-
-                                <span class="field">
-                                <p:outputLabel for="age65" value="65 and older"/>
-                                <p:inputText id="age65"
-                                             value="#{wellnessSurvey.answers['age65']}"
-                                             required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
-                                </p:inputText>
-                            </span>
-
-                                <span class="field">
-                                <p:outputLabel for="male" value="Males"/>
-                                <p:inputText id="male"
-                                             value="#{wellnessSurvey.answers['male']}"
-                                             required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
-                                </p:inputText>
-                            </span>
-
-                                <span class="field">
-                                <p:outputLabel for="female" value="Females"/>
-                                <p:inputText id="female"
-                                             value="#{wellnessSurvey.answers['female']}"
-                                             required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
-                                </p:inputText>
-                            </span>
-
-                                <span class="field">
-                                <p:outputLabel for="qatari" value="Qatari"/>
-                                <p:inputText id="qatari"
-                                             value="#{wellnessSurvey.answers['qatari']}"
-                                             required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
-                                </p:inputText>
-                            </span>
-
-                                <span class="field">
-                                <p:outputLabel for="nonQatari" value="Non-Qatari"/>
-                                <p:inputText id="nonQatari"
-                                             value="#{wellnessSurvey.answers['nonQatari']}"
-                                             required="true"
-                                             validatorMessage="Enter a non-negative whole number.">
-                                    <f:validateRegex pattern="^[0-9]+$"/>
-                                </p:inputText>
-                            </span>
-
-                            </div>
+                            <section class="demographics-matrix">
+                                <h4 class="demographics-matrix__title">
+                                    Number of employees by nationality
+                                    <span class="demographics-matrix__required">*Required</span>
+                                </h4>
+                                <div class="demographics-table-wrap">
+                                    <table class="demographics-table">
+                                        <thead><tr><th scope="col">Nationality</th><th scope="col">Number of employees</th></tr></thead>
+                                        <tbody>
+                                            <tr><td><p:outputLabel for="qatari" value="Qatari"/></td><td><p:inputText label="Qatari" styleClass="form-control" id="qatari" placeholder="example" value="#{wellnessSurvey.answers['qatari']}" required="true" requiredMessage="Qatari is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="qatari" display="text" styleClass="field-message"/></td></tr>
+                                            <tr><td><p:outputLabel for="nonQatari" value="Non-Qatari"/></td><td><p:inputText label="Non-Qatari" styleClass="form-control" id="nonQatari" placeholder="example" value="#{wellnessSurvey.answers['nonQatari']}" required="true" requiredMessage="Non-Qatari is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+<p:message for="nonQatari" display="text" styleClass="field-message"/></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
 
 
                             <div class="choice-block">
 
                                 <p:outputLabel
-                                        value="Countries for non-Qatari employees"/>
+                                        value="Please specify the nationalities of non-Qatari employees"/>
 
-                                <p:selectManyCheckbox
+                                <p:selectManyCheckbox label="Please specify the nationalities of non-Qatari employees"
                                         id="countries"
+                                        styleClass="countries-checkboxes"
                                         value="#{wellnessSurvey.multiAnswers['countries']}"
                                         layout="responsive"
-                                        columns="5"
-                                        required="true">
+                                        columns="8"
+                                        required="true" requiredMessage="Please specify the nationalities of non-Qatari employees - please select at least one option.">
 
                                     <f:selectItems
                                             value="#{wellnessSurvey.countries}"/>
@@ -1138,6 +1402,7 @@
                                             update="countryOtherPanel"/>
 
                                 </p:selectManyCheckbox>
+<p:message for="countries" display="text" styleClass="field-message"/>
 
                                 <p:outputPanel id="countryOtherPanel"
                                                layout="block">
@@ -1149,10 +1414,11 @@
                                             Other · specify
                                         </label>
 
-                                        <p:inputText
+                                        <p:inputText label="Other - specify" id="countryOther" styleClass="form-control"
                                                 placeholder="Other country"
                                                 value="#{wellnessSurvey.answers['countryOther']}"
-                                                required="true"/>
+                                                required="true" requiredMessage="Other - specify is required."/>
+<p:message for="countryOther" display="text" styleClass="field-message"/>
 
                                     </h:panelGroup>
 
@@ -1220,13 +1486,10 @@
 
                         <section class="survey-section">
 
-                            <p class="survey__eyebrow">
-                                Section 2
-                            </p>
-
-                            <h2>
-                                Occupational Health and Safety
-                            </h2>
+                            <div class="survey__banner">
+                                <div class="survey__banner-title">Section 2 - Occupational Health and Safety</div>
+                                <div class="survey__banner-meta">Policies, responsible officers, risk assessment, hazards &amp; training · 13 questions</div>
+                            </div>
 
 
                             <div class="question-card">
@@ -1234,10 +1497,10 @@
                                 <p:outputLabel
                                         value="Does your company have a policy/document for employees' Occupational Health and Safety?"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Does your company have a policy/document for employees' Occupational Health and Safety?" id="ohsPolicy"
                                         value="#{wellnessSurvey.answers['ohsPolicy']}"
                                         layout="pageDirection"
-                                        required="true">
+                                        required="true" requiredMessage="Does your company have a policy/document for employees' Occupational Health and Safety? - please select an option.">
 
                                     <f:selectItem
                                             itemLabel="Yes, occupational health and safety"
@@ -1260,6 +1523,7 @@
                                             update="ohsPolicyDetails"/>
 
                                 </p:selectOneRadio>
+<p:message for="ohsPolicy" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -1275,12 +1539,12 @@
                                     <p:outputLabel
                                             value="Aspects covered by the policy/document"/>
 
-                                    <p:selectManyCheckbox
+                                    <p:selectManyCheckbox label="Aspects covered by the policy/document"
                                             id="ohsPolicyAspects"
                                             value="#{wellnessSurvey.multiAnswers['ohsPolicyAspects']}"
                                             layout="responsive"
-                                            columns="2"
-                                            required="true">
+                                            columns="3"
+                                            required="true" requiredMessage="Aspects covered by the policy/document - please select at least one option.">
 
                                         <f:selectItems
                                                 value="#{wellnessSurvey.ohsPolicyAspects}"/>
@@ -1290,6 +1554,7 @@
                                                 update="ohsPolicyOtherPanel"/>
 
                                     </p:selectManyCheckbox>
+<p:message for="ohsPolicyAspects" display="text" styleClass="field-message"/>
 
                                     <p:outputPanel id="ohsPolicyOtherPanel"
                                                    layout="block">
@@ -1301,10 +1566,11 @@
                                                 Other · specify
                                             </label>
 
-                                            <p:inputText
+                                            <p:inputText label="Other - specify" id="ohsPolicyOther" styleClass="form-control"
                                                     placeholder="Other aspect"
                                                     value="#{wellnessSurvey.answers['ohsPolicyOther']}"
-                                                    required="true"/>
+                                                    required="true" requiredMessage="Other - specify is required."/>
+<p:message for="ohsPolicyOther" display="text" styleClass="field-message"/>
 
                                         </h:panelGroup>
 
@@ -1315,21 +1581,22 @@
                             </p:outputPanel>
 
 
-                            <div class="form-grid two">
+                            <div class="form-grid two question-stack">
 
                                 <div class="question-card">
 
                                     <p:outputLabel
                                             value="Designated responsible officer(s) for workplace health and safety?"/>
 
-                                    <p:selectOneRadio
+                                    <p:selectOneRadio label="Designated responsible officer(s) for workplace health and safety?" id="responsibleOfficer"
                                             value="#{wellnessSurvey.answers['responsibleOfficer']}"
-                                            required="true">
+                                            required="true" requiredMessage="Designated responsible officer(s) for workplace health and safety? - please select an option.">
 
                                         <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
 
                                     </p:selectOneRadio>
+<p:message for="responsibleOfficer" display="text" styleClass="field-message"/>
 
                                 </div>
 
@@ -1339,10 +1606,10 @@
                                     <p:outputLabel
                                             value="Special department/section/committee with dedicated staff?"/>
 
-                                    <p:selectOneRadio
+                                    <p:selectOneRadio label="Special department/section/committee with dedicated staff?" id="ohsCommittee"
                                             value="#{wellnessSurvey.answers['ohsCommittee']}"
                                             layout="pageDirection"
-                                            required="true">
+                                            required="true" requiredMessage="Special department/section/committee with dedicated staff? - please select an option.">
 
                                         <f:selectItem
                                                 itemLabel="Yes, full time"
@@ -1357,6 +1624,7 @@
                                                 itemValue="No"/>
 
                                     </p:selectOneRadio>
+<p:message for="ohsCommittee" display="text" styleClass="field-message"/>
 
                                 </div>
 
@@ -1368,11 +1636,11 @@
                                 <p:outputLabel
                                         value="How often is health and safety discussed between employees and management?"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="How often is health and safety discussed between employees and management?" id="discussionFrequency"
                                         value="#{wellnessSurvey.answers['discussionFrequency']}"
                                         layout="pageDirection"
                                         columns="3"
-                                        required="true">
+                                        required="true" requiredMessage="How often is health and safety discussed between employees and management? - please select an option.">
 
                                     <f:selectItem itemLabel="Monthly" itemValue="Monthly"/>
                                     <f:selectItem itemLabel="Quarterly" itemValue="Quarterly"/>
@@ -1382,6 +1650,7 @@
                                     <f:selectItem itemLabel="Not at all" itemValue="Not at all"/>
 
                                 </p:selectOneRadio>
+<p:message for="discussionFrequency" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -1391,9 +1660,9 @@
                                 <p:outputLabel
                                         value="Does your company conduct working environment surveillance / risk assessment?"/>
 
-                                <p:selectOneRadio  layout="lineDirection"
+                                <p:selectOneRadio label="Does your company conduct working environment surveillance / risk assessment?" id="riskAssessment"  layout="lineDirection"
                                                    value="#{wellnessSurvey.answers['riskAssessment']}"
-                                                   required="true">
+                                                   required="true" requiredMessage="Does your company conduct working environment surveillance / risk assessment? - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                     <f:selectItem itemLabel="No" itemValue="No"/>
@@ -1403,6 +1672,7 @@
                                             update="riskDetails"/>
 
                                 </p:selectOneRadio>
+<p:message for="riskAssessment" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -1419,12 +1689,12 @@
                                         <p:outputLabel
                                                 value="Hazards routinely evaluated"/>
 
-                                        <p:selectManyCheckbox
+                                        <p:selectManyCheckbox label="Hazards routinely evaluated"
                                                 id="hazards"
                                                 value="#{wellnessSurvey.multiAnswers['hazards']}"
                                                 layout="responsive"
-                                                columns="2"
-                                                required="true">
+                                                columns="3"
+                                                required="true" requiredMessage="Hazards routinely evaluated - please select at least one option.">
 
                                             <f:selectItems
                                                     value="#{wellnessSurvey.hazards}"/>
@@ -1434,6 +1704,7 @@
                                                     update="hazardOtherPanel"/>
 
                                         </p:selectManyCheckbox>
+<p:message for="hazards" display="text" styleClass="field-message"/>
 
                                         <p:outputPanel id="hazardOtherPanel"
                                                        layout="block">
@@ -1445,10 +1716,11 @@
                                                     Other · specify
                                                 </label>
 
-                                                <p:inputText
+                                                <p:inputText label="Other - specify" id="hazardOther" styleClass="form-control"
                                                         placeholder="Other hazard"
                                                         value="#{wellnessSurvey.answers['hazardOther']}"
-                                                        required="true"/>
+                                                        required="true" requiredMessage="Other - specify is required."/>
+<p:message for="hazardOther" display="text" styleClass="field-message"/>
 
                                             </h:panelGroup>
 
@@ -1462,11 +1734,11 @@
                                         <p:outputLabel
                                                 value="Risk assessment frequency"/>
 
-                                        <p:selectOneRadio
+                                        <p:selectOneRadio label="Risk assessment frequency" id="riskFrequency"
                                                 value="#{wellnessSurvey.answers['riskFrequency']}"
                                                 layout="responsive"
                                                 columns="5"
-                                                required="true">
+                                                required="true" requiredMessage="Risk assessment frequency - please select an option.">
 
                                             <f:selectItem itemLabel="Monthly" itemValue="Monthly"/>
                                             <f:selectItem itemLabel="Quarterly" itemValue="Quarterly"/>
@@ -1475,6 +1747,7 @@
                                             <f:selectItem itemLabel="Only when issues arise" itemValue="Only when issues arise"/>
 
                                         </p:selectOneRadio>
+<p:message for="riskFrequency" display="text" styleClass="field-message"/>
 
                                     </div>
 
@@ -1488,9 +1761,9 @@
                                 <p:outputLabel
                                         value="Does your Company have established program and procedures for identifying, assessing, evaluating risks and determining control measures?"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Does your Company have established program and procedures for identifying, assessing, evaluating risks and determining control measures?" id="riskProgram"
                                         value="#{wellnessSurvey.answers['riskProgram']}"
-                                        required="true">
+                                        required="true" requiredMessage="Does your Company have established program and procedures for identifying, assessing, evaluating risks and determining control measures? - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                     <f:selectItem itemLabel="No" itemValue="No"/>
@@ -1500,6 +1773,7 @@
                                             update="riskProgramDetails"/>
 
                                 </p:selectOneRadio>
+<p:message for="riskProgram" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -1515,14 +1789,15 @@
                                     <p:outputLabel
                                             value="Are the working environment assessments / risk assessments documented in written form?"/>
 
-                                    <p:selectOneRadio
+                                    <p:selectOneRadio label="Are the working environment assessments / risk assessments documented in written form?" id="riskDocumented"
                                             value="#{wellnessSurvey.answers['riskDocumented']}"
-                                            required="true">
+                                            required="true" requiredMessage="Are the working environment assessments / risk assessments documented in written form? - please select an option.">
 
                                         <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
 
                                     </p:selectOneRadio>
+<p:message for="riskDocumented" display="text" styleClass="field-message"/>
 
                                 </h:panelGroup>
 
@@ -1534,14 +1809,15 @@
                                 <p:outputLabel
                                         value="Does your company have records of Hygiene surveillance, such as monitoring of noise level or indoor air quality?"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Does your company have records of Hygiene surveillance, such as monitoring of noise level or indoor air quality?" id="hygieneRecords"
                                         value="#{wellnessSurvey.answers['hygieneRecords']}"
-                                        required="true">
+                                        required="true" requiredMessage="Does your company have records of Hygiene surveillance, such as monitoring of noise level or indoor air quality? - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                     <f:selectItem itemLabel="No" itemValue="No"/>
 
                                 </p:selectOneRadio>
+<p:message for="hygieneRecords" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -1551,10 +1827,10 @@
                                 <p:outputLabel
                                         value="Has your company developed and implemented Occupational Health and Safety training plan?"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Has your company developed and implemented Occupational Health and Safety training plan?" id="trainingPlan"
                                         value="#{wellnessSurvey.answers['trainingPlan']}"
                                         layout="pageDirection"
-                                        required="true">
+                                        required="true" requiredMessage="Has your company developed and implemented Occupational Health and Safety training plan? - please select an option.">
 
                                     <f:selectItem
                                             itemLabel="Developed and implemented"
@@ -1573,6 +1849,7 @@
                                             update="trainingDetails"/>
 
                                 </p:selectOneRadio>
+<p:message for="trainingPlan" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -1588,12 +1865,12 @@
                                     <p:outputLabel
                                             value="Included in the OHS training plan"/>
 
-                                    <p:selectManyCheckbox
+                                    <p:selectManyCheckbox label="Included in the OHS training plan"
                                             id="ohsTrainingItems"
                                             value="#{wellnessSurvey.multiAnswers['ohsTrainingItems']}"
                                             layout="responsive"
                                             columns="2"
-                                            required="true">
+                                            required="true" requiredMessage="Included in the OHS training plan - please select at least one option.">
 
                                         <f:selectItems
                                                 value="#{wellnessSurvey.ohsTrainingItems}"/>
@@ -1603,6 +1880,7 @@
                                                 update="trainingOtherPanel"/>
 
                                     </p:selectManyCheckbox>
+<p:message for="ohsTrainingItems" display="text" styleClass="field-message"/>
 
                                     <p:outputPanel id="trainingOtherPanel"
                                                    layout="block">
@@ -1614,10 +1892,11 @@
                                                 Other · specify
                                             </label>
 
-                                            <p:inputText
+                                            <p:inputText label="Other - specify" id="trainingOther" styleClass="form-control"
                                                     placeholder="Other training item"
                                                     value="#{wellnessSurvey.answers['trainingOther']}"
-                                                    required="true"/>
+                                                    required="true" requiredMessage="Other - specify is required."/>
+<p:message for="trainingOther" display="text" styleClass="field-message"/>
 
                                         </h:panelGroup>
 
@@ -1694,29 +1973,29 @@
 
                         <section class="survey-section">
 
-                            <p class="survey__eyebrow">
-                                Section 3
-                            </p>
-
-                            <h2>
-                                Health Assessment and Medical Examination
-                            </h2>
+                            <div class="survey__banner">
+                                <div class="survey__banner-title">Section 3 - Health Assessment and Medical Examination</div>
+                                <div class="survey__banner-meta">First aid facilities, health personnel, medical examinations &amp; lifestyle surveys · 5 questions</div>
+                            </div>
 
 
-                            <div class="form-grid three">
+                            <h3 class="matrix-question-title">Does your company have the following:</h3>
+
+                            <div class="form-grid three medical-matrix">
 
                                 <div class="question-card">
 
                                     <p:outputLabel value="First aid boxes"/>
 
-                                    <p:selectOneRadio
+                                    <p:selectOneRadio label="First aid boxes" id="firstAidBoxes"
                                             value="#{wellnessSurvey.answers['firstAidBoxes']}"
-                                            required="true">
+                                            required="true" requiredMessage="First aid boxes - please select an option.">
 
                                         <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
 
                                     </p:selectOneRadio>
+<p:message for="firstAidBoxes" display="text" styleClass="field-message"/>
 
                                 </div>
 
@@ -1725,14 +2004,15 @@
 
                                     <p:outputLabel value="First aid unit"/>
 
-                                    <p:selectOneRadio
+                                    <p:selectOneRadio label="First aid unit" id="firstAidUnit"
                                             value="#{wellnessSurvey.answers['firstAidUnit']}"
-                                            required="true">
+                                            required="true" requiredMessage="First aid unit - please select an option.">
 
                                         <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
 
                                     </p:selectOneRadio>
+<p:message for="firstAidUnit" display="text" styleClass="field-message"/>
 
                                 </div>
 
@@ -1741,30 +2021,39 @@
 
                                     <p:outputLabel value="Company clinic"/>
 
-                                    <p:selectOneRadio
+                                    <p:selectOneRadio label="Company clinic" id="companyClinic"
                                             value="#{wellnessSurvey.answers['companyClinic']}"
-                                            required="true">
+                                            required="true" requiredMessage="Company clinic - please select an option.">
 
                                         <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
 
                                     </p:selectOneRadio>
+<p:message for="companyClinic" display="text" styleClass="field-message"/>
 
                                 </div>
+
+
+                            </div>
+
+                            <h3 class="matrix-question-title">Does your company have the following health personnel:</h3>
+
+                            <div class="form-grid three medical-matrix">
 
 
                                 <div class="question-card">
 
                                     <p:outputLabel value="General practitioner"/>
 
-                                    <p:selectOneRadio
+                                    <p:selectOneRadio label="General practitioner" id="generalPractitioner"
                                             value="#{wellnessSurvey.answers['generalPractitioner']}"
-                                            required="true">
+                                            required="true" requiredMessage="General practitioner - please select an option.">
 
                                         <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
 
                                     </p:selectOneRadio>
+<p:message for="generalPractitioner" display="text" styleClass="field-message"/>
 
                                 </div>
 
@@ -1773,14 +2062,15 @@
 
                                     <p:outputLabel value="Specialist occupational physician"/>
 
-                                    <p:selectOneRadio
+                                    <p:selectOneRadio label="Specialist occupational physician" id="occupationalPhysician"
                                             value="#{wellnessSurvey.answers['occupationalPhysician']}"
-                                            required="true">
+                                            required="true" requiredMessage="Specialist occupational physician - please select an option.">
 
                                         <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
 
                                     </p:selectOneRadio>
+<p:message for="occupationalPhysician" display="text" styleClass="field-message"/>
 
                                 </div>
 
@@ -1789,14 +2079,15 @@
 
                                     <p:outputLabel value="Occupational health nurse"/>
 
-                                    <p:selectOneRadio
+                                    <p:selectOneRadio label="Occupational health nurse" id="occupationalNurse"
                                             value="#{wellnessSurvey.answers['occupationalNurse']}"
-                                            required="true">
+                                            required="true" requiredMessage="Occupational health nurse - please select an option.">
 
                                         <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
 
                                     </p:selectOneRadio>
+<p:message for="occupationalNurse" display="text" styleClass="field-message"/>
 
                                 </div>
 
@@ -1808,12 +2099,12 @@
                                 <p:outputLabel
                                         value="Pre-employment health examination and assessment before assignment"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Pre-employment health examination and assessment before assignment"
                                         id="preEmploymentExam"
                                         value="#{wellnessSurvey.answers['preEmploymentExam']}"
                                         layout="responsive"
                                         columns="3"
-                                        required="true">
+                                        required="true" requiredMessage="Pre-employment health examination and assessment before assignment - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                     <f:selectItem itemLabel="No" itemValue="No"/>
@@ -1824,6 +2115,7 @@
                                             update="preEmploymentOtherPanel"/>
 
                                 </p:selectOneRadio>
+<p:message for="preEmploymentExam" display="text" styleClass="field-message"/>
 
                                 <p:outputPanel id="preEmploymentOtherPanel"
                                                layout="block">
@@ -1835,10 +2127,11 @@
                                             Other · specify
                                         </label>
 
-                                        <p:inputText
+                                        <p:inputText label="Other - specify" id="preEmploymentOther" styleClass="form-control"
                                                 placeholder="Other detail"
                                                 value="#{wellnessSurvey.answers['preEmploymentOther']}"
-                                                required="true"/>
+                                                required="true" requiredMessage="Other - specify is required."/>
+<p:message for="preEmploymentOther" display="text" styleClass="field-message"/>
 
                                     </h:panelGroup>
 
@@ -1852,12 +2145,12 @@
                                 <p:outputLabel
                                         value="Periodic medical examinations for employees"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Periodic medical examinations for employees"
                                         id="periodicExam"
                                         value="#{wellnessSurvey.answers['periodicExam']}"
                                         layout="responsive"
                                         columns="4"
-                                        required="true">
+                                        required="true" requiredMessage="Periodic medical examinations for employees - please select an option.">
 
                                     <f:selectItem
                                             itemLabel="Yes, for all employees"
@@ -1880,6 +2173,7 @@
                                             update="periodicExamOtherPanel"/>
 
                                 </p:selectOneRadio>
+<p:message for="periodicExam" display="text" styleClass="field-message"/>
 
                                 <p:outputPanel id="periodicExamOtherPanel"
                                                layout="block">
@@ -1891,10 +2185,11 @@
                                             Other · specify
                                         </label>
 
-                                        <p:inputText
+                                        <p:inputText label="Other - specify" id="periodicExamOther" styleClass="form-control"
                                                 placeholder="Other detail"
                                                 value="#{wellnessSurvey.answers['periodicExamOther']}"
-                                                required="true"/>
+                                                required="true" requiredMessage="Other - specify is required."/>
+<p:message for="periodicExamOther" display="text" styleClass="field-message"/>
 
                                     </h:panelGroup>
 
@@ -1908,14 +2203,15 @@
                                 <p:outputLabel
                                         value="Lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing" id="lifestyleSurveys"
                                         value="#{wellnessSurvey.answers['lifestyleSurveys']}"
-                                        required="true">
+                                        required="true" requiredMessage="Lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                     <f:selectItem itemLabel="No" itemValue="No"/>
 
                                 </p:selectOneRadio>
+<p:message for="lifestyleSurveys" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -1984,13 +2280,10 @@
 
                         <section class="survey-section">
 
-                            <p class="survey__eyebrow">
-                                Section 4
-                            </p>
-
-                            <h2>
-                                Health Promotion / Workplace Wellness
-                            </h2>
+                            <div class="survey__banner">
+                                <div class="survey__banner-title">Section 4 - Health Promotion / Workplace Wellness</div>
+                                <div class="survey__banner-meta">Wellness policies &amp; programs, communication, nutrition, physical activity &amp; tobacco · 13 questions</div>
+                            </div>
 
 
                             <!-- WELLNESS POLICY -->
@@ -2000,10 +2293,10 @@
                                 <p:outputLabel
                                         value="Does your company have workplace health promotion / wellness policy or policies?"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Does your company have workplace health promotion / wellness policy or policies?" id="wellnessPolicy"
                                         value="#{wellnessSurvey.answers['wellnessPolicy']}"
                                         layout="pageDirection"
-                                        required="true">
+                                        required="true" requiredMessage="Does your company have workplace health promotion / wellness policy or policies? - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
 
@@ -2018,6 +2311,7 @@
                                             update="wellnessPolicyDetails"/>
 
                                 </p:selectOneRadio>
+<p:message for="wellnessPolicy" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -2033,12 +2327,12 @@
                                     <p:outputLabel
                                             value="Elements covered by the wellness policy"/>
 
-                                    <p:selectManyCheckbox
+                                    <p:selectManyCheckbox label="Elements covered by the wellness policy"
                                             id="wellnessPolicyElements"
                                             value="#{wellnessSurvey.multiAnswers['wellnessPolicyElements']}"
                                             layout="responsive"
                                             columns="5"
-                                            required="true">
+                                            required="true" requiredMessage="Elements covered by the wellness policy - please select at least one option.">
 
                                         <f:selectItems
                                                 value="#{wellnessSurvey.wellnessElements}"/>
@@ -2048,6 +2342,7 @@
                                                 update="wellnessPolicyOtherPanel"/>
 
                                     </p:selectManyCheckbox>
+<p:message for="wellnessPolicyElements" display="text" styleClass="field-message"/>
 
                                     <p:outputPanel id="wellnessPolicyOtherPanel"
                                                    layout="block">
@@ -2059,10 +2354,11 @@
                                                 Other · specify
                                             </label>
 
-                                            <p:inputText
+                                            <p:inputText label="Other - specify" id="wellnessPolicyOther" styleClass="form-control"
                                                     placeholder="Other element"
                                                     value="#{wellnessSurvey.answers['wellnessPolicyOther']}"
-                                                    required="true"/>
+                                                    required="true" requiredMessage="Other - specify is required."/>
+<p:message for="wellnessPolicyOther" display="text" styleClass="field-message"/>
 
                                         </h:panelGroup>
 
@@ -2080,10 +2376,10 @@
                                 <p:outputLabel
                                         value="Does your company have a workplace health promotion / wellness program?"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Does your company have a workplace health promotion / wellness program?" id="wellnessProgram"
                                         value="#{wellnessSurvey.answers['wellnessProgram']}"
                                         layout="pageDirection"
-                                        required="true">
+                                        required="true" requiredMessage="Does your company have a workplace health promotion / wellness program? - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
 
@@ -2098,6 +2394,7 @@
                                             update="programDetails"/>
 
                                 </p:selectOneRadio>
+<p:message for="wellnessProgram" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -2115,16 +2412,17 @@
                                         <p:outputLabel
                                                 value="Components / strategies included in the program"/>
 
-                                        <p:selectManyCheckbox
+                                        <p:selectManyCheckbox label="Components / strategies included in the program" id="wellnessStrategies"
                                                 value="#{wellnessSurvey.multiAnswers['wellnessStrategies']}"
                                                 layout="responsive"
                                                 columns="2"
-                                                required="true">
+                                                required="true" requiredMessage="Components / strategies included in the program - please select at least one option.">
 
                                             <f:selectItems
                                                     value="#{wellnessSurvey.wellnessStrategies}"/>
 
                                         </p:selectManyCheckbox>
+<p:message for="wellnessStrategies" display="text" styleClass="field-message"/>
 
                                     </div>
 
@@ -2134,12 +2432,12 @@
                                         <p:outputLabel
                                                 value="Responsible body for the wellness program"/>
 
-                                        <p:selectManyCheckbox
+                                        <p:selectManyCheckbox label="Responsible body for the wellness program"
                                                 id="wellnessOwners"
                                                 value="#{wellnessSurvey.multiAnswers['wellnessOwners']}"
                                                 layout="responsive"
                                                 columns="2"
-                                                required="true">
+                                                required="true" requiredMessage="Responsible body for the wellness program - please select at least one option.">
 
                                             <f:selectItems
                                                     value="#{wellnessSurvey.wellnessOwners}"/>
@@ -2149,6 +2447,7 @@
                                                     update="wellnessOwnerOtherPanel"/>
 
                                         </p:selectManyCheckbox>
+<p:message for="wellnessOwners" display="text" styleClass="field-message"/>
 
                                         <p:outputPanel id="wellnessOwnerOtherPanel"
                                                        layout="block">
@@ -2160,10 +2459,11 @@
                                                     Other · specify
                                                 </label>
 
-                                                <p:inputText
+                                                <p:inputText label="Other - specify" id="wellnessOwnerOther" styleClass="form-control"
                                                         placeholder="Other responsible body"
                                                         value="#{wellnessSurvey.answers['wellnessOwnerOther']}"
-                                                        required="true"/>
+                                                        required="true" requiredMessage="Other - specify is required."/>
+<p:message for="wellnessOwnerOther" display="text" styleClass="field-message"/>
 
                                             </h:panelGroup>
 
@@ -2177,12 +2477,12 @@
                                         <p:outputLabel
                                                 value="Elements of the workplace wellness program"/>
 
-                                        <p:selectManyCheckbox
+                                        <p:selectManyCheckbox label="Elements of the workplace wellness program"
                                                 id="wellnessProgramElements"
                                                 value="#{wellnessSurvey.multiAnswers['wellnessProgramElements']}"
                                                 layout="responsive"
                                                 columns="5"
-                                                required="true">
+                                                required="true" requiredMessage="Elements of the workplace wellness program - please select at least one option.">
 
                                             <f:selectItems
                                                     value="#{wellnessSurvey.wellnessElements}"/>
@@ -2192,6 +2492,7 @@
                                                     update="wellnessProgramOtherPanel"/>
 
                                         </p:selectManyCheckbox>
+<p:message for="wellnessProgramElements" display="text" styleClass="field-message"/>
 
                                         <p:outputPanel id="wellnessProgramOtherPanel"
                                                        layout="block">
@@ -2203,10 +2504,11 @@
                                                     Other · specify
                                                 </label>
 
-                                                <p:inputText
+                                                <p:inputText label="Other - specify" id="wellnessProgramOther" styleClass="form-control"
                                                         placeholder="Other element"
                                                         value="#{wellnessSurvey.answers['wellnessProgramOther']}"
-                                                        required="true"/>
+                                                        required="true" requiredMessage="Other - specify is required."/>
+<p:message for="wellnessProgramOther" display="text" styleClass="field-message"/>
 
                                             </h:panelGroup>
 
@@ -2227,12 +2529,12 @@
                                 <p:outputLabel
                                         value="Methods of communicating healthy behaviors to employees"/>
 
-                                <p:selectManyCheckbox
+                                <p:selectManyCheckbox label="Methods of communicating healthy behaviors to employees"
                                         id="communicationMethods"
                                         value="#{wellnessSurvey.multiAnswers['communicationMethods']}"
                                         layout="responsive"
                                         columns="3"
-                                        required="true">
+                                        required="true" requiredMessage="Methods of communicating healthy behaviors to employees - please select at least one option.">
 
                                     <f:selectItems
                                             value="#{wellnessSurvey.communicationMethods}"/>
@@ -2242,6 +2544,7 @@
                                             update="communicationOtherPanel"/>
 
                                 </p:selectManyCheckbox>
+<p:message for="communicationMethods" display="text" styleClass="field-message"/>
 
                                 <p:outputPanel id="communicationOtherPanel"
                                                layout="block">
@@ -2253,10 +2556,11 @@
                                             Other · specify
                                         </label>
 
-                                        <p:inputText
+                                        <p:inputText label="Other - specify" id="communicationOther" styleClass="form-control"
                                                 placeholder="Other communication method"
                                                 value="#{wellnessSurvey.answers['communicationOther']}"
-                                                required="true"/>
+                                                required="true" requiredMessage="Other - specify is required."/>
+<p:message for="communicationOther" display="text" styleClass="field-message"/>
 
                                     </h:panelGroup>
 
@@ -2272,10 +2576,10 @@
                                 <p:outputLabel
                                         value="Does your company provide healthy food and beverages for the company employees free of charge?"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Does your company provide healthy food and beverages for the company employees free of charge?" id="freeHealthyFood"
                                         value="#{wellnessSurvey.answers['freeHealthyFood']}"
                                         layout="pageDirection"
-                                        required="true">
+                                        required="true" requiredMessage="Does your company provide healthy food and beverages for the company employees free of charge? - please select an option.">
 
                                     <f:selectItem
                                             itemLabel="Yes, all food and beverages are healthy"
@@ -2290,6 +2594,7 @@
                                             itemValue="Not provided"/>
 
                                 </p:selectOneRadio>
+<p:message for="freeHealthyFood" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -2301,10 +2606,10 @@
                                 <p:outputLabel
                                         value="Does your company have cafeteria/canteen?"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Does your company have cafeteria/canteen?" id="cafeteria"
                                         value="#{wellnessSurvey.answers['cafeteria']}"
                                         layout="pageDirection"
-                                        required="true">
+                                        required="true" requiredMessage="Does your company have cafeteria/canteen? - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                     <f:selectItem itemLabel="No" itemValue="No"/>
@@ -2314,6 +2619,7 @@
                                             update="cafeteriaDetails"/>
 
                                 </p:selectOneRadio>
+<p:message for="cafeteria" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -2329,10 +2635,10 @@
                                     <p:outputLabel
                                             value="Does the cafeteria/canteen promote healthy food options?"/>
 
-                                    <p:selectOneRadio
+                                    <p:selectOneRadio label="Does the cafeteria/canteen promote healthy food options?" id="cafeteriaPromotion"
                                             value="#{wellnessSurvey.answers['cafeteriaPromotion']}"
                                             layout="pageDirection"
-                                            required="true">
+                                            required="true" requiredMessage="Does the cafeteria/canteen promote healthy food options? - please select an option.">
 
                                         <f:selectItem
                                                 itemLabel="Yes, designated area/shelf for healthier foods and snacks"
@@ -2351,6 +2657,7 @@
                                                 itemValue="No"/>
 
                                     </p:selectOneRadio>
+<p:message for="cafeteriaPromotion" display="text" styleClass="field-message"/>
 
                                 </h:panelGroup>
 
@@ -2364,11 +2671,11 @@
                                 <p:outputLabel
                                         value="Access to on-site physical activity facilities"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Access to on-site physical activity facilities" id="physicalActivityFacilities"
                                         value="#{wellnessSurvey.answers['physicalActivityFacilities']}"
                                         layout="responsive"
                                         columns="3"
-                                        required="true">
+                                        required="true" requiredMessage="Access to on-site physical activity facilities - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
 
@@ -2379,6 +2686,7 @@
                                     <f:selectItem itemLabel="No" itemValue="No"/>
 
                                 </p:selectOneRadio>
+<p:message for="physicalActivityFacilities" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -2390,10 +2698,10 @@
                                 <p:outputLabel
                                         value="Does your company ban tobacco use?"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Does your company ban tobacco use?" id="tobaccoBan"
                                         value="#{wellnessSurvey.answers['tobaccoBan']}"
                                         layout="pageDirection"
-                                        required="true">
+                                        required="true" requiredMessage="Does your company ban tobacco use? - please select an option.">
 
                                     <f:selectItem
                                             itemLabel="Use of tobacco is not permitted within the Company at any time"
@@ -2412,6 +2720,7 @@
                                             itemValue="No"/>
 
                                 </p:selectOneRadio>
+<p:message for="tobaccoBan" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -2423,14 +2732,15 @@
                                 <p:outputLabel
                                         value="Counseling / mental health support to employees"/>
 
-                                <p:selectOneRadio
+                                <p:selectOneRadio label="Counseling / mental health support to employees" id="mentalHealthSupport"
                                         value="#{wellnessSurvey.answers['mentalHealthSupport']}"
-                                        required="true">
+                                        required="true" requiredMessage="Counseling / mental health support to employees - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                     <f:selectItem itemLabel="No" itemValue="No"/>
 
                                 </p:selectOneRadio>
+<p:message for="mentalHealthSupport" display="text" styleClass="field-message"/>
 
                             </div>
 
@@ -2493,20 +2803,11 @@
 
 
                                     <p:commandButton
-                                            value="Submit Survey"
+                                            value="Submit"
                                             icon="pi pi-check"
                                             action="#{wellnessSurvey.submit}"
                                             ajax="false"
                                             styleClass="wizard-submit-button"/>
-
-
-                                    <p:commandButton
-                                            value="Clear"
-                                            icon="pi pi-refresh"
-                                            action="#{wellnessSurvey.reset}"
-                                            ajax="false"
-                                            immediate="true"
-                                            styleClass="ui-button-secondary"/>
 
                                 </div>
 

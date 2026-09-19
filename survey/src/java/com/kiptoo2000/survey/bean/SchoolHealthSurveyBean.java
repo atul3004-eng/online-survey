@@ -29,6 +29,8 @@ public class SchoolHealthSurveyBean implements Serializable {
     private String resumeToken = java.util.UUID.randomUUID().toString();
     private static final List<String> MULTI_KEYS = Arrays.asList("humanResources","infrastructureSupport","preparatoryGrades","primaryGrades","secondaryGrades","targetPopulation","targetedTopics");
     private String returnCode;
+    private String confirmationEmailMessage;
+    public String getConfirmationEmailMessage() { return confirmationEmailMessage; }
     public String getReturnCode() { return returnCode; }
     public void setReturnCode(String code) { returnCode = code == null ? null : code.trim(); }
     public String getResumeToken() { return resumeToken; }
@@ -47,6 +49,7 @@ public class SchoolHealthSurveyBean implements Serializable {
         return null;
     }
     public String reopen() {
+        confirmationEmailMessage = null;
         try {
             SchoolHealthResponse response = schoolHealthSurveyRepository.findByToken(returnCode);
             if (response == null) {
@@ -217,7 +220,17 @@ public class SchoolHealthSurveyBean implements Serializable {
         return false;
     }
 
+    public boolean isOptionSelected(String key, String option) {
+        String[] selected = multiAnswers.get(key);
+        if (selected == null) return false;
+        for (String value : selected) {
+            if (option.equals(value)) return true;
+        }
+        return false;
+    }
+
     public String beginSurvey() {
+        confirmationEmailMessage = null;
         resumeToken = java.util.UUID.randomUUID().toString();
         returnCode = null;
         answers.clear();
@@ -229,6 +242,7 @@ public class SchoolHealthSurveyBean implements Serializable {
     }
 
     public String submit() {
+        confirmationEmailMessage = null;
         try {
             savedResponseId = schoolHealthSurveyRepository.save(savedResponseId, resumeToken, answers, multiAnswers, locale, false);
             submitted = true;
@@ -248,10 +262,17 @@ public class SchoolHealthSurveyBean implements Serializable {
                             "The school health survey could not be saved. Please check the database connection and schema."));
             return null;
         }
+        boolean emailSent = new com.kiptoo2000.survey.service.SurveyConfirmationEmail()
+                .send(answers.get("contactEmail"), savedResponseId, locale);
+        java.util.ResourceBundle labels = java.util.ResourceBundle.getBundle(
+                "com.kiptoo2000.survey.i18n.messages", new java.util.Locale(locale));
+        confirmationEmailMessage = labels.getString(emailSent
+                ? "schoolHealth.emailSent" : "schoolHealth.emailFailed");
         return "school-health-complete?faces-redirect=true";
     }
 
     public String reset() {
+        confirmationEmailMessage = null;
         resumeToken = java.util.UUID.randomUUID().toString();
         returnCode = null;
         answers.clear();
@@ -332,7 +353,7 @@ public class SchoolHealthSurveyBean implements Serializable {
             add(rows, "government", "Government");
             add(rows, "semi_governmental", "Semi-Governmental");
             add(rows, "private", "Private");
-            add(rows, "ngo", "NGO");
+            add(rows, "ngo", "Non-Governmental Organization (NGO)");
             add(rows, "other", "Other");
         } else if ("statusOptions".equals(group)) {
             add(rows, "ongoing", "Ongoing");

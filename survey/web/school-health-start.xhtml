@@ -9,254 +9,372 @@
       lang="#{schoolHealthSurvey.lang}"
       dir="#{schoolHealthSurvey.dir}">
 
-<f:metadata>
-<f:viewParam name="lang" value="#{schoolHealthSurvey.locale}"/>
-</f:metadata><f:view locale="#{schoolHealthSurvey.locale}">
-<h:head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-<f:loadBundle basename="com.kiptoo2000.survey.i18n.messages" var="msg"/>
-<title>#{msg['schoolHealth.brand']}</title>
+<f>
+    <f name="lang" value="#{schoolHealthSurvey.locale}"/>
+</f>
 
-<link rel="shortcut icon"
-      href="/NCGP/faces/javax.faces.resources/MophTheam/images/favicon.ico"/>
-<link href="/NCGP/faces/javax.faces.resources/MophTheam/css/primefaces_override.css"
-      rel="stylesheet" type="text/css"/>
-<link href="/NCGP/faces/javax.faces.resources/MophTheam/css/light.css"
-      rel="stylesheet" type="text/css"/>
-<h:outputStylesheet library="primefaces" name="primeicons/primeicons.css"/>
+<f locale="#{schoolHealthSurvey.locale}">
+    <h>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <f basename="messages" var="msg"/>
+        <title>#{msg['schoolHealth.brand']}</title>
 
-<style type="text/css">
-    body { margin: 0; background: #f7f8fa; color: #343a40; }
-    .sidebar-brand__single-page { align-items: center; display: flex; }
-    .language-link { font-size: 1.05rem; font-weight: 600; text-decoration: none; }
-    .survey-shell { margin: 0 auto; max-width: 1100px; padding: 32px 1rem 48px; width: 100%; }
-    .stage-card { background: #fff; border: 1px solid #eceef1; border-radius: .5rem; box-shadow: 0 12px 30px rgba(31,45,61,.08); margin: 24px auto 0; max-width: 920px; padding: 36px; }
-    .stage-head { align-items: flex-start; display: flex; gap: 1rem; justify-content: space-between; }
-    .eyebrow { color: #8a1538; font-size: .78rem; font-weight: 700; letter-spacing: .06em; margin: 0 0 .5rem; text-transform: uppercase; }
-    h1 { color: #8a1538; font-size: 1.8rem; margin: 0 0 .75rem; }
-    h2 { color: #343a40; font-size: 1.1rem; margin: 1.5rem 0 .75rem; }
-    .intro { color: #5f6b7a; font-size: 1rem; line-height: 1.6; margin: 0 0 1rem; }
-    .note { background: #f6f7f9; border: 1px solid #eceef1; border-radius: .4rem; color: #495057; line-height: 1.55; padding: 1rem 1.25rem; }
-    .summary { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 1.5rem 0; }
-    .summary div { background: #fafbfc; border: 1px solid #edf0f2; border-radius: .4rem; padding: 1rem; }
-    .summary span { color: #8b95a1; display: block; font-size: .78rem; margin-bottom: .25rem; }
-    .summary strong { color: #343a40; display: block; }
-    .actions { display: flex; gap: .75rem; justify-content: center; margin-top: 1.75rem; }
-    .start-button { background: #8a1538 !important; border-color: #8a1538 !important; color: #fff !important; min-width: 160px; }
-    html[dir="rtl"] body, html[dir="rtl"] .stage-card { direction: rtl; text-align: right; }
-    html[dir="rtl"] .navbar { direction: rtl; }
-    html[dir="rtl"] .navbar-align { margin-left: 0 !important; margin-right: auto !important; }
-    @media (max-width: 767.98px) {
-        .survey-shell { padding: 1rem .75rem 2rem; }
-        .stage-card { padding: 1.25rem; }
-        .stage-head { align-items: stretch; flex-direction: column; }
-        .summary { grid-template-columns: 1fr; }
-        .actions { flex-direction: column; }
-    }
-</style>
+        <link rel="shortcut icon"
+              href="/NCGP/faces/javax.faces.resources/MophTheam/images/favicon.ico"/>
+        <link href="/NCGP/faces/javax.faces.resources/MophTheam/css/primefaces_override.css"
+              rel="stylesheet" type="text/css"/>
+        <link href="/NCGP/faces/javax.faces.resources/MophTheam/css/light.css"
+              rel="stylesheet" type="text/css"/>
+        <h:outputStylesheet library="primefaces" name="primeicons/primeicons.css"/>
 
-</h:head>
+        <style type="text/css">
+            body { margin: 0; background: #f7f8fa; color: #343a40; }
+            .sidebar-brand__single-page { align-items: center; display: flex; }
+            .language-link { font-size: 1.05rem; font-weight: 600; text-decoration: none; }
+            .survey-shell { margin: 0 auto; max-width: 1100px; padding: 32px 1rem 48px; width: 100%; }
+            .stage-card { background: #fff; border: 1px solid #eceef1; border-radius: .5rem; box-shadow: 0 12px 30px rgba(31,45,61,.08); margin: 24px auto 0; max-width: 920px; padding: 36px; }
+            .stage-head { align-items: flex-start; display: flex; gap: 1rem; justify-content: space-between; }
+            .eyebrow { color: #8a1538; font-size: .78rem; font-weight: 700; letter-spacing: .06em; margin: 0 0 .5rem; text-transform: uppercase; }
+            h1 { color: #8a1538; font-size: 1.8rem; margin: 0 0 .75rem; }
+            h2 { color: #343a40; font-size: 1.1rem; margin: 1.5rem 0 .75rem; }
+            .intro { color: #5f6b7a; font-size: 1rem; line-height: 1.6; margin: 0 0 1rem; }
+            .note { background: #f6f7f9; border: 1px solid #eceef1; border-radius: .4rem; color: #495057; line-height: 1.55; padding: 1rem 1.25rem; }
+            .summary { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 1.5rem 0; }
+            .summary div { background: #fafbfc; border: 1px solid #edf0f2; border-radius: .4rem; padding: 1rem; }
+            .summary span { color: #8b95a1; display: block; font-size: .78rem; margin-bottom: .25rem; }
+            .summary strong { color: #343a40; display: block; }
+            .actions { display: flex; gap: .75rem; justify-content: center; margin-top: 1.75rem; }
+            .start-button { background: #8a1538 !important; border-color: #8a1538 !important; color: #fff !important; min-width: 160px; }
+            html[dir="rtl"] body, html[dir="rtl"] .stage-card { direction: rtl; text-align: right; }
+            html[dir="rtl"] .navbar { direction: rtl; }
+            html[dir="rtl"] .navbar-align { margin-left: 0 !important; margin-right: auto !important; }
+            @media (max-width: 767.98px) {
+                .survey-shell { padding: 1rem .75rem 2rem; }
+                .stage-card { padding: 1.25rem; }
+                .stage-head { align-items: stretch; flex-direction: column; }
+                .summary { grid-template-columns: 1fr; }
+                .actions { flex-direction: column; }
+            }
+        </style>
 
-<h:body styleClass="survey-page">
-<nav class="navbar navbar-expand navbar-light navbar-bg">
-<a class="sidebar-brand sidebar-brand__single-page" href="#{request.contextPath}/index.xhtml">
-<h:graphicImage styleClass="mw-100"
-alt="MOPH"
-value="/NCGP/faces/javax.faces.resources/MophTheam/img/Logo_moph_bilingual.svg"/>
-<span class="sidebar-brand__single-page-divider"></span>
-<span class="align-middle d-block sidebar-brand__single-page-title">#{msg['schoolHealth.department']}</span>
-</a>
+    </h>
 
-    <div class="navbar-collapse collapse">
-        <ul class="navbar-nav navbar-align">
-            <li class="nav-item">
-                <h:form id="languageForm">
-                    <h:commandLink action="#{schoolHealthSurvey.toggleLanguage}"
-                                   styleClass="nav-flag link-primary language-link"
-                                   hreflang="#{schoolHealthSurvey.arabic ? 'en' : 'ar'}">
+    <h styleClass="survey-page">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-brand sidebar-brand__single-page" href="#{request.contextPath}/index.xhtml">
+                <h styleClass="mw-100"
+                   alt="MOPH"
+                   value="/NCGP/faces/javax.faces.resources/MophTheam/img/Logo_moph_bilingual.svg"/>
+                <span class="sidebar-brand__single-page-divider"></span>
+                <span class="align-middle d-block sidebar-brand__single-page-title">#{msg['schoolHealth.department']}</span>
+            </a>
+
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+                    <li class="nav-item">
+                        <h:form id="languageForm">
+                            <h:commandLink action="#{schoolHealthSurvey.toggleLanguage}"
+                                           styleClass="nav-flag link-primary language-link"
+                                           hreflang="#{schoolHealthSurvey.arabic ? 'en' : 'ar'}">
                         <span class="text-lg"
                               lang="#{schoolHealthSurvey.arabic ? 'en' : 'ar'}">
                             #{schoolHealthSurvey.arabic ? 'English' : 'عربي'}
                         </span>
-                    </h:commandLink>
-                </h:form>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<div class="survey">
-<div class="survey__card">
-
-    <div class="survey__head">
-        <div>
-            <p class="survey__eyebrow">
-                #{msg['schoolHealth.department']}
-            </p>
-
-            <h2 class="survey__title">
-                #{msg['schoolHealth.title']}
-            </h2>
-
-            <p class="survey__subtitle">
-                A mapping exercise to identify school health promotion programs
-                and initiatives across the State of Qatar.
-            </p>
-        </div>
-
-        <button type="button"
-                class="btn btn-outline-secondary btn-sm text-nowrap js-fullscreen"
-                onclick="toggleFullscreen()">
-            <i class="align-middle me-1" data-feather="maximize"></i>
-            <span class="js-fullscreen-label">Fullscreen</span>
-        </button>
-    </div>
-
-    <hr class="survey__rule"/>
-
-    <section class="mb-4">
-        <h5 class="survey__section-title">Background</h5>
-
-        <p class="mb-0">
-            This questionnaire is shared with relevant ministries, institutions,
-            and MoPH departments to support coordination, alignment, and future
-            planning. It collects information on existing or planned school health
-            promotion programs, initiatives, or activities — and any related
-            policies, guidelines, or documents.
-        </p>
-    </section>
-
-    <section class="mb-4">
-        <h5 class="survey__section-title">Instructions</h5>
-
-        <ul class="survey__steps">
-            <li class="survey__step-item">
-                <span class="survey__step-num">1</span>
-                <span>
-                    If you are implementing more than one program or initiative,
-                    complete a separate questionnaire for each. Answer all questions
-                    only in relation to the specific program being described.
-                </span>
-            </li>
-
-            <li class="survey__step-item">
-                <span class="survey__step-num">2</span>
-                <span>
-                    Move forward and backward using the navigation buttons in the
-                    questionnaire — do not use your browser’s back and forward arrows.
-                </span>
-            </li>
-
-            <li class="survey__step-item">
-                <span class="survey__step-num">3</span>
-                <span>
-                    Once you are comfortable with all your responses, click Submit
-                    at the end of the questionnaire.
-                </span>
-            </li>
-
-            <li class="survey__step-item">
-                <span class="survey__step-num">4</span>
-                <span>
-                    This questionnaire contains seven sections, and every question
-                    should be answered.
-                </span>
-            </li>
-
-            <li class="survey__step-item">
-                <span class="survey__step-num">5</span>
-                <span>
-                    It takes about 10–15 minutes to complete.
-                </span>
-            </li>
-        </ul>
-    </section>
-
-    <div class="survey__callout mb-4">
-        <p class="survey__callout-label">
-            Questions about this questionnaire?
-        </p>
-
-        <p class="survey__callout-value">
-            HPS@MOPH.GOV.QA
-            &#160;·&#160;
-            4407 7458
-        </p>
-    </div>
-
-    <h:form id="schoolHealthStartForm">
-        <p:messages/>
-        <p>Resume a draft or reopen a submitted survey using your private return code.</p>
-        <p:inputText value="#{schoolHealthSurvey.returnCode}"
-                     placeholder="Private return code" styleClass="form-control mb-2"/>
-        <p:commandButton value="Reopen Survey" action="#{schoolHealthSurvey.reopen}"
-                         ajax="false" styleClass="btn btn-outline-secondary w-100 mb-3"/>
-
-        <p:commandButton
-            value="#{msg['schoolHealth.startSurvey']}"
-            icon="pi pi-play"
-            action="#{schoolHealthSurvey.beginSurvey}"
-            ajax="false"
-            styleClass="btn btn-primary btn-lg w-100 mb-2"/>
-
-     <h:outputLink
-value="#{resource['docs:school-health-questionnaire.pdf']}"
-target="_blank"
-styleClass="btn btn-outline-secondary w-100 mb-3">
-
-<i class="align-middle me-1" data-feather="printer"></i>
-<span>Print a blank copy (PDF)</span>
-
-</h:outputLink>
-</h:form>
-
-    <p class="survey__intro-note">
-        Your participation is highly appreciated.
-    </p>
-
-</div>
-
-</div>
-
-<footer class="footer">
-    <div class="container-fluid">
-        <div class="row text-muted">
-            <div class="col-6 text-start">
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a class="text-muted" href="#">Support</a></li>
-                    <li class="list-inline-item"><a class="text-muted" href="#">Help Center</a></li>
-                    <li class="list-inline-item"><a class="text-muted" href="#">Privacy</a></li>
-                    <li class="list-inline-item"><a class="text-muted" href="#">Terms of Service</a></li>
+                            </h:commandLink>
+                        </h:form>
+                    </li>
                 </ul>
             </div>
-            <div class="col-6 text-end">
-                <p class="mb-0">© 2026 Copyright - Ministry of Public Health</p>
+        </nav>
+
+        <div class="survey">
+            <div class="survey__card">
+
+                <div class="survey__head">
+                    <div>
+                        <p class="survey__eyebrow">
+                            #{msg['schoolHealth.department']}
+                        </p>
+
+                        <h2 class="survey__title">
+                            #{msg['schoolHealth.title']}
+                        </h2>
+
+                        <h:panelGroup layout="block" styleClass="survey__subtitle"
+                                      rendered="#{not schoolHealthSurvey.arabic}">
+                            Mapping school health promotion programs and initiatives across
+                            the State of Qatar.
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="survey__subtitle"
+                                      rendered="#{schoolHealthSurvey.arabic}">
+                            حصر ورصد برامج ومبادرات تعزيز الصحة في المدارس في دولة قطر.
+                        </h:panelGroup>
+                    </div>
+
+                    <button type="button"
+                            class="btn btn-outline-secondary btn-sm text-nowrap js-fullscreen"
+                            onclick="toggleFullscreen()">
+                        <i class="align-middle me-1" data-feather="maximize"></i>
+                        <span class="js-fullscreen-label">Fullscreen</span>
+                    </button>
+                </div>
+
+                <hr class="survey__rule"/>
+
+                <h:panelGroup layout="block" rendered="#{not schoolHealthSurvey.arabic}">
+                    <section class="mb-4">
+                        <h5 class="survey__section-title">Background: </h5>
+
+                        <p>
+                            The Health Promotion Department at the Ministry of Public Health is
+                            conducting a mapping exercise to identify schools’ health promotion
+                            programs and initiatives implemented in schools across the State of
+                            Qatar. This questionnaire is being shared with relevant ministries and
+                            institutions, as well as with departments and sections within the
+                            Ministry of Public Health, to support coordination, alignment, and
+                            future planning of school health promotion activities.
+                        </p>
+
+                        <p>The purpose of this questionnaire is to collect information from institutions and partners regarding:</p>
+
+                        <ul class="mb-0">
+                            <li>Existing or planned School Health Promotion programs, or initiatives, or activities.</li>
+                            <li>School health–related policies, guidelines, or documents.</li>
+                        </ul>
+                    </section>
+
+                    <section class="mb-4">
+                        <h5 class="survey__section-title">Instructions</h5>
+
+                        <ul class="survey__steps">
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">1</span>
+                                <span>
+                    If you are implementing more than one school health promotion
+                    program or initiative, please complete a separate questionnaire for each program or initiative. All questions in this questionnaire should be answer only in relation to the specific Program/Initiative/Activity being described. Health Promoting School Program/Initiative/Activity refers to any activity, service, intervention, initiative, or program, that aims to improve the health, well-being, safety, or learning environment of students, staff, or the school community. This includes health education and raising awareness, school health services, mental health support, nutrition and physical activity, safety and environmental health measures, staff well-being, family and community engagement, and other initiatives that contribute to a healthier school environment.
+                </span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">2</span>
+                                <span>
+                    You may move forward and backward through the questionnaire by
+                    using the navigation buttons in the questionnaire. Do not use the forward and backward arrows on your browser.
+                </span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">3</span>
+                                <span>
+                    Once you are comfortable with all your responses, click on the <strong>SUBMIT</strong> button at the end of the questionnaire.
+                </span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">4</span>
+                                <span>
+                    This questionnaire contains seven sections.
+                </span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">5</span>
+                                <span>
+                    Please answer every question.
+                </span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">6</span>
+                                <span>
+                    This questionnaire may take you 10 - 15 minutes to answer.
+                </span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">7</span>
+                                <span>
+                    If you have any inquiries regarding this questionnaire, please
+                    contact us at
+                    <a href="mailto:HPS@MOPH.GOV.QA"><strong>HPS@MOPH.GOV.QA</strong></a>
+                    or <strong>44077458</strong>.
+                </span>
+                            </li>
+                        </ul>
+                    </section>
+                </h:panelGroup>
+
+                <h:panelGroup layout="block" rendered="#{schoolHealthSurvey.arabic}">
+                    <section class="mb-4">
+                        <h5 class="survey__section-title">مقدمة</h5>
+
+                        <p>
+                            تقوم إدارة تعزيز الصحة بوزارة الصحة العامة بإجراء حصر ورصد وتوثيق
+                            لمبادرات وبرامج تعزيز الصحة في المدارس في دولة قطر. ويتم تعميم هذا
+                            الاستبيان على الوزارات والمؤسسات ذات الصلة، وكذلك على الإدارات
+                            والأقسام داخل وزارة الصحة العامة، لدعم جهود التنسيق والمواءمة
+                            والتخطيط المستقبلي لأنشطة تعزيز الصحة في المدارس.
+                        </p>
+
+                        <p>يهدف هذا الاستبيان إلى جمع البيانات من المؤسسات والشركاء حول ما يلي:</p>
+
+                        <ul class="mb-0">
+                            <li>المبادرات أو البرامج أو الأنشطة الحالية أو المستقبلية في مجال الصحة المدرسية.</li>
+                            <li>السياسات أو الإرشادات أو الوثائق المعتمدة المتعلقة بالصحة المدرسية.</li>
+                        </ul>
+                    </section>
+
+                    <section class="mb-4">
+                        <h5 class="survey__section-title">التعليمات</h5>
+
+                        <ul class="survey__steps">
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">1</span>
+                                <span>
+                       1.	في حال تنفيذ أكثر من برنامج أو مبادرة، يرجى تعبئة استبيان منفصل لكل برنامج أو مبادرة. ويجب أن تقتصر جميع الإجابات في هذا الاستبيان على البرنامج أو المبادرة او النشاط المحدد الذي يتم تعبئة الاستبيان بشأنه.  تشير أنشطة المدارس المعززة للصحة إلى أي نشاط أو خدمة أو تدخل أو مبادرة أو برنامج يهدف إلى تعزيز صحة ورفاه وسلامة الطلاب، أو العاملين، أو بيئة التعلم، أو المجتمع المدرسي. ويشمل ذلك التثقيف الصحي ورفع الوعي، وخدمات الصحة المدرسية، ودعم الصحة النفسية، والتغذية والنشاط البدني، وإجراءات السلامة والصحة البيئية، وتعزيز صحة ورفاه العاملين، وإشراك الأسرة والمجتمع، وغيرها من المبادرات التي تسهم في خلق بيئة مدرسية أكثر صحة.
+                    </span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">2</span>
+                                <span>
+                        2.	يمكنك التنقل للأمام أو الخلف داخل الاستبيان باستخدام أزرار التنقل الموجودة فيه. يُرجى عدم استخدام أزرار الرجوع أو التقدم في متصفح الإنترنت.
+                    </span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">3</span>
+                                <span>
+                        بعد التأكد من جميع إجاباتك، اضغط على زر
+                        <strong>إرسال (SUBMIT)</strong> في نهاية الاستبيان.
+                    </span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">4</span>
+                                <span>يحتوي هذا الاستبيان على سبعة أقسام.</span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">5</span>
+                                <span>يُرجى الإجابة عن جميع الأسئلة.</span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">6</span>
+                                <span>قد يستغرق إكمال هذا الاستبيان من 10 إلى 15 دقيقة.</span>
+                            </li>
+
+                            <li class="survey__step-item">
+                                <span class="survey__step-num">7</span>
+                                <span>
+                        في حال وجود أي استفسار حول هذا الاستبيان، يُرجى التواصل عبر
+                        البريد الإلكتروني
+                        <a href="mailto:HPS@MOPH.GOV.QA"><strong>HPS@MOPH.GOV.QA</strong></a>
+                        أو على الرقم <strong>44077458</strong>.
+
+                    </span>
+                            </li>
+                        </ul>
+                    </section>
+                </h:panelGroup>
+
+                <div class="survey__callout mb-4">
+                    <h:panelGroup layout="block" styleClass="survey__callout-label"
+                                  rendered="#{not schoolHealthSurvey.arabic}">
+                        Questions about this questionnaire?
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="survey__callout-label"
+                                  rendered="#{schoolHealthSurvey.arabic}">
+                        هل لديك استفسار حول هذا الاستبيان؟
+                    </h:panelGroup>
+
+                    <p class="survey__callout-value">
+                        HPS@MOPH.GOV.QA
+                        &#160;·&#160;
+                        4407 7458
+                    </p>
+                </div>
+
+                <h:form id="schoolHealthStartForm">
+
+                    <p:messages/>
+                    <p>Resume a draft or reopen a submitted survey using your private return code.</p>
+                    <p:inputText value="#{schoolHealthSurvey.returnCode}"
+                                 placeholder="Private return code" styleClass="form-control mb-2"/>
+                    <p:commandButton value="Reopen Survey" action="#{schoolHealthSurvey.reopen}"
+                                     ajax="false" styleClass="btn btn-outline-secondary w-100 mb-3"/>
+
+                    <p:commandButton
+                            value="#{msg['schoolHealth.startSurvey']}"
+                            icon="pi pi-play"
+                            action="#{schoolHealthSurvey.beginSurvey}"
+                            ajax="false"
+                            styleClass="btn btn-primary btn-lg w-100 mb-2"/>
+
+                    <p:commandLink
+                            action="#{schoolHealthSurvey.downloadBlank}"
+                            ajax="false"
+                            target="_blank"
+                            styleClass="btn btn-outline-secondary w-100 mb-3">
+
+                        <i class="align-middle me-1" data-feather="printer"></i>
+                        <span>Print a blank copy (PDF)</span>
+                    </p:commandLink>
+                </h:form>
+
+                <h:panelGroup layout="block" styleClass="survey__intro-note"
+                              rendered="#{not schoolHealthSurvey.arabic}">
+                    Your participation is highly appreciated.
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="survey__intro-note"
+                              rendered="#{schoolHealthSurvey.arabic}">
+                    نقدّر مشاركتكم القيّمة.
+                </h:panelGroup>
+
             </div>
+
         </div>
-    </div>
-</footer>
 
-<script type="text/javascript">
-    function toggleFullscreen() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(function () {});
-        } else if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
-    }
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row text-muted">
+                    <div class="col-6 text-start">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a class="text-muted" href="#">Support</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Help Center</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Privacy</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">© 2026 Copyright - Ministry of Public Health</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
-    document.addEventListener("fullscreenchange", function () {
-        var label = document.querySelector(".stage-head .js-fullscreen-label");
-        if (label) {
-            label.textContent = document.fullscreenElement ? "Exit fullscreen" : "Fullscreen";
-        }
-    });
-</script>
-<script type="text/javascript" src="/NCGP/faces/javax.faces.resources/MophTheam/js/app.js"></script>
-<script type="text/javascript" src="/NCGP/faces/javax.faces.resources/MophTheam/js/accessibility.js"></script>
+        <script type="text/javascript">
+            function toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(function () {});
+                } else if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
 
-</h:body>
-</f:view>
+            document.addEventListener("fullscreenchange", function () {
+                var label = document.querySelector(".stage-head .js-fullscreen-label");
+                if (label) {
+                    label.textContent = document.fullscreenElement ? "Exit fullscreen" : "Fullscreen";
+                }
+            });
+        </script>
+        <script type="text/javascript" src="/NCGP/faces/javax.faces.resources/MophTheam/js/app.js"></script>
+        <script type="text/javascript" src="/NCGP/faces/javax.faces.resources/MophTheam/js/accessibility.js"></script>
+
+    </h>
+</f>
 
 </html>

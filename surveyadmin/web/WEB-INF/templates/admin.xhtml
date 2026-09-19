@@ -28,7 +28,8 @@
 
         <h:panelGroup layout="block" styleClass="mt-4" rendered="#{authBean.loggedIn}">
             <div class="nav nav-pills gap-2">
-                <h:link outcome="/topics.xhtml" value="Topics" styleClass="nav-link active"/>
+                <h:link outcome="/topics.xhtml" value="Topics" styleClass="nav-link #{view.viewId eq '/topics.xhtml' ? 'active' : ''}"/>
+                <h:link outcome="/school-health.xhtml" value="School Health Survey" styleClass="nav-link #{view.viewId eq '/school-health.xhtml' ? 'active' : ''}"/>
             </div>
         </h:panelGroup>
 

@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <!-- Include outside an existing h:form: this fragment owns its form. -->
+    <h:form id="schoolHealthExportForm">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h2 class="h4">School Health Survey — Excel Export</h2>
+                <h:panelGroup id="exportState" layout="block" styleClass="mb-3">
+                    <p role="status" aria-live="polite"><h:outputText value="#{schoolHealthExport.status}"/></p>
+                    <p:progressBar value="#{schoolHealthExport.progress}" labelTemplate="{value}%"
+                                   rendered="#{schoolHealthExport.running or schoolHealthExport.ready}"/>
+                    <p:commandButton value="Prepare Excel" icon="pi pi-file-excel"
+                                     action="#{schoolHealthExport.start}" process="@this" update="@form"
+                                     disabled="#{schoolHealthExport.running}"/>
+                    <p:commandButton value="Download Excel" icon="pi pi-download"
+                                     action="#{schoolHealthExport.download}" ajax="false"
+                                     rendered="#{schoolHealthExport.ready}"/>
+                </h:panelGroup>
+                <p:poll interval="1" process="@this" update="exportState" global="false"
+                        autoStart="#{schoolHealthExport.running}"
+                        stop="#{not schoolHealthExport.running}"/>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

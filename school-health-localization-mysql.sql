@@ -91,7 +91,7 @@ WHERE OPTION_TYPE IN (
 );
 
 INSERT INTO OPTIONS (DESCRIPTION, DESCRIPTION_AR, OPTION_TYPE) VALUES
-('Government','حكومية','institutionTypes'),('Semi-Governmental','شبه حكومية','institutionTypes'),('Private','خاصة','institutionTypes'),('NGO','منظمة غير حكومية','institutionTypes'),('Other','خيارات إضافية','institutionTypes'),
+('Government','حكومية','institutionTypes'),('Semi-Governmental','شبه حكومية','institutionTypes'),('Private','خاصة','institutionTypes'),('Non-Governmental Organization (NGO)','منظمة غير حكومية','institutionTypes'),('Other','خيارات إضافية','institutionTypes'),
 ('Ongoing','جارٍ التنفيذ','statusOptions'),('Planned','مخطط له','statusOptions'),('One-time or repeated activity','مبادرة أو نشاط لمرة واحدة أو عدة مرات','statusOptions'),('Other','خيارات أخرى','statusOptions'),
 ('Tobacco and nicotine product control','مكافحة منتجات التبغ والنيكوتين','targetedTopics'),('Nutrition','التغذية','targetedTopics'),('Physical Activity','النشاط البدني','targetedTopics'),('Non-Communicable Diseases (chronic)','الأمراض غير الانتقالية (المزمنة)','targetedTopics'),('Mental Health','الصحة النفسية','targetedTopics'),('Oral Health','صحة الفم والأسنان','targetedTopics'),('Communicable Diseases','الأمراض الانتقالية','targetedTopics'),('Vaccination','التطعيمات','targetedTopics'),('Environmental health','صحة البيئة','targetedTopics'),('Safety','السلامة','targetedTopics'),('Other','خيارات إضافية','targetedTopics'),
 ('Students','الطلاب','targetPopulations'),('Teachers','المعلمون','targetPopulations'),('Parents','أولياء الأمور','targetPopulations'),('Other','خيارات إضافية','targetPopulations'),
