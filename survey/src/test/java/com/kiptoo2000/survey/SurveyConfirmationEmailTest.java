@@ -8,6 +8,23 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SurveyConfirmationEmailTest {
+    @Test public void sendsResumeLinkInBothLanguages() throws Exception {
+        final MimeMessage[] captured = new MimeMessage[1];
+        SurveyConfirmationEmail mail = new SurveyConfirmationEmail(
+                Session.getInstance(new Properties()), "survey@example.org") {
+            @Override protected void deliver(MimeMessage message) { captured[0] = message; }
+        };
+        String link = "https://example.org/survey/school-health-resume.xhtml?token=private-token";
+        for (String language : new String[]{"en", "ar"}) {
+            assertTrue(mail.sendResumeLink("participant@example.org", 42L, language, link));
+            assertEquals(1, captured[0].getAllRecipients().length);
+            assertTrue(captured[0].getContent().toString().contains(link));
+            assertEquals(java.util.ResourceBundle.getBundle("messages", new java.util.Locale(language))
+                    .getString("schoolHealth.resumeSubject"), captured[0].getSubject());
+        }
+        assertFalse(mail.sendResumeLink("invalid", 42L, "en", link));
+    }
+
     @Test public void sendsLocalizedReceiptToOneParticipant() throws Exception {
         final MimeMessage[] captured = new MimeMessage[1];
         SurveyConfirmationEmail mail = new SurveyConfirmationEmail(

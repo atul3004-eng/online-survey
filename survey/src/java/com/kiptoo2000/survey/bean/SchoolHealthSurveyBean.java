@@ -30,6 +30,21 @@ public class SchoolHealthSurveyBean implements Serializable {
     private static final List<String> MULTI_KEYS = Arrays.asList("humanResources","infrastructureSupport","preparatoryGrades","primaryGrades","secondaryGrades","targetPopulation","targetedTopics");
     private String returnCode;
     private String confirmationEmailMessage;
+    private String draftEmailMessage;
+    public String getDraftEmailMessage() { return draftEmailMessage; }
+    private String label(String key) {
+        return java.util.ResourceBundle.getBundle("messages", new java.util.Locale(locale)).getString(key);
+    }
+    private boolean validateEmail() {
+        String email = answers.get("contactEmail");
+        if (!com.kiptoo2000.survey.validation.SurveyEmailValidator.isValid(email)) {
+            FacesContext.getCurrentInstance().validationFailed();
+            message(FacesMessage.SEVERITY_ERROR, label("schoolHealth.emailRequired"));
+            return false;
+        }
+        answers.put("contactEmail", email.trim());
+        return true;
+    }
     public String getConfirmationEmailMessage() { return confirmationEmailMessage; }
     public String getReturnCode() { return returnCode; }
     public void setReturnCode(String code) { returnCode = code == null ? null : code.trim(); }
@@ -39,10 +54,22 @@ public class SchoolHealthSurveyBean implements Serializable {
                 .getRequestParameterMap().get("saveDraft"));
     }
     public String saveDraft() {
+        draftEmailMessage = null;
+        if (!validateEmail()) return null;
         try {
             savedResponseId = schoolHealthSurveyRepository.save(savedResponseId, resumeToken, answers, multiAnswers, locale, true);
-            returnCode = resumeToken;
-            message(FacesMessage.SEVERITY_INFO, "Draft saved. Keep your private return code to continue later.");
+            javax.servlet.http.HttpServletRequest request = (javax.servlet.http.HttpServletRequest)
+                    FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            String baseUrl = System.getenv("SURVEY_PUBLIC_BASE_URL");
+            if (baseUrl == null || baseUrl.trim().isEmpty()) {
+                baseUrl = request.getRequestURL().toString();
+                baseUrl = baseUrl.substring(0, baseUrl.lastIndexOf('/'));
+            }
+            String resumeUrl = baseUrl.replaceAll("/+$", "") + "/school-health-resume.xhtml?token=" + resumeToken;
+            boolean sent = new com.kiptoo2000.survey.service.SurveyConfirmationEmail()
+                    .sendResumeLink(answers.get("contactEmail"), savedResponseId, locale, resumeUrl);
+            draftEmailMessage = label(sent ? "schoolHealth.draftEmailSent" : "schoolHealth.draftEmailFailed");
+            message(sent ? FacesMessage.SEVERITY_INFO : FacesMessage.SEVERITY_WARN, draftEmailMessage);
         } catch (RuntimeException ex) {
             message(FacesMessage.SEVERITY_ERROR, "Draft could not be saved. Please try again.");
         }
@@ -50,10 +77,15 @@ public class SchoolHealthSurveyBean implements Serializable {
     }
     public String reopen() {
         confirmationEmailMessage = null;
+        draftEmailMessage = null;
+        if (returnCode == null || !returnCode.matches("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")) {
+            message(FacesMessage.SEVERITY_ERROR, label("schoolHealth.invalidResumeLink"));
+            return null;
+        }
         try {
             SchoolHealthResponse response = schoolHealthSurveyRepository.findByToken(returnCode);
             if (response == null) {
-                message(FacesMessage.SEVERITY_ERROR, "No survey found for this return code.");
+                message(FacesMessage.SEVERITY_ERROR, label("schoolHealth.invalidResumeLink"));
                 return null;
             }
             answers.clear(); multiAnswers.clear();
@@ -188,7 +220,7 @@ public class SchoolHealthSurveyBean implements Serializable {
         // Keep the updated bilingual infrastructure choices available with older database seeds.
         if ("infrastructureSupports".equals(group)) {
             java.util.ResourceBundle labels = java.util.ResourceBundle.getBundle(
-                    "com.kiptoo2000.survey.i18n.messages", new java.util.Locale(locale));
+                    "messages", new java.util.Locale(locale));
             List<SelectItem> items = new ArrayList<SelectItem>();
             for (String label : getInfrastructureSupports()) {
                 String code = optionCode(label);
@@ -230,6 +262,7 @@ public class SchoolHealthSurveyBean implements Serializable {
     }
 
     public String beginSurvey() {
+        draftEmailMessage = null;
         confirmationEmailMessage = null;
         resumeToken = java.util.UUID.randomUUID().toString();
         returnCode = null;
@@ -242,6 +275,7 @@ public class SchoolHealthSurveyBean implements Serializable {
     }
 
     public String submit() {
+        if (!validateEmail()) return null;
         confirmationEmailMessage = null;
         try {
             savedResponseId = schoolHealthSurveyRepository.save(savedResponseId, resumeToken, answers, multiAnswers, locale, false);
@@ -265,13 +299,14 @@ public class SchoolHealthSurveyBean implements Serializable {
         boolean emailSent = new com.kiptoo2000.survey.service.SurveyConfirmationEmail()
                 .send(answers.get("contactEmail"), savedResponseId, locale);
         java.util.ResourceBundle labels = java.util.ResourceBundle.getBundle(
-                "com.kiptoo2000.survey.i18n.messages", new java.util.Locale(locale));
+                "messages", new java.util.Locale(locale));
         confirmationEmailMessage = labels.getString(emailSent
                 ? "schoolHealth.emailSent" : "schoolHealth.emailFailed");
         return "school-health-complete?faces-redirect=true";
     }
 
     public String reset() {
+        draftEmailMessage = null;
         confirmationEmailMessage = null;
         resumeToken = java.util.UUID.randomUUID().toString();
         returnCode = null;

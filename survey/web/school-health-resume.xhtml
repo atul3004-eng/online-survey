@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+    <f:metadata>
+        <f:viewParam name="token" value="#{schoolHealthSurvey.returnCode}" required="true"/>
+        <f:viewAction action="#{schoolHealthSurvey.reopen}"/>
+    </f:metadata>
+    <h:head><title>School Health Survey</title><meta name="referrer" content="no-referrer"/></h:head>
+    <h:body><h:messages/><h:link outcome="school-health-start" value="School Health Survey"/></h:body>
+</html>

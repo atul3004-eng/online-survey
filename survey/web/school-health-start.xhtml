@@ -9,15 +9,15 @@
       lang="#{schoolHealthSurvey.lang}"
       dir="#{schoolHealthSurvey.dir}">
 
-<f>
-    <f name="lang" value="#{schoolHealthSurvey.locale}"/>
-</f>
+<f:metadata>
+    <f:viewParam name="lang" value="#{schoolHealthSurvey.locale}"/>
+</f:metadata>
 
-<f locale="#{schoolHealthSurvey.locale}">
-    <h>
+<f:view locale="#{schoolHealthSurvey.locale}">
+    <h:head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <f basename="messages" var="msg"/>
+        <f:loadBundle basename="messages" var="msg"/>
         <title>#{msg['schoolHealth.brand']}</title>
 
         <link rel="shortcut icon"
@@ -58,12 +58,12 @@
             }
         </style>
 
-    </h>
+    </h:head>
 
-    <h styleClass="survey-page">
+    <h:body styleClass="survey-page">
         <nav class="navbar navbar-expand navbar-light navbar-bg">
             <a class="sidebar-brand sidebar-brand__single-page" href="#{request.contextPath}/index.xhtml">
-                <h styleClass="mw-100"
+                <h:graphicImage styleClass="mw-100"
                    alt="MOPH"
                    value="/NCGP/faces/javax.faces.resources/MophTheam/img/Logo_moph_bilingual.svg"/>
                 <span class="sidebar-brand__single-page-divider"></span>
@@ -300,11 +300,7 @@
                 <h:form id="schoolHealthStartForm">
 
                     <p:messages/>
-                    <p>Resume a draft or reopen a submitted survey using your private return code.</p>
-                    <p:inputText value="#{schoolHealthSurvey.returnCode}"
-                                 placeholder="Private return code" styleClass="form-control mb-2"/>
-                    <p:commandButton value="Reopen Survey" action="#{schoolHealthSurvey.reopen}"
-                                     ajax="false" styleClass="btn btn-outline-secondary w-100 mb-3"/>
+                    <p><h:outputText value="#{msg['schoolHealth.resumeInstructions']}"/></p>
 
                     <p:commandButton
                             value="#{msg['schoolHealth.startSurvey']}"
@@ -374,7 +370,7 @@
         <script type="text/javascript" src="/NCGP/faces/javax.faces.resources/MophTheam/js/app.js"></script>
         <script type="text/javascript" src="/NCGP/faces/javax.faces.resources/MophTheam/js/accessibility.js"></script>
 
-    </h>
-</f>
+    </h:body>
+</f:view>
 
 </html>
