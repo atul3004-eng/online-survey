@@ -8,36 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="546e4474-72fa-40bd-81ed-09e00fda6cf4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/survey_war.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/survey_war_exploded.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/surveyadmin_war.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/surveyadmin_war_exploded.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_25_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mysql_mysql_connector_j_8_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_javax_faces_2_2_20.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/mysql-schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/online-survey-system-java.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/survey/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/src/java/com/kiptoo2000/survey/bean/SchoolHealthSurveyBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/survey/src/java/com/kiptoo2000/survey/bean/SchoolHealthSurveyBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/survey/src/main/resources/META-INF/persistence.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/src/main/resources/com/kiptoo2000/survey/i18n/messages_ar.properties" beforeDir="false" afterPath="$PROJECT_DIR$/survey/src/main/resources/com/kiptoo2000/survey/i18n/messages_ar.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/src/main/resources/com/kiptoo2000/survey/i18n/messages_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/survey/src/main/resources/com/kiptoo2000/survey/i18n/messages_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/survey.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/web/WEB-INF/sun-web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/survey/web/WEB-INF/sun-web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/web/index.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/survey/web/index.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/web/school-health-complete.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/survey/web/school-health-complete.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/web/school-health-start.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/survey/web/school-health-start.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/survey/web/wellness.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/survey/web/wellness.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surveyadmin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/surveyadmin/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surveyadmin/surveyadmin.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/surveyadmin/web/WEB-INF/templates/admin.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/surveyadmin/web/WEB-INF/templates/admin.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surveyadmin/web/topics.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/surveyadmin/web/topics.xhtml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/survey/target/" />
@@ -49,8 +20,61 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="school-health-start.xhtml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/survey/web/school-health-start.xhtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret line="73" column="11" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SurveyConfirmationEmail.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/survey/src/java/com/kiptoo2000/survey/service/SurveyConfirmationEmail.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="202">
+              <caret line="94" column="79" selection-start-line="94" selection-start-column="79" selection-end-line="94" selection-end-column="79" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImportationExportController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/extras/importation-export-fix/ImportationExportController.java">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="school-health.xhtml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/survey/web/school-health.xhtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="574">
+              <caret line="371" selection-start-line="371" selection-end-line="371" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>SURVEY_SMTP_HOST</find>
+      <find>port</find>
+    </findStrings>
+    <dirStrings>
+      <dir>C:\projects\online-survey</dir>
+    </dirStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/survey/web/school-health-start.xhtml" />
+        <option value="$PROJECT_DIR$/survey/web/school-health.xhtml" />
+      </list>
+    </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
@@ -64,6 +88,38 @@
     <option name="FILTER_INFO" value="true" />
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:/software/apache-maven-3.9.12" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="survey" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="survey" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="surveyadmin" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="surveyadmin" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
@@ -80,6 +136,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -140,9 +199,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -150,6 +206,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -420,49 +477,52 @@
       <option name="presentableId" value="Default" />
       <updated>1789725632054</updated>
       <workItem from="1789725635973" duration="565000" />
+      <workItem from="1789909182478" duration="2920000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="565000" />
+    <option name="totallyTimeSpent" value="3485000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="830" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="830" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Application Servers" weight="0.3293944" />
-      <window_info anchor="right" id="Maven Projects" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="right" id="CDI" />
-      <window_info id="Capture Tool" />
-      <window_info id="Designer" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Application Servers" order="7" weight="0.3293944" />
+      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.077181205" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="CDI" order="3" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="JSF" />
+      <window_info anchor="right" id="JSF" order="3" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="UI Designer" order="2" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3988183" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" weight="0.3293944" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info id="Image Layers" />
-      <window_info anchor="bottom" id="Java Enterprise" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3293944" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Spring" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24966443" />
-      <window_info id="Web" side_tool="true" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info id="Favorites" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3293944" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="bottom" id="Java Enterprise" order="7" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3293944" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Persistence" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25302014" />
+      <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -470,6 +530,32 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/survey/web/school-health.xhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="574">
+          <caret line="371" selection-start-line="371" selection-end-line="371" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/survey/web/school-health-start.xhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="73" column="11" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/survey/src/java/com/kiptoo2000/survey/service/SurveyConfirmationEmail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="94" column="79" selection-start-line="94" selection-start-column="79" selection-end-line="94" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extras/importation-export-fix/ImportationExportController.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
   </component>
   <component name="masterDetails">
     <states>
