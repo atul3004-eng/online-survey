@@ -203,22 +203,23 @@
                                                                styleClass="btn btn-primary btn_wit_icon">
                                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Request New Importation 
                                                 </p:commandLink>
-												<p:commandButton id="prepareImportation" value="Export to Excel"
+												<h:panelGroup id="exportControls" layout="block">
+<p:commandButton id="prepareImportation" value="Export to Excel"
     action="#{importationExportController.prepareImportation}"
-    process="@this" update="@form"
+    process="@this" update="exportControls" global="false" ignoreAutoUpdate="true"
+    oncomplete="PF('importationExportPoll').start()"
     disabled="#{importationExportController.exportInProgress}"
     rendered="#{!request.isUserInRole('Vendor') and (request.isUserInRole('Admin') or request.isUserInRole('ImportationAdmin')) and (importationMasterController.approvedItems or importationMasterController.allItems or importationMasterController.pendingItems)}"
     styleClass="btn btn-primary btn_wit_icon" />
 
 <p:commandButton id="prepareStatistical" value="Export Statistical Excel"
     action="#{importationExportController.prepareStatisticalImportation}"
-    process="@this" update="@form"
+    process="@this" update="exportControls" global="false" ignoreAutoUpdate="true"
+    oncomplete="PF('importationExportPoll').start()"
     disabled="#{importationExportController.exportInProgress}"
     rendered="#{usersController.current.userName.equals('admin')}"
     styleClass="btn btn-primary btn_wit_icon" />
 
-<p:poll interval="2" process="@this" update="@form"
-    rendered="#{importationExportController.exportInProgress}" />
 <h:panelGroup id="impDownloadPanel" layout="block">
     <h:outputText value="Preparing Excel. Please wait..."
         rendered="#{importationExportController.exportInProgress}" />
@@ -233,6 +234,12 @@
         <p:fileDownload value="#{importationExportController.file}" />
     </p:commandButton>
 </h:panelGroup>
+</h:panelGroup>
+<p:poll id="exportPoll" widgetVar="importationExportPoll" interval="2"
+    process="@this" global="false" ignoreAutoUpdate="true"
+    autoStart="#{importationExportController.exportInProgress}"
+    listener="#{importationExportController.pollExport}"
+    onerror="PF('importationExportPoll').stop()" />
                                             </h:form>     
                                         </div>  
                                     </div>

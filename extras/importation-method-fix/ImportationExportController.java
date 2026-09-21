@@ -101,6 +101,18 @@ public class ImportationExportController implements Serializable {
         prepare(true);
     }
 
+    public void pollExport() {
+        if (exportInProgress) return;
+        // Leave the DOM untouched while preparing; repaint only the final result.
+        FacesContext faces = FacesContext.getCurrentInstance();
+        String source = faces.getExternalContext().getRequestParameterMap().get("javax.faces.source");
+        javax.faces.component.UIComponent poll = faces.getViewRoot().findComponent(source);
+        javax.faces.component.UIComponent controls = poll.getParent().findComponent("exportControls");
+        org.primefaces.context.RequestContext context = org.primefaces.context.RequestContext.getCurrentInstance();
+        context.update(controls.getClientId(faces));
+        context.execute("PF('importationExportPoll').stop();");
+    }
+
     private synchronized void prepare(final boolean statistical) {
         authorize(statistical);
         if (destroyed || exportInProgress) return;
