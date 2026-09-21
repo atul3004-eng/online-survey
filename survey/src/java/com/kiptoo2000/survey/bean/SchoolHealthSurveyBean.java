@@ -115,13 +115,14 @@ public class SchoolHealthSurveyBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, text, ""));
     }
     public void downloadBlank() {
-        try (java.io.InputStream in = getClass().getResourceAsStream("/docs/school-health-questionnaire.pdf")) {
+        String filename = isArabic() ? "school-health-questionnaire-ar.pdf" : "school-health-questionnaire.pdf";
+        try (java.io.InputStream in = getClass().getResourceAsStream("/docs/" + filename)) {
             if (in == null) { throw new java.io.IOException("Missing blank questionnaire"); }
             java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
             byte[] buffer = new byte[8192]; int count;
             while ((count = in.read(buffer)) != -1) { out.write(buffer, 0, count); }
-            sendPdf(out.toByteArray(), "school-health-questionnaire.pdf");
-        } catch (Exception ex) { message(FacesMessage.SEVERITY_ERROR, "Questionnaire download failed. Please try again."); }
+            sendPdf(out.toByteArray(), filename, "inline");
+        } catch (Exception ex) { message(FacesMessage.SEVERITY_ERROR, label("schoolHealth.blankPdfUnavailable")); }
     }
     public void downloadCompleted() {
         try {
@@ -136,10 +137,13 @@ public class SchoolHealthSurveyBean implements Serializable {
         } catch (Exception ex) { message(FacesMessage.SEVERITY_ERROR, "Completed questionnaire download failed. Please try again."); }
     }
     private void sendPdf(byte[] bytes, String filename) throws java.io.IOException {
+        sendPdf(bytes, filename, "attachment");
+    }
+    private void sendPdf(byte[] bytes, String filename, String disposition) throws java.io.IOException {
         FacesContext faces = FacesContext.getCurrentInstance();
         javax.faces.context.ExternalContext context = faces.getExternalContext();
         context.responseReset(); context.setResponseContentType("application/pdf");
-        context.setResponseHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+        context.setResponseHeader("Content-Disposition", disposition + "; filename=\"" + filename + "\"");
         context.setResponseHeader("Cache-Control", "no-store");
         context.setResponseContentLength(bytes.length);
         context.getResponseOutputStream().write(bytes); faces.responseComplete();

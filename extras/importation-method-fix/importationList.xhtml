@@ -217,7 +217,11 @@
     rendered="#{usersController.current.userName.equals('admin')}"
     styleClass="btn btn-primary btn_wit_icon" />
 
+<p:poll interval="2" process="@this" update="@form"
+    rendered="#{importationExportController.exportInProgress}" />
 <h:panelGroup id="impDownloadPanel" layout="block">
+    <h:outputText value="Preparing Excel. Please wait..."
+        rendered="#{importationExportController.exportInProgress}" />
     <h:outputText value="#{importationExportController.exportError}"
         rendered="#{not empty importationExportController.exportError}"
         style="color: #b00020" />

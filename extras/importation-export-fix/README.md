@@ -1,5 +1,8 @@
 # Importation export fix — PrimeFaces 6.1
 
+This older synchronous alternative is superseded by `../importation-method-fix/`,
+which provides background preparation and all export logic in one Java file.
+
 Replace the existing `dps.jsf.ImportationExportController` with the Java file here.
 Replace the original importation list view with `importationList.xhtml` (keep your existing view filename).
 Deploy both files together, rebuild the application, and start a fresh session.

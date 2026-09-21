@@ -1,43 +1,73 @@
-# Independent importation Excel reports
+# Importation Excel download - one Java file
 
-Leave ReportsController and DetailedReportController unchanged.
+Copy `ImportationExportController.java` into the DPS application's `dps.jsf` package,
+replacing the existing class. All export-specific Java code is in this file: job
+submission/state, data queries, regular and statistical workbook builders, and fresh
+download streams. The two workbook builders are private nested classes.
 
-Add these three classes to the DPS application's dps.jsf package:
-- SpecialImportationReportController.java: contains both getSpecialImportation(String status)
-  and generateSpecialImportationReport(int status)
-- SpecialImportationExcelExporter.java
-- SpecialImportationStatisticalExcelExporter.java
+Replace the importation list view with `importationList.xhtml` (keep your original
+view filename), or copy its export controls and poll into your customized page.
+Deploy the Java and XHTML changes together and start a fresh session.
 
-Replace ImportationExportController.java with the included class. It now injects
-the combined specialImportationReportController bean; it neither extends nor calls the existing report controllers.
-Use the included importationList.xhtml (keep your existing page filename), or copy
-its export/download controls into your customized page and remove old export polling.
-Do not apply getSpecialImportation.java or generateSpecialImportationReport.java:
-those standalone method snippets are from the previous approach and are not needed.
+Remove the older export-only classes if previously installed:
+`SpecialImportationReportController`, `SpecialImportationExcelExporter`,
+`SpecialImportationStatisticalExcelExporter`, and
+`SpecialImportationStatisticalReportController`.
+Leave the application's existing `ReportsController` and `DetailedReportController`
+unchanged. The old standalone method snippets are no longer needed.
+Do not deploy anything under `verification/`.
 
-Facade imports use the supplied dps.sb package. The class names assumed from the
-existing variables are ImportationMasterFacade and ExternalStatusFacade. Confirm
-these against your application; the actual facade sources are absent here. Entity
-imports use dps.ejb. Retain any application-specific service authorization checks.
-Rebuild, deploy, and start a fresh session after installing the classes and page.
+## Background preparation
 
-Regular reports retain the Approved, In-Progress and All queries. Statistical reports
-retain all 51 columns and the original 2021–2025 submission-year filter. The int status
-argument remains unused, as in the supplied method. Receipt date still equals submission
-date. Exporters use fixed widths, local formatters, correct XLS MIME type, all-column
-filtering, and fresh streams. Statistical assessor decision time uses HH:mm.
+The AJAX action checks export permission and captures the selected status, then
+submits to the application server's `java:comp/DefaultManagedExecutorService` and
+returns. Database queries and workbook creation run on the managed worker thread.
+The worker does not read FacesContext or the session's filter controller.
+The page displays a preparing message and polls every two seconds while the job
+is in progress. Successful completion shows a separate non-AJAX Download button.
+Each click gets a new stream, so the same prepared file can be downloaded again.
 
-Preparation uses an AJAX request; downloading uses a separate non-AJAX request.
-Only successful preparation enables downloading. Failures clear the previous result.
-There are no raw threads or polling. XLS supports 65,535 data rows plus the header.
-Large reports occupy a server request and keep bytes in the session; lazy entity
-relationships must remain available during generation.
+Only one export runs per session. A new export clears the prior file; generation
+failure or executor rejection leaves no stale download. Session destruction cancels
+the job and prevents a late result from being published. If a session is restored
+while a job was running, the user is asked to generate the report again.
+Permissions are checked before preparation and download using the page's existing
+rules: regular exports require Admin or ImportationAdmin and exclude Vendor;
+statistical exports require the current username `admin`.
 
-Verification: run verification/verify.ps1. It tests the download controller against
-PrimeFaces 6.1 with stub report beans and parses XHTML. It does not compile or test the
-real DPS facades, entities or exporters. In DPS, test all three regular statuses and
-the statistical report, inspect workbook contents, and download each result twice.
+## Runtime and existing behavior
 
-If you installed the earlier split version, remove SpecialImportationStatisticalReportController.java.
-The XHTML bindings remain unchanged.
+Requires Java 8 and a Java EE 7+ application server with managed concurrency, EJB,
+and JTA, plus the existing PrimeFaces 6.1, Apache POI 3.14, and jsoup dependencies.
+Plain Tomcat without those services is not sufficient. No raw thread pool is created.
 
+Facade imports use `dps.sb.ImportationMasterFacade` and `dps.sb.ExternalStatusFacade`;
+entity imports use `dps.ejb`. These are assumed from the supplied code; actual DPS
+facades/entities are absent in this repository. Keep service-level permission checks.
+
+The worker starts a UserTransaction around queries and workbook construction so
+standard REQUIRED EJB facades share the persistence context while lazy relationships
+are read. Verify that the real facades use JTA and REQUIRED (rather than
+REQUIRES_NEW/NOT_SUPPORTED), or explicitly fetch the report relationships in them.
+Configure transaction timeouts and managed-executor capacity for expected report sizes.
+Cancellation interrupts the worker; whether an in-flight database query stops depends
+on the database driver. The workbook loops check interruption between records.
+
+Regular reports retain Approved, In-Progress, and All queries and all 25 columns.
+Statistical reports retain all 51 columns and the original 2021-2025 submission-year
+filter. The statistical status parameter remains unused, matching the supplied code.
+Receipt date still equals submission date. Both outputs remain XLS with correct MIME
+type, fixed widths, and all-column filtering. XLS supports 65,535 data rows plus headers.
+Prepared files are held as session bytes; large reports still require adequate heap.
+
+## Verification
+
+Run `verification/verify.ps1`. It compiles the entire consolidated Java file against
+real PrimeFaces 6.1, Java EE 7, POI 3.14, and jsoup APIs, using test-only DPS entity and
+facade stubs. It verifies asynchronous execution, captured filters, duplicate job
+prevention, failures, rejection, retry, session destruction, download authorization
+hooks, repeated downloads, and the 25-/51-column workbooks. It also parses XHTML.
+
+This is not a live DPS integration test: verify injected facades, real authorization,
+JTA/lazy relationships, and polling on the target application server. Test Approved,
+All, In-Progress, and statistical generation and download each file twice.
