@@ -361,7 +361,7 @@
             }
 
             document.addEventListener("fullscreenchange", function () {
-                var label = document.querySelector(".stage-head .js-fullscreen-label");
+                var label = document.querySelector(".js-fullscreen .js-fullscreen-label");
                 if (label) {
                     label.textContent = document.fullscreenElement ? "Exit fullscreen" : "Fullscreen";
                 }
