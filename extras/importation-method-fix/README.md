@@ -1,33 +1,42 @@
-# Separate-class fix for getSpecialImportation
+# Complete importation Excel download fix
 
-Use these files instead of the earlier replacement export controller/XHTML:
+These files belong to the DPS application (GlassFish 4.1, PrimeFaces 6.1 and legacy
+Apache POI), not the survey application in this repository.
 
-1. Add `SpecialImportationExcelExporter.java` to the `dps.jsf` package.
-2. The new class imports `ImportationMaster`, `ImportationApproval`, and `UserMaster` from `dps.ejb`.
-3. Replace only `ReportsController.getSpecialImportation(String)` with the method in
-   `getSpecialImportation.java`.
+1. Add both SpecialImportationExcelExporter.java and
+   SpecialImportationStatisticalExcelExporter.java to package dps.jsf.
+2. Replace ReportsController.getSpecialImportation(String) with the method snippet
+   in getSpecialImportation.java.
+3. Replace DetailedReportController.generateSpecialImportationReport(int) with
+   the method snippet in generateSpecialImportationReport.java. Keep the existing
+   facade injection and entity/List/StreamedContent imports. Paste this method
+   inside the controller class; it is not a standalone Java class.
+4. Replace dps.jsf.ImportationExportController with the included controller.
+5. Replace the importation list page with importationList.xhtml, keeping its
+   existing filename. For a customized page, replace its export controls and
+   remove the old export thread/poll controls.
+6. Rebuild and deploy the DPS application, then start a fresh session.
 
-The controller retains the original facade queries. The new stateless class builds all 25
-columns and returns a PrimeFaces 6.1 StreamedContent that creates a fresh input stream for
-every download. It uses the existing legacy Apache POI styling API and JSoup dependency.
-No managed-bean registration is needed for the exporter.
+The second method delegates all 51 statistical columns to its stateless exporter.
+It uses local formatters, fixed column widths, the XLS MIME type, an all-column
+filter, and HH:mm for assessor decision time. Workbook resources are closed after
+writing, and every stream request reads the completed bytes afresh. Failures
+propagate instead of returning an old shared file.
 
-The target application uses GlassFish 4.1. The extracted code uses Java 7-compatible
-syntax and the existing Java EE-era dependencies; it adds no Jakarta APIs. Verification
-uses JDK 8, Java 7 source/target settings, PrimeFaces 6.1 and Apache POI 3.14 with stub
-entities/facades. This is not an integration test on the actual GlassFish application.
+Original statistical rules remain: submitted years 2021–2025, receipt date equal
+ to submission date, and no status filtering. The int argument remains for existing
+callers. XLS supports 65,535 data rows plus a header per sheet. Queries and approval
+selection rules remain unchanged; lazy relationships must be accessible during export.
 
-Fixes include XLS MIME type, workbook cleanup, safe worksheet names, all-column filtering,
-null approval collection handling, and propagated/logged failures instead of returning a
-stale shared `file`. All automatic column sizing is replaced with fixed widths to avoid
-scanning every report cell for font measurements. Remarks/address columns are wider, text
-wrapping is retained, and the header row is taller. Database queries are unchanged; no
-end-to-end performance improvement has been measured against the real database.
+The XHTML prepares via AJAX, then displays a separate non-AJAX download button.
+Preparation runs in the JSF request without raw threads or polling. Ready is set
+only after a non-empty stream is read successfully. New exports clear the previous
+result; failures display an error. Existing visibility rules are preserved; retain
+existing report-service authorization too.
 
-The existing background thread, polling, and XHTML are unchanged by this method-level fix.
-It does not correct the separate controller bug that sets `exportReady = true` in `finally`.
-The background controller must eventually publish ready only after successful generation.
-It also does not change facade transaction boundaries: lazy-loaded entity relationships
-must remain accessible while the exporter reads them.
-
-The method retains XLS format and its 65,536-row sheet limit (65,535 data rows plus header).
+Run verification/verify.ps1 to check the preparation/download controller against
+PrimeFaces 6.1 using stub DPS controllers and parse the XHTML. This does not compile
+the real DPS entities/exporters or verify GlassFish/database integration. In the
+actual application, test Approved, In-Progress, All and statistical exports, download
+each twice, and inspect the workbook contents. Large reports still occupy a server
+request and retain bytes in the session. Real database performance is unmeasured.

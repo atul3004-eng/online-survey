@@ -1,0 +1,402 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<ui:composition template="/template.xhtml">        
+    <ui:define name="contentList">  
+        <div class="container-fluid">
+            <div class="row">
+                <div class="sub_table">
+                    <div class="side_menu_wrap">
+                        <ui:include src="sideMenuList.xhtml" />
+						
+                        <div class="side_menu_contnt">
+                            <p:messages id="message" closable="true" showDetail="true" />
+							<h:panelGroup rendered="#{request.isUserInRole('Vendor')}">
+							<div class="row">
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <h2>Special Importation</h2>
+                                        </div>  
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <p:commandButton value="Video Tutorial" class="btn btn-primary btn_wit_icon" style="box-shadow:none; font-size:12px; padding:0" type="button" onclick="PF('dlg1').show();" />
+									<p:dialog header="Special Importation Tutorial" widgetVar="dlg1" minHeight="40">
+										<video class="youtube_box" width="900" height="506" style="frameborder:0;" controls="true" muted="true" autoplay="true" >
+											<source src="/dps/dps/DP_SpecialImportation.mp4" type="video/mp4"/>                                                             
+										</video>
+									</p:dialog> 
+                                        </div>  
+                                    </div>
+							</h:panelGroup>
+                            <div class="row">
+								
+                                <h:panelGroup rendered="#{request.isUserInRole('Vendor')}">
+                                    <h:panelGroup rendered="#{(!importationMasterController.importerRegistered and importationMasterController.selectedImporter == null) or 
+                                                              (importationMasterController.agentImporter and importationMasterController.selectedImporter == null)}">
+                                        <div class="panel panel-default">                                            
+                                            <div class="panel-heading">
+                                                <h2 class="panel-title">
+                                                    <a role="button" style="color: red;">
+                                                        Note:
+                                                    </a>
+                                                </h2>
+                                            </div>                                                                                             
+
+                                            <div class="panel-collapse collapse in" >
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-xs-12">
+                                                            <table class="table view_page_table two_col">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="color: red;">
+                                                                            <label><span class="req">*</span>
+                                                                                <h:outputText rendered="#{importationMasterController.agentImporter}"
+                                                                                              value="As an Agent you can submit special importation for Products registered under your organization.
+                                                                                              To submit special importation for non registered products, you should registered as an Importer.
+                                                                                Please click on the button to register as an Importer."/>
+                                                                                <h:outputText rendered="#{!importationMasterController.agentImporter}"
+                                                                                              value="You should registered as an Importer before requesting Special Importation of the Product.
+                                                                                Please click on the button to register as an Importer."/>
+                                                                            </label>
+                                                                        </td>                                                                        
+                                                                    </tr> 
+                                                                </tbody>
+                                                            </table>
+                                                        </div>   
+                                                        <div class="row">                                                            
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <h:form>
+                                                                    <p:commandLink action="#{importationMasterController.registerAsImporter()}" ajax="false" 
+                                                                                   styleClass="btn btn-primary btn_wit_icon">
+                                                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Register As Importer 
+                                                                    </p:commandLink>
+                                                                </h:form>                                        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{importationMasterController.selectedImporter != null }">											
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingdir">
+                                                <h2 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsedir" aria-expanded="true" aria-controls="collapsedir">
+                                                        Importer Details
+                                                    </a>
+                                                </h2>
+                                            </div>
+
+                                            <div id="collapsedir" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingdir">
+                                                <div class="panel-body">
+                                                    <div class="row">     
+                                                        <div class="col-md-12 col-xs-12">
+                                                            <table class="table view_page_table two_col ">
+																<tr>
+                                                                    <td>
+                                                                        <h:form>                                                                                
+                                                                            <p:commandButton rendered="#{importationMasterController.selectedImporter.status != null and 
+                                                                                                         (importationMasterController.selectedImporter.status.equals('Return to Applicant') or
+                                                                                                         importationMasterController.selectedImporter.status.equals('Not Approved'))}"  
+                                                                                           id="reSubmit" value="Re-Submit" styleClass="btn btn-primary"
+                                                                                           action="#{importationMasterController.resubmitAsImporter()}"
+                                                                                           ajax="false"/>
+																			<p:commandLink rendered="#{importationMasterController.selectedImporter.status != null and 
+                                                                                                       importationMasterController.selectedImporter.status.equals('Approved')}" 
+                                                                                           id="generateCertificate" value="Print Certificate" styleClass="btn btn-primary"  
+                                                                                           action="#{importerController.generateCertificate(importationMasterController.selectedImporter.id)}"
+                                                                                           ajax="false" target="_blank"/> 
+                                                                        </h:form>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><label>Applicant Type</label></td>
+                                                                    <td>
+                                                                        <h:outputText value="#{importationMasterController.selectedImporter.applicantType}" />                                                                        
+                                                                    </td>
+                                                                </tr>
+                                                               <!-- <tr>
+                                                                    <td><label>Activities</label></td>
+                                                                    <td>
+                                                                        <ui:repeat value="{importationMasterController.showSelectedActivities()}" var="activity">
+                                                                            <h:outputText value="{activity}"/>
+                                                                            <h:outputText value="&lt;br/&gt;" escape="false" />
+                                                                        </ui:repeat>
+                                                                    </td>
+                                                                </tr>-->
+                                                                <tr>
+                                                                    <td>
+                                                                        <label>
+                                                                            <h:outputText rendered="#{importationMasterController.selectedImporter.applicantType.equals('Importers')}" 
+                                                                                          value="Copy of the Drug Store License"/>
+                                                                            <h:outputText rendered="#{importationMasterController.selectedImporter.applicantType.equals('Hospitals and medical centers')}" 
+                                                                                          value="Copy of License for medical institution + internal activities of healthcare facility"/>
+                                                                            <h:outputText rendered="#{importationMasterController.selectedImporter.applicantType.equals('Others (Non-pharmaceutical companies)')}" 
+                                                                                          value="Copy of commercial license + Commercial activities"/>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a style="text-decoration:underline;color: #7096ab;font-weight:bold" target="_blank" href="/dps#{importationMasterController.selectedImporter.document1}">Click here</a>                                                                                                      
+                                                                    </td>
+                                                                </tr>     
+                                                                <tr>
+                                                                    <td>
+                                                                        <label>
+                                                                            <h:outputText rendered="#{importationMasterController.selectedImporter.applicantType.equals('Importers')}" 
+                                                                                          value="Copy of the Commercial Registration [CR] which is showing the activities"/>
+                                                                            <h:outputText rendered="#{importationMasterController.selectedImporter.applicantType.equals('Hospitals and medical centers')}" 
+                                                                                          value="Copy of commercial license + Commercial activities"/>
+                                                                            <h:outputText rendered="#{importationMasterController.selectedImporter.applicantType.equals('Others (Non-pharmaceutical companies)')}" 
+                                                                                          value="Copy of company registration and activities"/>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a style="text-decoration:underline;color: #7096ab;font-weight:bold" target="_blank" href="/dps#{importationMasterController.selectedImporter.document2}">Click here</a>                                                                                                      
+                                                                    </td>
+                                                                </tr>    
+                                                                <h:panelGroup rendered="#{importationMasterController.selectedImporter.applicantType.equals('Importers')}">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>
+                                                                                Pharmacist License  
+                                                                            </label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a style="text-decoration:underline;color: #7096ab;font-weight:bold" target="_blank" href="/dps#{importationMasterController.selectedImporter.document3}">Click here</a>                                                                                                      
+                                                                        </td>
+                                                                    </tr>    
+                                                                </h:panelGroup>
+                                                                <tr>
+                                                                    <td><label>Status</label></td>
+                                                                    <td>
+                                                                        <h:outputText style="#{importationMasterController.selectedImporter.status.equals('Submitted') or 
+                                                                                               importationMasterController.selectedImporter.status.equals('rejected') ? 'color: red;' : 'color: green;' }" 
+                                                                                      value="#{importationMasterController.selectedImporter.status}" />                                                                                  
+                                                                    </td>
+                                                                </tr> 
+
+                                                            </table>   
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>          
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{userRightController.importationAdminRight or userRightController.importationAssessorRight 
+												or userRightController.importationSectionRight or userRightController.importationViewRight or
+                                                          (importationMasterController.importerRegistered 
+                                                          and 
+														  importationMasterController.selectedImporter.status.equals('Approved')) or importationMasterController.agentImporter}">
+                                    <div class="row">
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <h2>Special Importation List</h2>
+                                        </div>  
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <h:form>
+                                                <p:commandLink rendered="#{userRightController.importationCreateRight}" action="#{importationMasterController.requestImportation()}" ajax="false" 
+                                                               styleClass="btn btn-primary btn_wit_icon">
+                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Request New Importation 
+                                                </p:commandLink>
+												<p:commandButton id="prepareImportation" value="Export to Excel"
+    action="#{importationExportController.prepareImportation}"
+    process="@this" update="@form"
+    disabled="#{importationExportController.exportInProgress}"
+    rendered="#{!request.isUserInRole('Vendor') and (request.isUserInRole('Admin') or request.isUserInRole('ImportationAdmin')) and (importationMasterController.approvedItems or importationMasterController.allItems or importationMasterController.pendingItems)}"
+    styleClass="btn btn-primary btn_wit_icon" />
+
+<p:commandButton id="prepareStatistical" value="Export Statistical Excel"
+    action="#{importationExportController.prepareStatisticalImportation}"
+    process="@this" update="@form"
+    disabled="#{importationExportController.exportInProgress}"
+    rendered="#{usersController.current.userName.equals('admin')}"
+    styleClass="btn btn-primary btn_wit_icon" />
+
+<h:panelGroup id="impDownloadPanel" layout="block">
+    <h:outputText value="#{importationExportController.exportError}"
+        rendered="#{not empty importationExportController.exportError}"
+        style="color: #b00020" />
+    <p:commandButton id="downloadImportation"
+        value="#{importationExportController.downloadLabel}"
+        ajax="false" immediate="true"
+        rendered="#{importationExportController.exportReady}"
+        styleClass="btn btn-primary btn_wit_icon">
+        <p:fileDownload value="#{importationExportController.file}" />
+    </p:commandButton>
+</h:panelGroup>
+                                            </h:form>     
+                                        </div>  
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-xs-12">
+                                            <div class="table-responsive tbl_borderless">
+												<style type="text/css">
+                                                    .released {
+                                                        background-color: #90EE90 !important;
+                                                        background-image: none !important;
+                                                        color: #000000 !important;
+                                                    }
+													
+													.extra {
+                                                        background-color: #f2dede !important;
+                                                        background-image: none !important;
+                                                        color: #000000 !important;
+                                                    }
+
+                                                </style> 
+                                                <h:form>                                                
+                                                    <p:dataTable widgetVar="importationListWidget"  id="primeTable" var="col" value="#{lazyImportationView.allImportations}" paginator="true" rows="10"                                                                
+                                                                 filterDelay="600" emptyMessage="#{bundle['items.empty']}" rowsPerPageTemplate="10,15,20"  paginatorPosition="bottom" rowIndexVar="index" 
+                                                                 first="#{lazyImportationView.importationFirst}" lazy="true" paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} 
+                                                                 {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowStyleClass="${col.externalStatus.id == 3 and 
+                                                                                  col.releasedQuantities != null and 
+                                                                                  importationMasterController.fetchRemainingQuantities(col.quantities, col.releasedQuantities) == 0 ? 'released' : 
+                                                                                  col.externalStatus.id == 3 and 
+                                                                                  col.releasedQuantities != null and importationMasterController.fetchRemainingQuantities(col.quantities, col.releasedQuantities) != 0 ? 'extra' : ''}">     
+
+                                                        <p:ajax event="page" listener="#{lazyImportationView.onPageChange}" />
+                                                        <p:ajax event="filter" listener="#{lazyImportationView.onFilterChange}"  />	
+
+                                                        <p:column headerText="Application No" sortBy="id" filterBy="#{col.id}" filterMatchMode="contains" width="6%" 
+                                                                  filterValue="#{lazyImportationView.id}"> 
+                                                            <h:commandLink class="srl_numb" action="importationView">
+                                                                <h:outputText value="#{col.id}" style="text-decoration:underline;color: #7096ab;font-weight:bold" />                            
+                                                                <f:setPropertyActionListener value="#{col}" target="#{importationMasterController.selected}" />
+                                                            </h:commandLink>  
+
+                                                        </p:column> 
+
+                                                        <p:column headerText="Trade Name"  filterBy="#{col.tradeName}" filterMatchMode="contains" width="10%"
+                                                                  filterValue="#{lazyImportationView.tradeName}">  
+                                                            <h:outputText value="#{col.tradeName}" />  
+                                                        </p:column>
+
+						    <p:column headerText="Drug Type" filterable="true" filterBy="#{col.drugType}" 
+                                                                  filterOptions="#{drugTypeController.itemsAvailableSelectOne}" filterMatchMode="contains" width="10%"
+                                                                  filterValue="#{lazyImportationView.drugType}">                                                         
+                                                            <h:outputText value="#{col.drugType.description}" />  
+                                                        </p:column>								
+
+                                                        <p:column headerText="Generic Name"  filterBy="#{col.genericName}" filterMatchMode="contains" width="10%"
+                                                                  filterValue="#{lazyImportationView.genericName}">  
+                                                            <h:outputText value="#{col.genericName }" />  
+                                                        </p:column>
+
+                                                        <p:column headerText="Manufacturer"  filterBy="#{col.manufacturerName}" filterMatchMode="contains" width="6%"
+                                                                  filterValue="#{lazyImportationView.manufacturerName}">  
+                                                            <h:outputText value="#{col.manufacturerName}" />  
+                                                        </p:column>
+
+                                                        <p:column headerText="MAH"  filterBy="#{col.mah}" filterMatchMode="contains" width="6%"
+                                                                  filterValue="#{lazyImportationView.mah}">  
+                                                            <h:outputText value="#{col.mah}" />  
+                                                        </p:column>
+
+                                                        <p:column headerText="Exporter Name"  filterBy="#{col.exporterName}" filterMatchMode="contains" width="6%"
+                                                                  filterValue="#{lazyImportationView.exporterName}">  
+                                                            <h:outputText value="#{col.exporterName}" />  
+                                                        </p:column>
+
+                                                        <p:column headerText="Importer Name"  filterBy="#{col.importerName}" filterMatchMode="contains" width="6%"
+                                                                  filterValue="#{lazyImportationView.importerName}">  
+                                                            <h:outputText value="#{col.importerName}" />  
+                                                        </p:column>
+														
+													<p:column headerText="Beneficiary name"  rendered="#{!request.isUserInRole('Vendor')}"  filterBy="#{col.beneficieryName}" filterMatchMode="contains" width="6%"
+                                                                  filterValue="#{lazyImportationView.benificiaryName}">  
+                                                            <h:outputText value="#{col.beneficieryName}" />  
+                                                        </p:column> 
+
+                                                        <p:column headerText="Status"  width="4%">  
+                                                            <h:outputText rendered="#{request.isUserInRole('Vendor')}" style="#{col.externalStatus.id != 3 ? 'color:red' : 'color:green'}" value="#{col.externalStatus.descEn}" />  
+                                                            <h:outputText rendered="#{!request.isUserInRole('Vendor')}" style="#{col.internalStatus.id != 12 ? 'color:red' : 'color:green'}" value="#{col.internalStatus.descEn}" />  
+                                                        </p:column>
+														
+														<h:panelGroup rendered="#{!request.isUserInRole('Vendor') and !userRightController.importationViewRight and !(importationMasterController.submittedItems or
+                                                                                  importationMasterController.notSubmittedItems) }">
+                                                            <p:column headerText="Assessor"  width="5%">  
+                                                            <h:outputText value="#{col.assessor.firstNameEn.concat(' ').concat(col.assessor.lastNameEn)}" />  
+															</p:column>
+															<p:column headerText="Assessor Decision"  width="5%">  
+																<h:outputText style="color: red;" rendered="#{col.assessorDecision == null}"
+																			  value="Pending" />
+																<h:outputText style="color: green;" rendered="#{col.assessorDecision != null and 
+																											  (col.assessorDecision.id == 38 or col.assessorDecision.id == 39) }"
+																			  value="Request Assessed" />  
+																<h:outputText style="color: red;" rendered="#{col.assessorDecision != null and 
+																											(col.assessorDecision.id != 38 and col.assessorDecision.id != 39) }"
+																									  value="#{col.assessorDecision.descEn}" />
+															</p:column>
+															
+															<p:column headerText="Section Head Decision"  width="5%">  
+																<h:outputText value="#{col.headDecision.descEn}" />
+																
+															</p:column>
+                                                        </h:panelGroup>
+														
+														
+                                                            <p:column rendered="#{!request.isUserInRole('Vendor') and importationMasterController.approvedItems }" headerText="Approved Quantities"  width="4%">  
+                                                                <h:outputText value="#{col.quantities}" />  
+                                                            </p:column>
+
+                                                            <p:column rendered="#{!request.isUserInRole('Vendor') and importationMasterController.approvedItems }" headerText="Released Quantities"  width="4%">  
+                                                                <h:outputText value="#{col.releasedQuantities}" />
+
+                                                            </p:column>
+                                                        
+														
+															<p:column style="width:3%" headerText="Edit" rendered="#{!userRightController.ministerOffice}">
+																<h:panelGroup rendered="#{col.externalStatus.id == 5}">
+																<f:facet name="header"><div class="edithead"><img src="/dps/faces/javax.faces.resources/images/edit.png"/></div></f:facet>  
+																<div>
+																	<h:commandLink  action="#{importationMasterController.editImporationMaster()}" class="edithead" >
+																		<img src="/dps/faces/javax.faces.resources/images/edit.png"></img>
+																		<f:setPropertyActionListener value="#{col}" target="#{importationMasterController.selected}" />
+																	</h:commandLink>  
+																</div>
+																</h:panelGroup>
+															</p:column> 
+															<!--<p:column rendered="{col.externalStatus.id == 5}" style="width:3%" >                                                                
+																<f:facet name="header"><div class="deletehead"><img src="/dps/faces/javax.faces.resources/images/delete.png"/></div></f:facet>  
+																<div>
+																	<h:commandLink  class="deletehead" action="{importationMasterController.deleteImportation()}" 
+																				   onclick="if (!confirm('Are you sure you want to delete the importation record?'))
+																							   return false" >
+																		<img src="/dps/faces/javax.faces.resources/images/delete.png"></img>
+																		<f:setPropertyActionListener value="{col}" target="{importationMasterController.selected}" />       
+																	</h:commandLink> 
+																</div>                                                                
+															</p:column>-->
+														
+                                                    </p:dataTable>  
+                                                    <script  type="text/javascript" target="body">
+                                                        $(document).ready(function () {
+                                                            var isFilterExist = #{lazyImportationView.filterExist};
+                                                            if (isFilterExist) {
+                                                                PF('statusDialog').show();
+                                                                PF('importationListWidget').filter();
+                                                            }
+                                                        });
+                                                    </script> 		
+                                                </h:form>
+                                                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </h:panelGroup>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>    
+</html>
