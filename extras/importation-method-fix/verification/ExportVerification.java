@@ -12,18 +12,18 @@ public class ExportVerification {
 
     public static void main(String[] args) throws Exception {
         ImportationMasterController filters = new ImportationMasterController();
-        DetailedReportController statistics = new DetailedReportController();
+        SpecialImportationReportController reports = new SpecialImportationReportController();
         ImportationExportController controller = new ImportationExportController();
         controller.setImportationMasterController(filters);
-        controller.setDetailedReportController(statistics);
+        controller.setSpecialImportationReportController(reports);
         check(!controller.isExportReady() && controller.getFile() == null, "initial state");
 
         for (int status = 0; status < 3; status++) {
             filters.approved = status == 0;
             filters.pending = status == 1;
-            ReportsController.next = content("report.xlsx");
+            SpecialImportationReportController.next = content("report.xlsx");
             controller.prepareImportation();
-            check(new String[]{"Approved", "In-Progress", "All"}[status].equals(ReportsController.lastStatus), "status snapshot");
+            check(new String[]{"Approved", "In-Progress", "All"}[status].equals(SpecialImportationReportController.lastStatus), "status snapshot");
             check(controller.isExportReady() && !controller.isExportInProgress(), "ready after bytes copied");
             StreamedContent first = controller.getFile();
             StreamedContent second = controller.getFile();
@@ -33,32 +33,32 @@ public class ExportVerification {
             check("report.xlsx".equals(second.getName()) && second.getContentLength() == PAYLOAD.length, "metadata");
         }
 
-        ReportsController.next = null;
+        SpecialImportationReportController.next = null;
         controller.prepareImportation();
         failed(controller, "null report clears old result");
 
-        ReportsController.next = new DefaultStreamedContent(new ByteArrayInputStream(new byte[0]), "application/vnd.ms-excel", "empty.xls");
+        SpecialImportationReportController.next = new DefaultStreamedContent(new ByteArrayInputStream(new byte[0]), "application/vnd.ms-excel", "empty.xls");
         controller.prepareImportation();
         failed(controller, "empty report");
 
-        ReportsController.next = new DefaultStreamedContent(null, "application/vnd.ms-excel", "missing.xls");
+        SpecialImportationReportController.next = new DefaultStreamedContent(null, "application/vnd.ms-excel", "missing.xls");
         controller.prepareImportation();
         failed(controller, "null stream");
 
-        ReportsController.next = new DefaultStreamedContent(new InputStream() {
+        SpecialImportationReportController.next = new DefaultStreamedContent(new InputStream() {
             @Override public int read() throws IOException { throw new IOException("closed stream fixture"); }
         }, "application/vnd.ms-excel", "closed.xls");
         controller.prepareImportation();
         failed(controller, "unreadable stream");
 
-        ReportsController.fail = true;
+        SpecialImportationReportController.fail = true;
         controller.prepareImportation();
         failed(controller, "generator exception");
-        ReportsController.fail = false;
+        SpecialImportationReportController.fail = false;
 
-        statistics.next = content("statistics.xlsx");
+        reports.statisticalResult = content("statistics.xlsx");
         controller.prepareStatisticalImportation();
-        check(statistics.argument == 3 && controller.isExportReady(), "statistical generation");
+        check(reports.argument == 3 && controller.isExportReady(), "statistical generation");
         check("Download Statistical Excel".equals(controller.getDownloadLabel()), "statistical label");
         check(controller.getExportError() == null, "retry clears error");
         check(Arrays.equals(PAYLOAD, read(controller.getFile())), "statistical download");
@@ -86,10 +86,16 @@ public class ExportVerification {
     }
 }
 
-class ReportsController implements Serializable {
+class SpecialImportationReportController implements Serializable {
     static StreamedContent next;
     static String lastStatus;
     static boolean fail;
+    StreamedContent statisticalResult;
+    int argument;
+    public StreamedContent generateSpecialImportationReport(int value) {
+        argument = value;
+        return statisticalResult;
+    }
     public StreamedContent getSpecialImportation(String status) {
         lastStatus = status;
         if (fail) throw new IllegalStateException("report generation failure fixture");
@@ -102,11 +108,4 @@ class ImportationMasterController {
     public boolean isApprovedItems() { return approved; }
     public boolean isPendingItems() { return pending; }
 }
-class DetailedReportController {
-    StreamedContent next;
-    int argument;
-    public StreamedContent generateSpecialImportationReport(int value) {
-        argument = value;
-        return next;
-    }
-}
+

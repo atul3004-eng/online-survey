@@ -1,42 +1,43 @@
-# Complete importation Excel download fix
+# Independent importation Excel reports
 
-These files belong to the DPS application (GlassFish 4.1, PrimeFaces 6.1 and legacy
-Apache POI), not the survey application in this repository.
+Leave ReportsController and DetailedReportController unchanged.
 
-1. Add both SpecialImportationExcelExporter.java and
-   SpecialImportationStatisticalExcelExporter.java to package dps.jsf.
-2. Replace ReportsController.getSpecialImportation(String) with the method snippet
-   in getSpecialImportation.java.
-3. Replace DetailedReportController.generateSpecialImportationReport(int) with
-   the method snippet in generateSpecialImportationReport.java. Keep the existing
-   facade injection and entity/List/StreamedContent imports. Paste this method
-   inside the controller class; it is not a standalone Java class.
-4. Replace dps.jsf.ImportationExportController with the included controller.
-5. Replace the importation list page with importationList.xhtml, keeping its
-   existing filename. For a customized page, replace its export controls and
-   remove the old export thread/poll controls.
-6. Rebuild and deploy the DPS application, then start a fresh session.
+Add these three classes to the DPS application's dps.jsf package:
+- SpecialImportationReportController.java: contains both getSpecialImportation(String status)
+  and generateSpecialImportationReport(int status)
+- SpecialImportationExcelExporter.java
+- SpecialImportationStatisticalExcelExporter.java
 
-The second method delegates all 51 statistical columns to its stateless exporter.
-It uses local formatters, fixed column widths, the XLS MIME type, an all-column
-filter, and HH:mm for assessor decision time. Workbook resources are closed after
-writing, and every stream request reads the completed bytes afresh. Failures
-propagate instead of returning an old shared file.
+Replace ImportationExportController.java with the included class. It now injects
+the combined specialImportationReportController bean; it neither extends nor calls the existing report controllers.
+Use the included importationList.xhtml (keep your existing page filename), or copy
+its export/download controls into your customized page and remove old export polling.
+Do not apply getSpecialImportation.java or generateSpecialImportationReport.java:
+those standalone method snippets are from the previous approach and are not needed.
 
-Original statistical rules remain: submitted years 2021–2025, receipt date equal
- to submission date, and no status filtering. The int argument remains for existing
-callers. XLS supports 65,535 data rows plus a header per sheet. Queries and approval
-selection rules remain unchanged; lazy relationships must be accessible during export.
+Facade imports use the supplied dps.sb package. The class names assumed from the
+existing variables are ImportationMasterFacade and ExternalStatusFacade. Confirm
+these against your application; the actual facade sources are absent here. Entity
+imports use dps.ejb. Retain any application-specific service authorization checks.
+Rebuild, deploy, and start a fresh session after installing the classes and page.
 
-The XHTML prepares via AJAX, then displays a separate non-AJAX download button.
-Preparation runs in the JSF request without raw threads or polling. Ready is set
-only after a non-empty stream is read successfully. New exports clear the previous
-result; failures display an error. Existing visibility rules are preserved; retain
-existing report-service authorization too.
+Regular reports retain the Approved, In-Progress and All queries. Statistical reports
+retain all 51 columns and the original 2021–2025 submission-year filter. The int status
+argument remains unused, as in the supplied method. Receipt date still equals submission
+date. Exporters use fixed widths, local formatters, correct XLS MIME type, all-column
+filtering, and fresh streams. Statistical assessor decision time uses HH:mm.
 
-Run verification/verify.ps1 to check the preparation/download controller against
-PrimeFaces 6.1 using stub DPS controllers and parse the XHTML. This does not compile
-the real DPS entities/exporters or verify GlassFish/database integration. In the
-actual application, test Approved, In-Progress, All and statistical exports, download
-each twice, and inspect the workbook contents. Large reports still occupy a server
-request and retain bytes in the session. Real database performance is unmeasured.
+Preparation uses an AJAX request; downloading uses a separate non-AJAX request.
+Only successful preparation enables downloading. Failures clear the previous result.
+There are no raw threads or polling. XLS supports 65,535 data rows plus the header.
+Large reports occupy a server request and keep bytes in the session; lazy entity
+relationships must remain available during generation.
+
+Verification: run verification/verify.ps1. It tests the download controller against
+PrimeFaces 6.1 with stub report beans and parses XHTML. It does not compile or test the
+real DPS facades, entities or exporters. In DPS, test all three regular statuses and
+the statistical report, inspect workbook contents, and download each result twice.
+
+If you installed the earlier split version, remove SpecialImportationStatisticalReportController.java.
+The XHTML bindings remain unchanged.
+

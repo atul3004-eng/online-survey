@@ -16,7 +16,7 @@ import org.primefaces.model.StreamedContent;
 /** PrimeFaces 6.1: prepare in an AJAX request, download in a non-AJAX request. */
 @ManagedBean(name = "importationExportController")
 @SessionScoped
-public class ImportationExportController extends ReportsController implements Serializable {
+public class ImportationExportController implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = Logger.getLogger(ImportationExportController.class.getName());
 
@@ -28,8 +28,15 @@ public class ImportationExportController extends ReportsController implements Se
     @ManagedProperty(value = "#{importationMasterController}")
     private ImportationMasterController importationMasterController;
 
-    @ManagedProperty(value = "#{detailedReportController}")
-    private DetailedReportController detailedReportController;
+    @ManagedProperty(value = "#{specialImportationReportController}")
+    private SpecialImportationReportController specialImportationReportController;
+
+    public SpecialImportationReportController getSpecialImportationReportController() {
+        return specialImportationReportController;
+    }
+    public void setSpecialImportationReportController(SpecialImportationReportController controller) {
+        specialImportationReportController = controller;
+    }
 
     public void prepareImportation() {
         prepare(false);
@@ -55,11 +62,11 @@ public class ImportationExportController extends ReportsController implements Se
             // on FacesContext, the logged-in user, or request-bound persistence.
             StreamedContent generated;
             if (statistical) {
-                generated = detailedReportController.generateSpecialImportationReport(3);
+                generated = specialImportationReportController.generateSpecialImportationReport(3);
             } else {
                 String status = importationMasterController.isApprovedItems() ? "Approved"
                         : importationMasterController.isPendingItems() ? "In-Progress" : "All";
-                generated = getSpecialImportation(status);
+                generated = specialImportationReportController.getSpecialImportation(status);
             }
             preparedFile = readFile(generated, statistical);
         } catch (Exception ex) {
@@ -119,10 +126,6 @@ public class ImportationExportController extends ReportsController implements Se
     public void setImportationMasterController(ImportationMasterController controller) {
         importationMasterController = controller;
     }
-    public DetailedReportController getDetailedReportController() { return detailedReportController; }
-    public void setDetailedReportController(DetailedReportController controller) {
-        detailedReportController = controller;
-    }
 
     private static final class ExportFile implements Serializable {
         private static final long serialVersionUID = 1L;
@@ -138,3 +141,5 @@ public class ImportationExportController extends ReportsController implements Se
         }
     }
 }
+
+
