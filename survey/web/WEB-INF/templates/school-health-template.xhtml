@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="#{schoolHealthSurvey.lang}"
+      dir="#{schoolHealthSurvey.dir}">
+<f:metadata>
+    <f:viewParam name="lang" value="#{schoolHealthSurvey.locale}"/>
+    <ui:insert name="metadata"/>
+</f:metadata>
+<f:view locale="#{schoolHealthSurvey.locale}">
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <f:loadBundle basename="messages" var="msg"/>
+        <title><ui:insert name="pageTitle">#{msg['schoolHealth.pageTitle']}</ui:insert></title>
+        <link rel="shortcut icon"
+              href="/NCGP/faces/javax.faces.resources/MophTheam/images/favicon.ico"/>
+        <link href="/NCGP/faces/javax.faces.resources/MophTheam/css/primefaces_override.css"
+              rel="stylesheet" type="text/css"/>
+        <link href="/NCGP/faces/javax.faces.resources/MophTheam/css/light.css"
+              rel="stylesheet" type="text/css"/>
+        <h:outputStylesheet library="primefaces" name="primeicons/primeicons.css"/>
+        <style type="text/css">
+            body { margin: 0; background: #f7f8fa; color: #343a40; }
+            .sidebar-brand__single-page { align-items: center; display: flex; }
+            .language-link { font-size: 1.05rem; font-weight: 600; text-decoration: none; }
+            html[dir="rtl"] body { direction: rtl; text-align: right; }
+            html[dir="rtl"] .navbar { direction: rtl; }
+            html[dir="rtl"] .navbar-align { margin-left: 0 !important; margin-right: auto !important; }
+        </style>
+        <ui:insert name="pageStyles"/>
+    </h:head>
+
+    <h:body styleClass="survey-page">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-brand sidebar-brand__single-page" href="#{request.contextPath}/index.xhtml">
+                <h:graphicImage styleClass="mw-100" alt="MOPH"
+                                library="MophTheam" name="img/Logo_moph_bilingual.svg"/>
+                <span class="sidebar-brand__single-page-divider"></span>
+                <span class="align-middle d-block sidebar-brand__single-page-title">#{msg['schoolHealth.department']}</span>
+            </a>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+                    <li class="nav-item">
+                        <h:form id="languageForm">
+                            <h:commandLink action="#{schoolHealthSurvey.toggleLanguage}"
+                                           styleClass="nav-flag link-primary language-link"
+                                           hreflang="#{schoolHealthSurvey.arabic ? 'en' : 'ar'}">
+                                <span class="text-lg" lang="#{schoolHealthSurvey.arabic ? 'en' : 'ar'}">
+                                    #{schoolHealthSurvey.arabic ? 'English' : 'عربي'}
+                                </span>
+                            </h:commandLink>
+                        </h:form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main>
+            <ui:insert name="content"/>
+        </main>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row text-muted">
+                    <div class="col-6 text-start">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a class="text-muted" href="#">Support</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Help Center</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Privacy</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">© 2026 Copyright - Ministry of Public Health</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script type="text/javascript">
+            function toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(function () {});
+                } else if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+            document.addEventListener("fullscreenchange", function () {
+                var label = document.querySelector(".js-fullscreen-label");
+                if (label) {
+                    label.textContent = document.fullscreenElement ? "Exit fullscreen" : "Fullscreen";
+                }
+            });
+        </script>
+        <script type="text/javascript" src="/NCGP/faces/javax.faces.resources/MophTheam/js/app.js"></script>
+        <script type="text/javascript" src="/NCGP/faces/javax.faces.resources/MophTheam/js/accessibility.js"></script>
+        <ui:insert name="pageScripts"/>
+    </h:body>
+</f:view>
+</html>
