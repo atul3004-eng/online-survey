@@ -1,0 +1,198 @@
+<!DOCTYPE html []>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/WEB-INF/templates/admin.xhtml">
+        <ui:define name="content">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h2>School Survey Setup</h2>
+                    <p>Manage survey details and answer options. Enter an unused ID for new records; existing IDs cannot be changed.</p>
+                    <p class="text-muted">Question keys and option groups must match the school survey fields. Adding a new question key does not automatically add a field to the survey form.</p>
+                </div>
+            </div>
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h3>Survey details</h3>
+                    <h:form id="detailForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h:outputLabel for="id" value="ID" styleClass="form-label d-block" />
+                                <p:inputText id="id" label="ID" value="#{schoolSurveySetupBean.detail.id}" required="true" styleClass="w-100" disabled="#{schoolSurveySetupBean.editingDetail}">
+                                    <f:validateLongRange minimum="1" maximum="9223372036854775807" />
+                                </p:inputText>
+                                <p:message for="id" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="eventUuid" value="Event UUID" styleClass="form-label d-block" />
+                                <p:inputText id="eventUuid" label="Event UUID" value="#{schoolSurveySetupBean.detail.eventUuid}" required="false" styleClass="w-100" maxlength="100"></p:inputText>
+                                <p:message for="eventUuid" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="headingId" value="Heading ID" styleClass="form-label d-block" />
+                                <p:inputText id="headingId" label="Heading ID" value="#{schoolSurveySetupBean.detail.headingId}" required="false" styleClass="w-100">
+                                    <f:validateLongRange minimum="1" maximum="9223372036854775807" />
+                                </p:inputText>
+                                <p:message for="headingId" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="heading" value="Heading (English)" styleClass="form-label d-block" />
+                                <p:inputText id="heading" label="Heading (English)" value="#{schoolSurveySetupBean.detail.heading}" required="true" styleClass="w-100" maxlength="255"></p:inputText>
+                                <p:message for="heading" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="headingAr" value="Heading (Arabic)" styleClass="form-label d-block" />
+                                <p:inputText id="headingAr" label="Heading (Arabic)" value="#{schoolSurveySetupBean.detail.headingAr}" required="false" styleClass="w-100" maxlength="255"></p:inputText>
+                                <p:message for="headingAr" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="question" value="Question (English)" styleClass="form-label d-block" />
+                                <p:inputText id="question" label="Question (English)" value="#{schoolSurveySetupBean.detail.question}" required="true" styleClass="w-100" maxlength="1000"></p:inputText>
+                                <p:message for="question" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="questionAr" value="Question (Arabic)" styleClass="form-label d-block" />
+                                <p:inputText id="questionAr" label="Question (Arabic)" value="#{schoolSurveySetupBean.detail.questionAr}" required="false" styleClass="w-100" maxlength="1000"></p:inputText>
+                                <p:message for="questionAr" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="fieldType" value="Field type (text, radio, checkbox, textarea)" styleClass="form-label d-block" />
+                                <p:inputText id="fieldType" label="Field type (text, radio, checkbox, textarea)" value="#{schoolSurveySetupBean.detail.fieldType}" required="true" styleClass="w-100" maxlength="50"></p:inputText>
+                                <p:message for="fieldType" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="fieldOption" value="Question key (e.g. institutionName)" styleClass="form-label d-block" />
+                                <p:inputText id="fieldOption" label="Question key (e.g. institutionName)" value="#{schoolSurveySetupBean.detail.fieldOption}" required="true" styleClass="w-100" maxlength="100"></p:inputText>
+                                <p:message for="fieldOption" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="requiredMessage" value="Required message (English)" styleClass="form-label d-block" />
+                                <p:inputText id="requiredMessage" label="Required message (English)" value="#{schoolSurveySetupBean.detail.requiredMessage}" required="false" styleClass="w-100" maxlength="500"></p:inputText>
+                                <p:message for="requiredMessage" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="requiredMessageAr" value="Required message (Arabic)" styleClass="form-label d-block" />
+                                <p:inputText id="requiredMessageAr" label="Required message (Arabic)" value="#{schoolSurveySetupBean.detail.requiredMessageAr}" required="false" styleClass="w-100" maxlength="500"></p:inputText>
+                                <p:message for="requiredMessageAr" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="correctAnswerId" value="Correct answer ID" styleClass="form-label d-block" />
+                                <p:inputText id="correctAnswerId" label="Correct answer ID" value="#{schoolSurveySetupBean.detail.correctAnswerId}" required="false" styleClass="w-100">
+                                    <f:validateLongRange minimum="1" maximum="9223372036854775807" />
+                                </p:inputText>
+                                <p:message for="correctAnswerId" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="mandatory" value="Mandatory" styleClass="form-label d-block" />
+                                <p:selectBooleanCheckbox id="mandatory" value="#{schoolSurveySetupBean.detail.mandatory}" />
+                                <p:message for="mandatory" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="preSurvey" value="Pre-survey" styleClass="form-label d-block" />
+                                <p:selectBooleanCheckbox id="preSurvey" value="#{schoolSurveySetupBean.detail.preSurvey}" />
+                                <p:message for="preSurvey" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="postSurvey" value="Post-survey" styleClass="form-label d-block" />
+                                <p:selectBooleanCheckbox id="postSurvey" value="#{schoolSurveySetupBean.detail.postSurvey}" />
+                                <p:message for="postSurvey" />
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 mt-3">
+                            <p:commandButton value="Save" action="#{schoolSurveySetupBean.saveDetail}" process="@form" update="@form :detailList :messages" />
+                            <p:commandButton value="New / Cancel" action="#{schoolSurveySetupBean.newDetail}" process="@this" update="@form" resetValues="true" styleClass="ui-button-secondary" />
+                        </div>
+                    </h:form>
+                    <h:form id="detailList" styleClass="mt-4">
+                        <p:dataTable value="#{schoolSurveySetupBean.details}" var="row" paginator="true" rows="10" emptyMessage="No records found.">
+                            <p:column headerText="ID" sortBy="#{row.id}">
+                                <h:outputText value="#{row.id}" />
+                            </p:column>
+                            <p:column headerText="Heading" filterBy="#{row.heading}" filterMatchMode="contains">
+                                <h:outputText value="#{row.heading}" />
+                            </p:column>
+                            <p:column headerText="Question" filterBy="#{row.question}" filterMatchMode="contains">
+                                <h:outputText value="#{row.question}" />
+                            </p:column>
+                            <p:column headerText="Question key" filterBy="#{row.fieldOption}" filterMatchMode="contains">
+                                <h:outputText value="#{row.fieldOption}" />
+                            </p:column>
+                            <p:column headerText="Actions">
+                                <p:commandButton value="Edit" action="#{schoolSurveySetupBean.editDetail(row)}" process="@this" update=":detailForm :messages" resetValues="true" />
+                                <p:commandButton value="Delete" action="#{schoolSurveySetupBean.deleteDetail(row)}" process="@this" update="@form :detailForm :messages" resetValues="true" styleClass="ui-button-danger">
+                                    <p:confirm header="Delete record" message="Delete this record permanently?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </div>
+            </div>
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h3>Options</h3>
+                    <h:form id="optionForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h:outputLabel for="id" value="ID" styleClass="form-label d-block" />
+                                <p:inputText id="id" label="ID" value="#{schoolSurveySetupBean.option.id}" required="true" styleClass="w-100" disabled="#{schoolSurveySetupBean.editingOption}">
+                                    <f:validateLongRange minimum="1" maximum="2147483647" />
+                                </p:inputText>
+                                <p:message for="id" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="description" value="Description (English)" styleClass="form-label d-block" />
+                                <p:inputText id="description" label="Description (English)" value="#{schoolSurveySetupBean.option.description}" required="true" styleClass="w-100" maxlength="500"></p:inputText>
+                                <p:message for="description" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="descriptionAr" value="Description (Arabic)" styleClass="form-label d-block" />
+                                <p:inputText id="descriptionAr" label="Description (Arabic)" value="#{schoolSurveySetupBean.option.descriptionAr}" required="false" styleClass="w-100" maxlength="500"></p:inputText>
+                                <p:message for="descriptionAr" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="eventUuid" value="Event UUID" styleClass="form-label d-block" />
+                                <p:inputText id="eventUuid" label="Event UUID" value="#{schoolSurveySetupBean.option.eventUuid}" required="false" styleClass="w-100" maxlength="100"></p:inputText>
+                                <p:message for="eventUuid" />
+                            </div>
+                            <div class="col-md-6">
+                                <h:outputLabel for="optionType" value="Option group (e.g. institutionTypes)" styleClass="form-label d-block" />
+                                <p:inputText id="optionType" label="Option group (e.g. institutionTypes)" value="#{schoolSurveySetupBean.option.optionType}" required="true" styleClass="w-100" maxlength="100"></p:inputText>
+                                <p:message for="optionType" />
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 mt-3">
+                            <p:commandButton value="Save" action="#{schoolSurveySetupBean.saveOption}" process="@form" update="@form :optionList :messages" />
+                            <p:commandButton value="New / Cancel" action="#{schoolSurveySetupBean.newOption}" process="@this" update="@form" resetValues="true" styleClass="ui-button-secondary" />
+                        </div>
+                    </h:form>
+                    <h:form id="optionList" styleClass="mt-4">
+                        <p:dataTable value="#{schoolSurveySetupBean.options}" var="row" paginator="true" rows="10" emptyMessage="No records found.">
+                            <p:column headerText="ID" sortBy="#{row.id}">
+                                <h:outputText value="#{row.id}" />
+                            </p:column>
+                            <p:column headerText="Description" filterBy="#{row.description}" filterMatchMode="contains">
+                                <h:outputText value="#{row.description}" />
+                            </p:column>
+                            <p:column headerText="Arabic description" filterBy="#{row.descriptionAr}" filterMatchMode="contains">
+                                <h:outputText value="#{row.descriptionAr}" />
+                            </p:column>
+                            <p:column headerText="Option group" filterBy="#{row.optionType}" filterMatchMode="contains">
+                                <h:outputText value="#{row.optionType}" />
+                            </p:column>
+                            <p:column headerText="Actions">
+                                <p:commandButton value="Edit" action="#{schoolSurveySetupBean.editOption(row)}" process="@this" update=":optionForm :messages" resetValues="true" />
+                                <p:commandButton value="Delete" action="#{schoolSurveySetupBean.deleteOption(row)}" process="@this" update="@form :optionForm :messages" resetValues="true" styleClass="ui-button-danger">
+                                    <p:confirm header="Delete record" message="Delete this record permanently?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </div>
+            </div>
+            <p:confirmDialog global="true">
+                <h:form id="deleteConfirmationForm">
+                    <p:commandButton value="Cancel" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" />
+                    <p:commandButton value="Delete" type="button" styleClass="ui-confirmdialog-yes ui-button-danger" />
+                </h:form>
+            </p:confirmDialog>
+        </ui:define>
+    </ui:composition>
+</html>
