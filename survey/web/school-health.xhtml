@@ -55,38 +55,7 @@
             .survey-section .ui-selectoneradio td, .survey-section .ui-selectmanycheckbox td { padding: .35rem .75rem .35rem 0; }
             .survey-section .ui-selectoneradio label, .survey-section .ui-selectmanycheckbox label { color: #495057; font-size: .88rem; }
             .validation-summary { margin-bottom: 1rem; }
-            /* PrimeFaces applies the error class to the input/message itself. */
-            .survey-section .ui-inputfield.ui-state-error,
-            .survey-section .ui-selectonemenu.ui-state-error,
-            .survey-section .ui-radiobutton-box.ui-state-error,
-            .survey-section .ui-chkbox-box.ui-state-error,
-            .survey-section .ui-state-error .ui-radiobutton-box,
-            .survey-section .ui-state-error .ui-chkbox-box {
-                border: 1px solid #ff4545 !important;
-                background-color: #fff !important;
-                background-image: none !important;
-                box-shadow: none !important;
-            }
-            .survey-section .ui-inputfield.ui-state-error:focus,
-            .survey-section .ui-selectonemenu.ui-state-error.ui-state-focus {
-                border-color: #ff4545 !important;
-                box-shadow: 0 0 0 .15rem rgba(255,69,69,.15) !important;
-            }
             .field-message { display: block; font-size: .78rem; line-height: 1.35; margin-top: .3rem; min-height: 1em; }
-            .survey .field-message.ui-message-error,
-            .survey .field-message.ui-message-fatal,
-            .survey .field-message.ui-message-warn,
-            .survey .field-message .ui-message-error,
-            .survey .field-message .ui-message-fatal,
-            .survey .field-message .ui-message-warn,
-            .survey .validation-summary .ui-messages-error,
-            .survey .validation-summary .ui-messages-fatal {
-                color: #d32f2f !important;
-                background: transparent !important;
-                border: 0 !important;
-                box-shadow: none !important;
-                padding: 0 !important;
-            }
             .field-message .ui-message-error,
             .field-message .ui-message-warn,
             .field-message .ui-message-info,
@@ -98,13 +67,7 @@
             .field-message .ui-message-error-detail,
             .field-message .ui-message-error-summary,
             .field-message .ui-message-warn-detail,
-            .field-message .ui-message-warn-summary,
-            .field-message .ui-message-fatal-detail,
-            .field-message .ui-message-fatal-summary { color: #d32f2f !important; margin: 0 !important; padding: 0 !important; }
-            .survey .validation-summary .ui-messages-error-summary,
-            .survey .validation-summary .ui-messages-error-detail,
-            .survey .validation-summary .ui-messages-fatal-summary,
-            .survey .validation-summary .ui-messages-fatal-detail { color: #d32f2f !important; }
+            .field-message .ui-message-warn-summary { color: #c0173a !important; margin: 0 !important; padding: 0 !important; }
             .survey-section .form-control.ui-inputfield,
             .survey-section textarea.form-control { min-height: 38px; padding: .45rem .75rem; }
             .survey-section .ui-selectonemenu.form-select { -webkit-appearance: none; appearance: none; background-image: none !important; }
@@ -311,7 +274,7 @@
                                     <span class="field"><p:outputLabel for="schoolsCovered" value="#{schoolHealthSurvey.text('schoolsCovered')}"/><p:inputText id="schoolsCovered" label="#{schoolHealthSurvey.text('schoolsCovered')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['schoolsCovered']}" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('schoolsCovered')} #{msg['schoolHealth.requiredText']}" validatorMessage="Enter a non-negative whole number."><f:validateRegex disabled="#{schoolHealthSurvey.savingDraft}" pattern="^[0-9]+$"/></p:inputText><p:message for="schoolsCovered" display="text" styleClass="field-message"/></span>
                                     <span class="field"><p:outputLabel for="coverageInfo" value="#{schoolHealthSurvey.text('coverageInfo')}"/><p:inputTextarea id="coverageInfo" label="#{schoolHealthSurvey.text('coverageInfo')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['coverageInfo']}" rows="3" autoResize="false"/></span>
                                 </div>
-                                <div class="question-card"><p:outputLabel for="performanceIndicators" value="#{schoolHealthSurvey.text('performanceIndicators')}"/><p:selectOneRadio id="performanceIndicators" label="#{schoolHealthSurvey.text('performanceIndicators')}" value="#{schoolHealthSurvey.answers['performanceIndicators']}" layout="responsive" columns="3" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('performanceIndicators')} - #{msg['schoolHealth.requiredSelect']}"><f:selectItems value="#{schoolHealthSurvey.options('indicatorOptions')}"/><p:ajax process="@this" update="performanceIndicatorDetail"/></p:selectOneRadio><p:message for="performanceIndicators" display="text" styleClass="field-message"/><p:outputPanel id="performanceIndicatorDetail" layout="block"><h:panelGroup rendered="#{schoolHealthSurvey.answers['performanceIndicators'] eq 'yes'}"><p:outputLabel for="performanceIndicatorsDescription" value="#{msg['schoolHealth.performanceIndicatorsIfYes']}"/><p:inputTextarea id="performanceIndicatorsDescription" label="#{schoolHealthSurvey.text('performanceIndicatorsDescription')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['performanceIndicatorsDescription']}" rows="3" autoResize="false" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('performanceIndicatorsDescription')} #{msg['schoolHealth.requiredText']}"/><p:message for="performanceIndicatorsDescription" display="text" styleClass="field-message"/></h:panelGroup></p:outputPanel></div>
+                                <div class="question-card"><p:outputLabel for="performanceIndicators" value="#{schoolHealthSurvey.text('performanceIndicators')}"/><p:selectOneRadio id="performanceIndicators" label="#{schoolHealthSurvey.text('performanceIndicators')}" value="#{schoolHealthSurvey.answers['performanceIndicators']}" layout="responsive" columns="3" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('performanceIndicators')} - #{msg['schoolHealth.requiredSelect']}"><f:selectItems value="#{schoolHealthSurvey.options('indicatorOptions')}"/><p:ajax process="@this" update="performanceIndicatorDetail"/></p:selectOneRadio><p:message for="performanceIndicators" display="text" styleClass="field-message"/><p:outputPanel id="performanceIndicatorDetail" layout="block"><h:panelGroup rendered="#{schoolHealthSurvey.answers['performanceIndicators'] eq 'yes'}"><p:inputTextarea id="performanceIndicatorsDescription" label="#{schoolHealthSurvey.text('performanceIndicatorsDescription')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['performanceIndicatorsDescription']}" rows="3" autoResize="false" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('performanceIndicatorsDescription')} #{msg['schoolHealth.requiredText']}"/><p:message for="performanceIndicatorsDescription" display="text" styleClass="field-message"/></h:panelGroup></p:outputPanel></div>
                                 <div class="wizard-footer"><div class="wizard-footer-progress"><span>#{msg['schoolHealth.sectionProgress2']}</span><strong>33%</strong></div><div class="wizard-footer-actions"><p:commandButton value="#{msg['saveAndContinueLater']}" action="#{schoolHealthSurvey.saveDraft}" process="@form" update="validationMessages draftEmailPanel"><f:param name="saveDraft" value="true"/><p:confirm header="#{msg['schoolHealth.saveConfirmTitle']}" message="#{msg['schoolHealth.saveConfirmMessage']}" icon="pi pi-envelope"/></p:commandButton><p:commandButton type="button" value="#{msg['schoolHealth.back']}" icon="#{schoolHealthSurvey.arabic ? 'pi pi-arrow-right' : 'pi pi-arrow-left'}" styleClass="wizard-back-button" onclick="PF('schoolHealthWizard').back();"/><p:commandButton type="button" value="#{msg['schoolHealth.next']}" icon="#{schoolHealthSurvey.arabic ? 'pi pi-arrow-left' : 'pi pi-arrow-right'}" iconPos="#{schoolHealthSurvey.arabic ? 'left' : 'right'}" styleClass="wizard-next-button" onclick="PF('schoolHealthWizard').next();"/></div></div>
                             </section>
                         </p:tab>
@@ -321,8 +284,8 @@
                                 <p class="survey__eyebrow">#{msg['schoolHealth.section3']}</p>
                                 <h2>#{msg['schoolHealth.section3Title']}</h2>
                                 <div class="question-card"><p:outputLabel for="partnersInvolved" value="#{schoolHealthSurvey.text('partnersInvolved')}"/><p:selectOneRadio id="partnersInvolved" label="#{schoolHealthSurvey.text('partnersInvolved')}" value="#{schoolHealthSurvey.answers['partnersInvolved']}" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('partnersInvolved')} - #{msg['schoolHealth.requiredSelect']}"><f:selectItems value="#{schoolHealthSurvey.options('yesNoOptions')}"/><p:ajax process="@this" update="partnerDetails"/></p:selectOneRadio><p:message for="partnersInvolved" display="text" styleClass="field-message"/></div>
-                                <p:outputPanel id="partnerDetails" layout="block"><h:panelGroup rendered="#{schoolHealthSurvey.answers['partnersInvolved'] eq 'yes'}"><p:outputLabel value="#{msg['schoolHealth.partnersIfYes']}"/><div class="form-grid two"><span class="field"><p:outputLabel for="partnerNames" value="#{schoolHealthSurvey.text('partnerNames')}"/><p:inputTextarea id="partnerNames" label="#{schoolHealthSurvey.text('partnerNames')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['partnerNames']}" rows="3" autoResize="false" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('partnerNames')} #{msg['schoolHealth.requiredText']}"/><p:message for="partnerNames" display="text" styleClass="field-message"/></span><span class="field"><p:outputLabel for="partnerRoles" value="#{schoolHealthSurvey.text('partnerRoles')}"/><p:inputTextarea id="partnerRoles" label="#{schoolHealthSurvey.text('partnerRoles')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['partnerRoles']}" rows="3" autoResize="false" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('partnerRoles')} #{msg['schoolHealth.requiredText']}"/><p:message for="partnerRoles" display="text" styleClass="field-message"/></span></div></h:panelGroup></p:outputPanel>
-                                <div class="question-card"><p:outputLabel for="coordinationMechanism" value="#{schoolHealthSurvey.text('coordinationMechanism')}"/><p:selectOneRadio id="coordinationMechanism" label="#{schoolHealthSurvey.text('coordinationMechanism')}" value="#{schoolHealthSurvey.answers['coordinationMechanism']}" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('coordinationMechanism')} - #{msg['schoolHealth.requiredSelect']}"><f:selectItems value="#{schoolHealthSurvey.options('yesNoOptions')}"/><p:ajax process="@this" update="coordinationDetail"/></p:selectOneRadio><p:message for="coordinationMechanism" display="text" styleClass="field-message"/><p:outputPanel id="coordinationDetail" layout="block"><h:panelGroup rendered="#{schoolHealthSurvey.answers['coordinationMechanism'] eq 'yes'}"><p:outputLabel for="coordinationStructure" value="#{msg['schoolHealth.coordinationIfYes']}"/><p:inputTextarea id="coordinationStructure" label="#{schoolHealthSurvey.text('coordinationStructure')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['coordinationStructure']}" rows="3" autoResize="false" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('coordinationStructure')} #{msg['schoolHealth.requiredText']}"/><p:message for="coordinationStructure" display="text" styleClass="field-message"/></h:panelGroup></p:outputPanel></div>
+                                <p:outputPanel id="partnerDetails" layout="block"><h:panelGroup rendered="#{schoolHealthSurvey.answers['partnersInvolved'] eq 'yes'}"><div class="form-grid two"><span class="field"><p:outputLabel for="partnerNames" value="#{schoolHealthSurvey.text('partnerNames')}"/><p:inputTextarea id="partnerNames" label="#{schoolHealthSurvey.text('partnerNames')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['partnerNames']}" rows="3" autoResize="false" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('partnerNames')} #{msg['schoolHealth.requiredText']}"/><p:message for="partnerNames" display="text" styleClass="field-message"/></span><span class="field"><p:outputLabel for="partnerRoles" value="#{schoolHealthSurvey.text('partnerRoles')}"/><p:inputTextarea id="partnerRoles" label="#{schoolHealthSurvey.text('partnerRoles')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['partnerRoles']}" rows="3" autoResize="false" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('partnerRoles')} #{msg['schoolHealth.requiredText']}"/><p:message for="partnerRoles" display="text" styleClass="field-message"/></span></div></h:panelGroup></p:outputPanel>
+                                <div class="question-card"><p:outputLabel for="coordinationMechanism" value="#{schoolHealthSurvey.text('coordinationMechanism')}"/><p:selectOneRadio id="coordinationMechanism" label="#{schoolHealthSurvey.text('coordinationMechanism')}" value="#{schoolHealthSurvey.answers['coordinationMechanism']}" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('coordinationMechanism')} - #{msg['schoolHealth.requiredSelect']}"><f:selectItems value="#{schoolHealthSurvey.options('yesNoOptions')}"/><p:ajax process="@this" update="coordinationDetail"/></p:selectOneRadio><p:message for="coordinationMechanism" display="text" styleClass="field-message"/><p:outputPanel id="coordinationDetail" layout="block"><h:panelGroup rendered="#{schoolHealthSurvey.answers['coordinationMechanism'] eq 'yes'}"><p:outputLabel for="coordinationStructure" value="#{schoolHealthSurvey.text('coordinationStructure')}"/><p:inputTextarea id="coordinationStructure" label="#{schoolHealthSurvey.text('coordinationStructure')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['coordinationStructure']}" rows="3" autoResize="false" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('coordinationStructure')} #{msg['schoolHealth.requiredText']}"/><p:message for="coordinationStructure" display="text" styleClass="field-message"/></h:panelGroup></p:outputPanel></div>
                                 <div class="wizard-footer"><div class="wizard-footer-progress"><span>#{msg['schoolHealth.sectionProgress3']}</span><strong>50%</strong></div><div class="wizard-footer-actions"><p:commandButton value="#{msg['saveAndContinueLater']}" action="#{schoolHealthSurvey.saveDraft}" process="@form" update="validationMessages draftEmailPanel"><f:param name="saveDraft" value="true"/><p:confirm header="#{msg['schoolHealth.saveConfirmTitle']}" message="#{msg['schoolHealth.saveConfirmMessage']}" icon="pi pi-envelope"/></p:commandButton><p:commandButton type="button" value="#{msg['schoolHealth.back']}" icon="#{schoolHealthSurvey.arabic ? 'pi pi-arrow-right' : 'pi pi-arrow-left'}" styleClass="wizard-back-button" onclick="PF('schoolHealthWizard').back();"/><p:commandButton type="button" value="#{msg['schoolHealth.next']}" icon="#{schoolHealthSurvey.arabic ? 'pi pi-arrow-left' : 'pi pi-arrow-right'}" iconPos="#{schoolHealthSurvey.arabic ? 'left' : 'right'}" styleClass="wizard-next-button" onclick="PF('schoolHealthWizard').next();"/></div></div>
                             </section>
                         </p:tab>
@@ -331,7 +294,7 @@
                             <section class="survey-section">
                                 <p class="survey__eyebrow">#{msg['schoolHealth.section4']}</p>
                                 <h2>#{msg['schoolHealth.section4Title']}</h2>
-                                <div class="question-card"><p:outputLabel for="documentsDeveloped" value="#{schoolHealthSurvey.text('documentsDeveloped')}"/><p:selectOneRadio id="documentsDeveloped" label="#{schoolHealthSurvey.text('documentsDeveloped')}" value="#{schoolHealthSurvey.answers['documentsDeveloped']}" layout="responsive" columns="3" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('documentsDeveloped')} - #{msg['schoolHealth.requiredSelect']}"><f:selectItems value="#{schoolHealthSurvey.options('documentStatusOptions')}"/><p:ajax process="@this" update="documentDetail"/></p:selectOneRadio><p:message for="documentsDeveloped" display="text" styleClass="field-message"/><p:outputPanel id="documentDetail" layout="block"><h:panelGroup rendered="#{schoolHealthSurvey.answers['documentsDeveloped'] eq 'yes'}"><p:outputLabel for="documentTitlesYears" value="#{msg['schoolHealth.documentsIfYes']}"/><p:inputTextarea id="documentTitlesYears" label="#{schoolHealthSurvey.text('documentTitlesYears')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['documentTitlesYears']}" rows="5" autoResize="false" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('documentTitlesYears')} #{msg['schoolHealth.requiredText']}"/><p:message for="documentTitlesYears" display="text" styleClass="field-message"/></h:panelGroup></p:outputPanel></div>
+                                <div class="question-card"><p:outputLabel for="documentsDeveloped" value="#{schoolHealthSurvey.text('documentsDeveloped')}"/><p:selectOneRadio id="documentsDeveloped" label="#{schoolHealthSurvey.text('documentsDeveloped')}" value="#{schoolHealthSurvey.answers['documentsDeveloped']}" layout="responsive" columns="3" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('documentsDeveloped')} - #{msg['schoolHealth.requiredSelect']}"><f:selectItems value="#{schoolHealthSurvey.options('documentStatusOptions')}"/><p:ajax process="@this" update="documentDetail"/></p:selectOneRadio><p:message for="documentsDeveloped" display="text" styleClass="field-message"/><p:outputPanel id="documentDetail" layout="block"><h:panelGroup rendered="#{schoolHealthSurvey.answers['documentsDeveloped'] eq 'yes'}"><p:inputTextarea id="documentTitlesYears" label="#{schoolHealthSurvey.text('documentTitlesYears')}" styleClass="form-control" value="#{schoolHealthSurvey.answers['documentTitlesYears']}" rows="5" autoResize="false" required="#{not schoolHealthSurvey.savingDraft}" requiredMessage="#{schoolHealthSurvey.text('documentTitlesYears')} #{msg['schoolHealth.requiredText']}"/><p:message for="documentTitlesYears" display="text" styleClass="field-message"/></h:panelGroup></p:outputPanel></div>
                                 <div class="wizard-footer"><div class="wizard-footer-progress"><span>#{msg['schoolHealth.sectionProgress4']}</span><strong>67%</strong></div><div class="wizard-footer-actions"><p:commandButton value="#{msg['saveAndContinueLater']}" action="#{schoolHealthSurvey.saveDraft}" process="@form" update="validationMessages draftEmailPanel"><f:param name="saveDraft" value="true"/><p:confirm header="#{msg['schoolHealth.saveConfirmTitle']}" message="#{msg['schoolHealth.saveConfirmMessage']}" icon="pi pi-envelope"/></p:commandButton><p:commandButton type="button" value="#{msg['schoolHealth.back']}" icon="#{schoolHealthSurvey.arabic ? 'pi pi-arrow-right' : 'pi pi-arrow-left'}" styleClass="wizard-back-button" onclick="PF('schoolHealthWizard').back();"/><p:commandButton type="button" value="#{msg['schoolHealth.next']}" icon="#{schoolHealthSurvey.arabic ? 'pi pi-arrow-left' : 'pi pi-arrow-right'}" iconPos="#{schoolHealthSurvey.arabic ? 'left' : 'right'}" styleClass="wizard-next-button" onclick="PF('schoolHealthWizard').next();"/></div></div>
                             </section>
                         </p:tab>
@@ -369,8 +332,15 @@
         <footer class="footer">
             <div class="container-fluid">
                 <div class="row text-muted">
-
-                    <div class="col-12 text-center">
+                    <div class="col-6 text-start">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a class="text-muted" href="#">Support</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Help Center</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Privacy</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6 text-end">
                         <p class="mb-0">© 2026 Copyright - Ministry of Public Health</p>
                     </div>
                 </div>
@@ -387,7 +357,7 @@
             }
 
             document.addEventListener("fullscreenchange", function () {
-                var label = document.querySelector(".js-fullscreen .js-fullscreen-label");
+                var label = document.querySelector(".survey__head .js-fullscreen-label");
                 if (label) {
                     label.textContent = document.fullscreenElement ? "Exit fullscreen" : "Fullscreen";
                 }

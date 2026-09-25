@@ -113,6 +113,10 @@ public class SchoolHealthSurveyRepository implements Serializable {
     }
 
     public String findQuestionText(String questionKey, String locale) {
+        // Keep the corrected prompt available when an older question seed is installed.
+        if ("coordinationStructure".equals(questionKey)) {
+            return fallbackQuestionText(questionKey, locale);
+        }
         EntityManager entityManager = createEntityManager();
         try {
             String text = findQuestionText(entityManager, questionKey, normalizeLocale(locale));
@@ -320,7 +324,7 @@ public class SchoolHealthSurveyRepository implements Serializable {
         labels.put("partnerNames", "اسم الشريك / الشركاء");
         labels.put("partnerRoles", "دور الشريك / الشركاء");
         labels.put("coordinationMechanism", "هل توجد آلية تنسيق قائمة؟");
-        labels.put("coordinationStructure", "يرجى ذكر اسم الجهة وهيكلها التنظيمي");
+        labels.put("coordinationStructure", "يرجى ذكر آلية التنسيق");
         labels.put("documentsDeveloped", "هل قامت مؤسستكم بإعداد أو المساهمة في تطوير وثائق داعمة لهذا النشاط؟");
         labels.put("documentTitlesYears", "يرجى ذكر عناوين وسنوات إصدار الوثائق");
         labels.put("humanResources", "الموارد البشرية المخصصة");
@@ -376,7 +380,7 @@ public class SchoolHealthSurveyRepository implements Serializable {
         add(meta, "partnerNames", section, "Partner names", order++);
         add(meta, "partnerRoles", section, "Partner roles", order++);
         add(meta, "coordinationMechanism", section, "Established coordination mechanism", order++);
-        add(meta, "coordinationStructure", section, "Coordination name and structure", order++);
+        add(meta, "coordinationStructure", section, "Please specify the coordination mechanism", order++);
         return order;
     }
 
