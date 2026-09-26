@@ -12,6 +12,11 @@ import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.MessagingException;
+import javax.mail.SendFailedException;
+import com.sun.mail.smtp.SMTPAddressFailedException;
+import com.sun.mail.smtp.SMTPSendFailedException;
+import com.sun.mail.util.MailConnectException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -63,7 +68,7 @@ public class SurveyConfirmationEmail {
                     .process(data, body);
             message.setText(body.toString(), "UTF-8");
             message.setSentDate(new Date());
-            deliver(message);
+            deliverWithRetry(message, responseId);
             return true;
         } catch (Exception ex) {
             // Do not expose addresses, credentials, or survey answers in logs.
@@ -75,6 +80,61 @@ public class SurveyConfirmationEmail {
 
     protected void deliver(MimeMessage message) throws Exception {
         Transport.send(message);
+    }
+
+    private void deliverWithRetry(MimeMessage message, Long responseId) throws Exception {
+        for (int attempt = 1; ; attempt++) {
+            try {
+                deliver(message);
+                return;
+            } catch (Exception ex) {
+                if (attempt >= 3 || !isTemporaryFailure(ex)) throw ex;
+                LOG.warning("Temporary SMTP failure for response " + responseId
+                        + "; retrying email (attempt " + (attempt + 1) + " of 3).");
+                try {
+                    pauseBeforeRetry(attempt * 1000L);
+                } catch (InterruptedException interrupted) {
+                    Thread.currentThread().interrupt();
+                    throw interrupted;
+                }
+            }
+        }
+    }
+
+    protected void pauseBeforeRetry(long milliseconds) throws InterruptedException {
+        Thread.sleep(milliseconds);
+    }
+
+    private static boolean isTemporaryFailure(Exception failure) {
+        // Retry only explicit temporary rejections or failures to connect. A read/write
+        // timeout may occur after acceptance, so retrying it could send duplicate mail.
+        java.util.Set<Exception> visited = Collections.newSetFromMap(
+                new java.util.IdentityHashMap<Exception, Boolean>());
+        boolean temporary = false;
+        for (Exception ex = failure; ex != null && visited.add(ex); ) {
+            if (ex instanceof SendFailedException) {
+                javax.mail.Address[] sent = ((SendFailedException) ex).getValidSentAddresses();
+                if (sent != null && sent.length > 0) return false;
+            }
+            int code = 0;
+            if (ex instanceof SMTPSendFailedException) {
+                code = ((SMTPSendFailedException) ex).getReturnCode();
+            } else if (ex instanceof SMTPAddressFailedException) {
+                code = ((SMTPAddressFailedException) ex).getReturnCode();
+            }
+            if (code != 0) {
+                if (code < 400 || code >= 500) return false;
+                temporary = true;
+            }
+            if (ex instanceof MailConnectException || ex instanceof java.net.ConnectException) {
+                temporary = true;
+            }
+            Exception next = ex instanceof MessagingException
+                    ? ((MessagingException) ex).getNextException() : null;
+            ex = next != null ? next : (ex.getCause() instanceof Exception
+                    ? (Exception) ex.getCause() : null);
+        }
+        return temporary;
     }
 
     private static Configuration templateConfiguration() {

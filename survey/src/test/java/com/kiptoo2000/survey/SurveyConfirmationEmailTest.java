@@ -8,6 +8,66 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SurveyConfirmationEmailTest {
+    private static class RetryingMail extends SurveyConfirmationEmail {
+        private final Exception failure;
+        private final int failures;
+        int attempts;
+        final java.util.List<Long> delays = new java.util.ArrayList<Long>();
+
+        RetryingMail(Exception failure, int failures) {
+            super(Session.getInstance(new Properties()), "survey@example.org");
+            this.failure = failure;
+            this.failures = failures;
+        }
+
+        @Override protected void deliver(MimeMessage message) throws Exception {
+            if (++attempts <= failures) throw failure;
+        }
+
+        @Override protected void pauseBeforeRetry(long milliseconds) {
+            delays.add(milliseconds);
+        }
+    }
+
+    @Test public void temporarySmtpRejectionRecoversWithinOneSaveRequest() {
+        RetryingMail mail = new RetryingMail(new com.sun.mail.smtp.SMTPSendFailedException(
+                "DATA", 451, "Temporary failure", null, null, null, null), 2);
+        assertTrue(mail.sendResumeLink("participant@example.org", 42L, "en", "https://example.org/resume"));
+        assertEquals(3, mail.attempts);
+        assertEquals(java.util.Arrays.asList(1000L, 2000L), mail.delays);
+    }
+
+    @Test public void connectionFailureRetriesButStopsAfterThreeAttempts() {
+        RetryingMail mail = new RetryingMail(new javax.mail.MessagingException(
+                "Connection failure", new java.net.ConnectException()), 10);
+        assertFalse(mail.send("participant@example.org", 42L, "en"));
+        assertEquals(3, mail.attempts);
+    }
+
+    @Test public void permanentRejectionAndAmbiguousTimeoutAreNotRetried() {
+        Exception[] failures = {
+            new com.sun.mail.smtp.SMTPSendFailedException(
+                    "DATA", 550, "Rejected", null, null, null, null),
+            new javax.mail.MessagingException("Read timeout", new java.net.SocketTimeoutException()),
+            new javax.mail.AuthenticationFailedException("Authentication failed")
+        };
+        for (Exception failure : failures) {
+            RetryingMail mail = new RetryingMail(failure, 10);
+            assertFalse(mail.send("participant@example.org", 42L, "en"));
+            assertEquals(1, mail.attempts);
+            assertTrue(mail.delays.isEmpty());
+        }
+    }
+
+    @Test public void partiallyDeliveredMailIsNotRetried() throws Exception {
+        RetryingMail mail = new RetryingMail(new com.sun.mail.smtp.SMTPSendFailedException(
+                "DATA", 451, "Partial delivery", null,
+                new javax.mail.Address[]{new javax.mail.internet.InternetAddress("participant@example.org")},
+                null, null), 10);
+        assertFalse(mail.send("participant@example.org", 42L, "en"));
+        assertEquals(1, mail.attempts);
+    }
+
     @Test public void sendsResumeLinkInBothLanguages() throws Exception {
         final MimeMessage[] captured = new MimeMessage[1];
         SurveyConfirmationEmail mail = new SurveyConfirmationEmail(
