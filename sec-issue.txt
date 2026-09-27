@@ -1,0 +1,240 @@
+Cookie and header guidance: OWASP session management, security headers.
+1. Configure session cookies
+Merge this into the existing <session-config> in your application’s WEB-INF/web.xml:
+<session-config>
+    <session-timeout>30</session-timeout>
+    <cookie-config>
+        <http-only>true</http-only>
+        <secure>true</secure>
+    </cookie-config>
+    <tracking-mode>COOKIE</tracking-mode>
+</session-config>
+This configures JSESSIONID; custom cookies need their own flags. Configure SameSite using your application server’s supported settings. Choose it to support your AD login flow—cross-site login callbacks can require different settings.
+2. Set response headers
+A servlet filter mapped to /*, or your reverse proxy, can add:
+Strict-Transport-Security: max-age=31536000
+Content-Security-Policy: frame-ancestors 'none'
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Send HSTS on HTTPS responses. Add includeSubDomains only after confirming all affected subdomains support HTTPS. If TLS terminates at a proxy, setting HSTS there is usually simplest. OWASP HSTS guidance
+3. Implement CSRF protection for JSF
+Use a dedicated filter and token helper:
+- Generate a cryptographically random token and store it in the session.
+- Include it in each state-changing form.
+- Ensure PrimeFaces AJAX requests also submit it, including requests using process="@this".
+- Compare the submitted token with the session token before processing the action.
+- Reject missing or invalid tokens with HTTP 403.
+- Keep GET requests free of state changes.
+Do not rely solely on SameSite or assume JSF ViewState protects every endpoint. OWASP CSRF guidance
+4. Fix XSS at the output point
+For ordinary JSF text:
+<h:outputText value="#{bean.userInput}" escape="true"/>
+For browser-side text, use textContent instead of innerHTML. HTML escaping alone is insufficient when inserting values into JavaScript or URLs; those contexts need appropriate handling. Cookie flags do not fix the underlying XSS issue. OWASP XSS guidance
+For exact implementation, I need your application server/version, HTTPS proxy type, and the scanner’s affected URLs, cookie names, and JavaScript versions. No code has been changed for these findings yet.
+
+
+8:21 PM
+
+
+
+
+
+
+
+
+weblogic 14.1
+
+
+
+
+
+
+
+8:21 PM
+
+
+
+
+
+
+For WebLogic 14.1, you can address these without Spring Security using deployment descriptors and servlet filters.
+F-5 — Secure session cookies
+Merge this into your existing WEB-INF/web.xml:
+<session-config>
+    <session-timeout>30</session-timeout>
+    <cookie-config>
+        <http-only>true</http-only>
+        <secure>true</secure>
+    </cookie-config>
+    <tracking-mode>COOKIE</tracking-mode>
+</session-config>
+This protects the application’s session cookie. Apply Secure to custom cookies separately. Test through HTTPS, since browsers will not send Secure cookies over ordinary HTTP.
+F-6 and F-9 — HSTS and clickjacking
+Create a javax.servlet.Filter that adds these headers before calling chain.doFilter():
+response.setHeader(
+    "Strict-Transport-Security", "max-age=31536000");
+response.setHeader(
+    "Content-Security-Policy", "frame-ancestors 'none'");
+response.setHeader("X-Frame-Options", "DENY");
+response.setHeader("X-Content-Type-Options", "nosniff");
+Map it to /*. HSTS belongs on HTTPS responses; if a load balancer terminates HTTPS, configure it there or correctly configure WebLogic’s trusted proxy handling. Use the framing restrictions above only if your pages do not need embedding. OWASP header guidance
+F-10 — CSRF
+Implement a separate servlet filter that validates a random, session-bound token for state-changing requests. Include the token in JSF forms and PrimeFaces AJAX submissions. Invalid or missing tokens should return 403. Existing AD authentication does not replace CSRF protection. OWASP CSRF guidance
+F-7, F-8 and F-11 — Application changes
+Finding	Required change
+Vulnerable JavaScript	Upgrade the exact libraries identified by the scan, including copies bundled in UI components.
+DOM cookie manipulation	Remove untrusted input flowing into document.cookie; never trust client cookies for roles or permissions.
+Reflected input/XSS	Keep JSF escaping enabled, use context-appropriate output encoding, and avoid unsafe innerHTML assignments.
+
+
+Reflected input needs investigation at the reported location; it is not automatically exploitable XSS. OWASP XSS guidance
+Does HTTPS terminate directly on WebLogic, or on a load balancer/OHS in front of it? This determines where to configure HSTS and HTTPS redirects correctly.
+
+
+8:21 PM
+
+
+
+
+
+
+
+
+ohs
+
+
+
+
+
+
+
+8:22 PM
+
+
+
+
+
+
+Worked for 9s
+
+
+
+With OHS → WebLogic 14.1, configure headers in OHS, session cookies in WebLogic, and CSRF/XSS fixes in your application. Spring Security is unnecessary.
+1. OHS: fix HSTS and clickjacking
+Inside the existing HTTPS <VirtualHost>, typically configured in ssl.conf, add:
+Header always set Strict-Transport-Security "max-age=31536000"
+Header always set Content-Security-Policy "frame-ancestors 'none'"
+Header always set X-Frame-Options "DENY"
+Header always set X-Content-Type-Options "nosniff"
+Ensure mod_headers is enabled. If a CSP already exists, merge frame-ancestors into it rather than replacing its other protections.
+- Add includeSubDomains to HSTS only when all subdomains support HTTPS.
+- If your application needs same-origin iframe embedding, use frame-ancestors 'self' and SAMEORIGIN instead.
+- Configure the HTTP listener to redirect to your fixed public HTTPS hostname.
+Oracle documents OHS’s Header always set approach for HSTS. Oracle OHS security configuration
+2. OHS: pass the original HTTPS scheme correctly
+If HTTPS terminates at OHS, add this to the applicable WebLogic plug-in configuration within the HTTPS virtual host:
+WLProxySSL ON
+Enable WebLogic Plug-In Enabled on the target WebLogic server or cluster. This helps WebLogic generate correct HTTPS redirects behind OHS.
+WLProxySSL does not encrypt OHS-to-WebLogic traffic; backend TLS is configured separately. Keep backend access restricted to trusted infrastructure. Oracle plug-in configuration
+3. WebLogic: fix session cookie flags
+Merge this into WEB-INF/weblogic.xml, preserving any existing configuration:
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-web-app
+    xmlns="http://xmlns.oracle.com/weblogic/weblogic-web-app">
+
+    <session-descriptor>
+        <cookie-secure>true</cookie-secure>
+        <cookie-http-only>true</cookie-http-only>
+    </session-descriptor>
+
+</weblogic-web-app>
+These settings protect WebLogic session cookies. Custom application or authentication cookies require separate verification and configuration. Oracle WebLogic 14.1.1 cookie guidance
+4. Complete the remaining fixes in application code
+Finding	Required work
+F-7	Upgrade the JavaScript libraries identified by the scanner and remove old deployed copies.
+F-8	Remove untrusted input flowing into document.cookie; validate cookie values server-side.
+F-10	Add session-bound CSRF tokens and a validation servlet filter covering forms and AJAX requests.
+F-11	Encode reflected values for their output context and keep JSF escaping enabled.
+
+
+Verify after deployment
+curl.exe -sS -D - -o NUL https://your-host/your-app/
+Check response headers, then inspect cookies during an actual login in browser developer tools. Retest missing/invalid CSRF tokens, iframe embedding, and the scanner’s exact JavaScript/XSS findings. Headers alone will not resolve all seven findings.
+
+
+8:22 PM
+
+
+
+
+
+
+
+
+so basically this issue will fix by wl team , not from developer side
+
+
+
+
+
+
+
+8:40 PM
+
+
+
+
+
+
+Partly—the WebLogic/OHS team can fix the infrastructure findings, but developers must address the application findings.
+Finding	Main owner
+F-5 — Cookie missing Secure	Shared: WL team for server/authentication cookies; developers for application-created cookies and deployment descriptors
+F-6 — HSTS missing	WL/OHS team
+F-7 — Vulnerable JavaScript dependencies	Developers
+F-8 — DOM-based cookie manipulation	Developers
+F-9 — Clickjacking	WL/OHS team, with developers confirming whether iframe embedding is needed
+F-10 — CSRF	Developers
+F-11 — Reflected input / possible XSS	Developers to investigate and fix if exploitable
+
+
+You can assign F-6 and F-9 to the WL/OHS team, coordinate F-5 jointly, and assign F-7, F-8, F-10, and F-11 to developers. Security should retest all findings after the changes.
+
+
+8:41 PM
+
+
+
+
+
+
+
+
+i am from deveoper i receive eamil from sec team , so can forward mail to wl team for fixing this issue
+
+
+
+
+
+
+
+8:42 PM
+
+
+
+
+
+
+Yes—forward the email to the WL/OHS team for F-6, F-9, and the infrastructure-owned cookies in F-5. Keep the remaining findings with development.
+You can write:
+Subject: Action Required: WebLogic/OHS Security Findings
+Hi Team,
+Please review the attached security findings and address the following for the application:
+- F-5: Configure the Secure flag on WebLogic/OHS-managed cookies. Please identify any application-managed cookies requiring developer changes.
+- F-6: Enable HSTS on the OHS HTTPS responses.
+- F-9: Configure anti-clickjacking response headers, coordinating with us on any iframe requirements.
+Development will handle F-7, F-8, F-10, and F-11, along with any application-side changes needed for F-5.
+Please confirm the planned changes and deployment timeline so we can coordinate testing and security revalidation.
+Thanks.
+
+
+8:42 PM
