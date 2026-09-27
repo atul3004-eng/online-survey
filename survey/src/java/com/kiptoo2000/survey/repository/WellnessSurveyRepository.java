@@ -190,8 +190,8 @@ public class WellnessSurveyRepository implements Serializable {
         add(meta, "industryOther", section, "Other industry / company activities", order++);
         add(meta, "fullTime", section, "Full-time employees", order++);
         add(meta, "partTime", section, "Part-time employees", order++);
-        add(meta, "contracted", section, "Contracted/outsourced employees", order++);
         add(meta, "totalEmployees", section, "Total employees", order++);
+        add(meta, "contracted", section, "Contracted/outsourced employees", order++);
         add(meta, "outsourcedServices", section, "Contracted/outsourced service types", order++);
         add(meta, "outsourcedOther", section, "Other outsourced service", order++);
         add(meta, "occupations", section, "Main occupations", order++);
@@ -207,6 +207,7 @@ public class WellnessSurveyRepository implements Serializable {
         add(meta, "nonQatari", section, "Non-Qatari employees", order++);
         add(meta, "countries", section, "Countries for non-Qatari employees", order++);
         add(meta, "countryOther", section, "Other country", order++);
+        add(meta, "employeeLanguages", section, "Most common languages spoken by employees in the workplace", order++);
         return order;
     }
 

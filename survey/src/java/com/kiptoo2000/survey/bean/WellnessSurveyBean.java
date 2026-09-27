@@ -138,14 +138,6 @@ public class WellnessSurveyBean implements Serializable {
     }
 
     public String submit() {
-        if (!isEmployeeTotalValid()) {
-            FacesContext.getCurrentInstance().validationFailed();
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid employee total",
-                            "Total employees must equal full-time + part-time + contracted/outsourced employees."));
-            return null;
-        }
-
         try {
             savedResponseId = wellnessSurveyRepository.save(answers, multiAnswers);
             submitted = true;
@@ -166,22 +158,6 @@ public class WellnessSurveyBean implements Serializable {
             return null;
         }
         return "wellness-complete?faces-redirect=true";
-    }
-
-    private boolean isEmployeeTotalValid() {
-        String fullTime = answers.get("fullTime");
-        String partTime = answers.get("partTime");
-        String contracted = answers.get("contracted");
-        String totalEmployees = answers.get("totalEmployees");
-        if (isBlank(fullTime) || isBlank(partTime) || isBlank(contracted) || isBlank(totalEmployees)) {
-            return true;
-        }
-        try {
-            int expectedTotal = Integer.parseInt(fullTime) + Integer.parseInt(partTime) + Integer.parseInt(contracted);
-            return expectedTotal == Integer.parseInt(totalEmployees);
-        } catch (NumberFormatException ex) {
-            return true;
-        }
     }
 
     private boolean isBlank(String value) {
