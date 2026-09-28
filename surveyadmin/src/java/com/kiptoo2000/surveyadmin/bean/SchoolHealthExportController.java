@@ -25,6 +25,7 @@ public class SchoolHealthExportController implements Serializable {
     private volatile String status = "Export all submitted school health responses (drafts excluded).";
 
     public synchronized void start() {
+        com.kiptoo2000.surveyadmin.security.SurveyAccess.require("school");
         if (running) { return; }
         file = null;
         progress = 0;
@@ -65,6 +66,7 @@ public class SchoolHealthExportController implements Serializable {
     }
 
     public void download() throws IOException {
+        com.kiptoo2000.surveyadmin.security.SurveyAccess.require("school");
         byte[] bytes = file;
         if (running || bytes == null) { return; }
         FacesContext faces = FacesContext.getCurrentInstance();

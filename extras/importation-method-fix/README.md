@@ -23,8 +23,10 @@ The AJAX action checks export permission and captures the selected status, then
 submits to the application server's `java:comp/DefaultManagedExecutorService` and
 returns. Database queries and workbook creation run on the managed worker thread.
 The worker does not read FacesContext or the session's filter controller.
-The page displays a preparing message and polls every two seconds while the job
-is in progress. Successful completion shows a separate non-AJAX Download button.
+The page displays a preparing message and polls silently every two seconds while the
+job is in progress. Poll requests do not trigger the global AJAX status dialog or
+refresh the page/form. Only completion or failure updates the export controls and
+stops polling. Successful completion shows a separate non-AJAX Download button.
 Each click gets a new stream, so the same prepared file can be downloaded again.
 
 Only one export runs per session. A new export clears the prior file; generation

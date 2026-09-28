@@ -229,14 +229,17 @@ public class WellnessSurveyBean implements Serializable {
     }
 
     public List<WellnessResponse> getSavedResponses() {
+        com.kiptoo2000.survey.security.SurveyAccess.require("wellness");
         return wellnessSurveyRepository.findAllResponses();
     }
 
     public List<WellnessAnswer> getExportAnswers() {
+        com.kiptoo2000.survey.security.SurveyAccess.require("wellness");
         return wellnessSurveyRepository.findAllAnswersForExport();
     }
 
     public void downloadFullResultsExcel() {
+        com.kiptoo2000.survey.security.SurveyAccess.require("wellness");
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
         try {
@@ -313,15 +316,18 @@ public class WellnessSurveyBean implements Serializable {
     }
 
     public void viewSavedResponse(Long responseId) {
+        com.kiptoo2000.survey.security.SurveyAccess.require("wellness");
         selectedResponse = wellnessSurveyRepository.findResponse(responseId);
         selectedAnswers = wellnessSurveyRepository.findAnswers(responseId);
     }
 
     public WellnessResponse getSelectedResponse() {
+        com.kiptoo2000.survey.security.SurveyAccess.require("wellness");
         return selectedResponse;
     }
 
     public List<WellnessAnswer> getSelectedAnswers() {
+        com.kiptoo2000.survey.security.SurveyAccess.require("wellness");
         return selectedAnswers;
     }
 

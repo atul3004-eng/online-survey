@@ -1,32 +1,14 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <title>Workplace Wellness Survey Results</title>
-    <link rel="stylesheet" href="styles.css"/>
-</h:head>
-<h:body styleClass="wellness-page">
-    <div class="wellness-shell">
-        <header class="wellness-header">
-            <div>
-                <p class="eyebrow">Saved responses</p>
-                <h1>Workplace Wellness Survey Results</h1>
-                <p class="intro">Review submitted workplace wellness baseline survey responses from the database.</p>
-            </div>
-            <div class="header-panel">
-                <span>Database View</span>
-                <strong>Master response + answer rows</strong>
-            </div>
-        </header>
-
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/survey-results-template.xhtml">
+ <ui:define name="pageTitle">Workplace Wellness Survey Results</ui:define>
+ <ui:define name="content">
+  <section class="results-card">
+   <h1>Workplace Wellness Survey Results</h1>
+   <p>Review submitted workplace wellness baseline survey responses.</p>
         <h:form id="resultsForm">
-            <div class="wellness-wizard">
-                <div class="actions top-actions">
-                    <p:button value="New Survey" icon="pi pi-plus" outcome="wellness"/>
-                    <p:button value="Home" icon="pi pi-home" outcome="index"/>
+            <div class="results-content">
+                <div class="results-actions">
+                    <p:button value="New Survey" icon="pi pi-plus" outcome="/wellness.xhtml"/>
+                    <p:button value="Home" icon="pi pi-home" outcome="/index.xhtml"/>
                     <p:commandButton value="Download Full Excel"
                                      icon="pi pi-download"
                                      ajax="false"
@@ -106,6 +88,6 @@
                 </p:outputPanel>
             </h:panelGroup>
         </h:form>
-    </div>
-</h:body>
-</html>
+  </section>
+ </ui:define>
+</ui:composition>

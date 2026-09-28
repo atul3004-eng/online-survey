@@ -79,6 +79,16 @@
         <version>3.4.0</version>
         <configuration>
           <warSourceDirectory>web</warSourceDirectory>
+          <webResources>
+            <resource>
+              <directory>src/main/resources/MophTheam</directory>
+              <targetPath>resources/MophTheam</targetPath>
+              <filtering>false</filtering>
+              <includes>
+                <include>img/**</include>
+              </includes>
+            </resource>
+          </webResources>
           <packagingExcludes>WEB-INF/lib/javax.faces-2.2.20.jar</packagingExcludes>
           <failOnMissingWebXml>${failOnMissingWebXml}</failOnMissingWebXml>
         </configuration>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" lang="en">
+
+
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <title><ui:insert name="pageTitle">Survey Results</ui:insert></title>
+        <h:outputStylesheet library="MophTheam" name="css/light.css"/>
+        <h:outputStylesheet library="primefaces" name="primeicons/primeicons.css"/>
+        <style type="text/css">
+            body { margin: 0; background: #f7f8fa; color: #343a40; }
+            .sidebar-brand__single-page { align-items: center; display: flex; }
+            .language-link { font-size: 1.05rem; font-weight: 600; text-decoration: none; }
+            html[dir="rtl"] body { direction: rtl; text-align: right; }
+            html[dir="rtl"] .navbar { direction: rtl; }
+            html[dir="rtl"] .navbar-align { margin-left: 0 !important; margin-right: auto !important; }
+        </style>
+        <style type="text/css">
+            .survey-page { min-height: 100vh; display: flex; flex-direction: column; }
+            .survey-page main { flex: 1; }
+            .survey-results-shell { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+            .survey-results-shell h1, .survey-results-shell h2 { color: #8a1538; }
+            .survey-results-shell .ui-button { background: #8a1538; border-color: #8a1538; color: #fff; }
+            .results-card { background: #fff; border: 1px solid #eceef1; border-radius: .5rem; padding: 2rem; box-shadow: 0 12px 30px rgba(31,45,61,.08); }
+            .results-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1.5rem 0; }
+            .result-panel { margin-top: 2rem; }
+            @media (max-width: 600px) { .results-card { padding: 1rem; } .sidebar-brand__single-page-title { font-size: .85rem; } }
+        </style>
+        <ui:insert name="pageStyles"/>
+    </h:head>
+
+    <h:body styleClass="survey-page">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-brand sidebar-brand__single-page" href="#{request.contextPath}/index.xhtml">
+                <h:graphicImage styleClass="mw-100" alt="MOPH"
+                                library="MophTheam" name="img/Logo_moph_bilingual.svg"/>
+                <span class="sidebar-brand__single-page-divider"></span>
+                <span class="align-middle d-block sidebar-brand__single-page-title">Health Promotion Department</span>
+            </a>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+                    <li class="nav-item">
+                        <ui:insert name="headerActions"/>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main>
+            <div class="survey-results-shell"><ui:insert name="content"/></div>
+        </main>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row text-muted">
+                    <div class="col-6 text-start">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a class="text-muted" href="#">Support</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Help Center</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Privacy</a></li>
+                            <li class="list-inline-item"><a class="text-muted" href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">© 2026 Copyright - Ministry of Public Health</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <ui:insert name="pageScripts"/>
+    </h:body>
+
+</html>

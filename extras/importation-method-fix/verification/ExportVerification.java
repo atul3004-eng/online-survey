@@ -1,111 +1,126 @@
 package dps.jsf;
 
 import java.io.*;
-import java.util.Arrays;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.concurrent.*;
+import javax.enterprise.concurrent.ManagedExecutorService;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-/** Test fixtures only: do not deploy these stub DPS controllers. */
+/** Verification fixtures only; never deploy this directory. */
 public class ExportVerification {
-    private static final byte[] PAYLOAD = {80, 75, 3, 4, 10, 20, 30};
     private static int checks;
-
+    private static final byte[] PAYLOAD = {1, 2, 3};
     public static void main(String[] args) throws Exception {
-        ImportationMasterController filters = new ImportationMasterController();
-        SpecialImportationReportController reports = new SpecialImportationReportController();
-        ImportationExportController controller = new ImportationExportController();
-        controller.setImportationMasterController(filters);
-        controller.setSpecialImportationReportController(reports);
-        check(!controller.isExportReady() && controller.getFile() == null, "initial state");
-
-        for (int status = 0; status < 3; status++) {
-            filters.approved = status == 0;
-            filters.pending = status == 1;
-            SpecialImportationReportController.next = content("report.xlsx");
-            controller.prepareImportation();
-            check(new String[]{"Approved", "In-Progress", "All"}[status].equals(SpecialImportationReportController.lastStatus), "status snapshot");
-            check(controller.isExportReady() && !controller.isExportInProgress(), "ready after bytes copied");
-            StreamedContent first = controller.getFile();
-            StreamedContent second = controller.getFile();
-            check(first != second && first.getStream() != second.getStream(), "fresh streams");
-            check(Arrays.equals(PAYLOAD, read(first)), "first download bytes");
-            check(Arrays.equals(PAYLOAD, read(second)), "second download bytes");
-            check("report.xlsx".equals(second.getName()) && second.getContentLength() == PAYLOAD.length, "metadata");
+        ExecutorService pool = Executors.newSingleThreadExecutor();
+        ManagedExecutorService managed = (ManagedExecutorService) Proxy.newProxyInstance(
+                ExportVerification.class.getClassLoader(), new Class<?>[]{ManagedExecutorService.class},
+                (proxy, method, values) -> {
+                    try { return method.invoke(pool, values); }
+                    catch (InvocationTargetException ex) { throw ex.getCause(); }
+                });
+        try {
+            TestController c = new TestController(managed);
+            ImportationMasterController filters = new ImportationMasterController();
+            c.setImportationMasterController(filters);
+            check(!c.isExportReady() && c.getFile() == null, "initial state");
+            for (int status=0; status<3; status++) {
+                filters.approved = status==0; filters.pending = status==1;
+                c.started = new CountDownLatch(1); c.release = new CountDownLatch(1);
+                c.next = content(PAYLOAD);
+                c.prepareImportation();
+                check(c.started.await(3, TimeUnit.SECONDS), "worker starts");
+                check(c.worker != Thread.currentThread(), "generation uses background thread");
+                check(c.isExportInProgress() && c.getFile()==null, "request returns before generation finishes");
+                filters.approved = false; filters.pending = false;
+                int calls = c.calls;
+                c.prepareStatisticalImportation();
+                check(c.calls==calls, "duplicate request ignored");
+                c.release.countDown(); await(c);
+                check(new String[]{"Approved", "In-Progress", "All"}[status].equals(c.status), "captured filter is immutable");
+                check(c.isExportReady(), "ready only after completion");
+                StreamedContent first=c.getFile(), second=c.getFile();
+                check(first.getStream()!=second.getStream(), "fresh download streams");
+                check(Arrays.equals(PAYLOAD, read(first)) && Arrays.equals(PAYLOAD, read(second)), "repeat downloads");
+            }
+            c.started = new CountDownLatch(1); c.release = new CountDownLatch(0);
+            for (StreamedContent bad : new StreamedContent[]{null,content(new byte[0]),
+                    new DefaultStreamedContent(null,"application/vnd.ms-excel","bad.xls"),
+                    new DefaultStreamedContent(new InputStream(){public int read() throws IOException {throw new IOException("fixture");}},"application/vnd.ms-excel","bad.xls")}) {
+                c.next=bad; c.prepareImportation(); await(c); failed(c);
+            }
+            c.fail=true; c.prepareImportation(); await(c); failed(c); c.fail=false;
+            c.next=content(PAYLOAD); c.prepareStatisticalImportation(); await(c);
+            check(c.statistical && c.isExportReady() && c.getExportError()==null, "statistical retry");
+            check("Download Statistical Excel".equals(c.getDownloadLabel()), "statistical label");
+            c.allowed=false;
+            try { c.getFile(); throw new AssertionError("download authorization missing"); } catch(SecurityException expected) {checks++;}
+            try { c.prepareImportation(); throw new AssertionError("generation authorization missing"); } catch(SecurityException expected) {checks++;}
+            c.allowed=true;
+            c.started=new CountDownLatch(1); c.release=new CountDownLatch(1);
+            c.prepareImportation(); check(c.started.await(3,TimeUnit.SECONDS),"cancellation worker started");
+            c.destroy(); c.release.countDown();
+            Future<?> fence=pool.submit(()->{}); fence.get(3,TimeUnit.SECONDS);
+            check(!c.isExportReady() && !c.isExportInProgress(),"destroy prevents late result publication");
+            pool.shutdown();
+            TestController rejected=new TestController(managed); rejected.setImportationMasterController(filters);
+            rejected.prepareImportation(); failed(rejected);
+            verifyWorkbook("SpecialImportationExcelExporter",25);
+            verifyWorkbook("SpecialImportationStatisticalExcelExporter",51);
+            System.out.println("PASS: "+checks+" background, failure, download and workbook checks.");
+        } finally { pool.shutdownNow(); }
+    }
+    private static void verifyWorkbook(String name,int columns) throws Exception {
+        Class<?> type=Class.forName("dps.jsf.ImportationExportController$"+name);
+        Constructor<?> ctor=type.getDeclaredConstructor(); ctor.setAccessible(true);
+        boolean statistical=columns==51;
+        Method export=statistical ? type.getDeclaredMethod("export",List.class) : type.getDeclaredMethod("export",String.class,List.class);
+        export.setAccessible(true);
+        List<dps.ejb.ImportationMaster> records=Collections.singletonList(new dps.ejb.ImportationMaster());
+        StreamedContent file=(StreamedContent)(statistical ? export.invoke(ctor.newInstance(),records) : export.invoke(ctor.newInstance(),"All",records));
+        check(file.getName().endsWith(".xls") && "application/vnd.ms-excel".equals(file.getContentType()),"XLS metadata");
+        try(HSSFWorkbook workbook=new HSSFWorkbook(file.getStream())) {
+            check(workbook.getSheetAt(0).getRow(0).getLastCellNum()==columns,"all report columns retained");
+            check(workbook.getSheetAt(0).getLastRowNum()==1,"sample record exported");
         }
-
-        SpecialImportationReportController.next = null;
-        controller.prepareImportation();
-        failed(controller, "null report clears old result");
-
-        SpecialImportationReportController.next = new DefaultStreamedContent(new ByteArrayInputStream(new byte[0]), "application/vnd.ms-excel", "empty.xls");
-        controller.prepareImportation();
-        failed(controller, "empty report");
-
-        SpecialImportationReportController.next = new DefaultStreamedContent(null, "application/vnd.ms-excel", "missing.xls");
-        controller.prepareImportation();
-        failed(controller, "null stream");
-
-        SpecialImportationReportController.next = new DefaultStreamedContent(new InputStream() {
-            @Override public int read() throws IOException { throw new IOException("closed stream fixture"); }
-        }, "application/vnd.ms-excel", "closed.xls");
-        controller.prepareImportation();
-        failed(controller, "unreadable stream");
-
-        SpecialImportationReportController.fail = true;
-        controller.prepareImportation();
-        failed(controller, "generator exception");
-        SpecialImportationReportController.fail = false;
-
-        reports.statisticalResult = content("statistics.xlsx");
-        controller.prepareStatisticalImportation();
-        check(reports.argument == 3 && controller.isExportReady(), "statistical generation");
-        check("Download Statistical Excel".equals(controller.getDownloadLabel()), "statistical label");
-        check(controller.getExportError() == null, "retry clears error");
-        check(Arrays.equals(PAYLOAD, read(controller.getFile())), "statistical download");
-        System.out.println("PASS: " + checks + " controller checks against PrimeFaces 6.1 (stub report generators).");
     }
-
-    private static StreamedContent content(String filename) {
-        return new DefaultStreamedContent(new ByteArrayInputStream(PAYLOAD),
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
-    }
+    private static StreamedContent content(byte[] data) { return new DefaultStreamedContent(new ByteArrayInputStream(data),"application/vnd.ms-excel","report.xls"); }
     private static byte[] read(StreamedContent file) throws IOException {
-        try (InputStream input = file.getStream(); ByteArrayOutputStream output = new ByteArrayOutputStream()) {
-            int next;
-            while ((next = input.read()) != -1) output.write(next);
-            return output.toByteArray();
+        try(InputStream input=file.getStream(); ByteArrayOutputStream out=new ByteArrayOutputStream()) {
+            int next; while((next=input.read())!=-1) out.write(next); return out.toByteArray();
         }
     }
-    private static void failed(ImportationExportController controller, String name) {
-        check(!controller.isExportReady() && !controller.isExportInProgress()
-                && controller.getFile() == null && controller.getExportError() != null, name);
+    private static void await(ImportationExportController c) throws Exception {
+        long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(3);
+        while(c.isExportInProgress() && System.nanoTime()<end) Thread.sleep(5);
+        check(!c.isExportInProgress(),"worker completes");
     }
-    private static void check(boolean result, String name) {
-        if (!result) throw new AssertionError(name);
-        checks++;
+    private static void failed(ImportationExportController c) { check(!c.isExportInProgress() && !c.isExportReady() && c.getFile()==null && c.getExportError()!=null,"failure clears result"); }
+    private static void check(boolean ok,String message) { if(!ok) throw new AssertionError(message); checks++; }
+    private static class TestController extends ImportationExportController {
+        final ManagedExecutorService managed;
+        volatile CountDownLatch started=new CountDownLatch(1),release=new CountDownLatch(0);
+        volatile StreamedContent next;
+        volatile String status;
+        volatile boolean statistical,fail;
+        volatile int calls;
+        volatile Thread worker;
+        boolean allowed=true;
+        TestController(ManagedExecutorService executor) {managed=executor;}
+        @Override protected ManagedExecutorService executor() {return managed;}
+        @Override protected void authorize(boolean statistical) {if(!allowed) throw new SecurityException("fixture");}
+        @Override protected StreamedContent buildReport(String status,boolean statistical) throws Exception {
+            calls++; worker=Thread.currentThread(); started.countDown(); release.await();
+            this.status=status; this.statistical=statistical;
+            if(fail) throw new IOException("fixture failure");
+            return next;
+        }
     }
 }
-
-class SpecialImportationReportController implements Serializable {
-    static StreamedContent next;
-    static String lastStatus;
-    static boolean fail;
-    StreamedContent statisticalResult;
-    int argument;
-    public StreamedContent generateSpecialImportationReport(int value) {
-        argument = value;
-        return statisticalResult;
-    }
-    public StreamedContent getSpecialImportation(String status) {
-        lastStatus = status;
-        if (fail) throw new IllegalStateException("report generation failure fixture");
-        return next;
-    }
+class ImportationMasterController implements Serializable {
+    boolean approved,pending;
+    public boolean isApprovedItems() {return approved;}
+    public boolean isPendingItems() {return pending;}
 }
-class ImportationMasterController {
-    boolean approved;
-    boolean pending;
-    public boolean isApprovedItems() { return approved; }
-    public boolean isPendingItems() { return pending; }
-}
-

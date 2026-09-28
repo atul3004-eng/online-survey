@@ -4,6 +4,21 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    <!-- Leave blank in production. Local mock IDs: school-user or wellness-user. -->
+    <context-param>
+        <param-name>survey.mockUserId</param-name>
+        <param-value></param-value>
+    </context-param>
+    <filter>
+        <filter-name>SurveyAccessFilter</filter-name>
+        <filter-class>com.kiptoo2000.survey.security.SurveyAccessFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SurveyAccessFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -12,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
