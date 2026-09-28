@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template1.xhtml">
+        <ui:define name="title">
+            #{bundle['eventUserDownload']}
+        </ui:define>
+        <ui:define name="content">
+            <f:metadata>
+                <f:viewAction action="#{loginController.checkSession}" />
+            </f:metadata>
+            <h:form id="eventForm">
+                <!-- Access is handled by the existing /faces/jsf/* web.xml security. -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <p:button value="School Survey Results"
+                                  icon="pi pi-table"
+                                  outcome="/jsf/school-health-results.xhtml"
+                                  styleClass="btn btn-primary"
+                                  style="margin-right: .5rem; margin-bottom: .5rem;"/>
+                        <p:button value="Wellness Survey Results"
+                                  icon="pi pi-table"
+                                  outcome="/jsf/wellness-results.xhtml"
+                                  styleClass="btn btn-primary"
+                                  style="margin-bottom: .5rem;"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="alert alert-info" role="alert">
+
+                                    <div class="alert-message">
+                                        <p class="mb-1"><strong>#{bundle['downloadSteps']}</strong></p>
+                                        <ol class="m-0">
+                                            <li>#{bundle['selectEvent']}</li>
+                                            <li>#{bundle['retrieveData']}</li>
+                                            <li>#{bundle['exportToExcel']}</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-6 col-sm-8 col-xs-12">
+                                        <div class="input-group mb-3">
+                                            <h:selectOneMenu id="roles" value="#{eventMasterController.eventid}" styleClass="form-select flex-grow-1" >
+                                                <f:selectItems value="#{eventMasterController.userItemsAvailableSelectOneEvent}"  />
+                                            </h:selectOneMenu> 
+                                            <p:commandButton action="#{eventMasterController.eventApplicantDetails()}" value="#{bundle['fetchApplicants']}" styleClass="btn btn-primary" update="paramTable" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <h:panelGroup rendered="#{sessionScope.adUser eq 'ajain1'}" styleClass="custom-class">
+                                    <p:outputLabel for="queryInput" value="SQL Query:" />
+                                    <p:inputTextarea id="queryInput" value="#{dataSupportController.query}" rows="5" cols="60" />
+                                    <p:commandButton value="Execute Query" action="#{dataSupportController.executeQuery}" update="@form" />
+                                </h:panelGroup> 
+                                <p:dataTable id="paramTable" value="#{eventMasterController.applicantDetails}" var="applicant" paginator="true" rows="10" style="table-layout:auto; width:auto;" >
+                                    <p:columns value="#{eventMasterController.regdetails}" var="col" headerText="#{col.key}">
+                                        <h:outputText value="#{applicant[col.key]}" />
+                                    </p:columns>
+                                </p:dataTable>
+                                <div class="row">
+                                  
+
+                                    <p:commandButton value="Generate Excel"
+                                                     actionListener="#{excelController.startEventExcelThread}"
+                                                     update="status downloadPanel"
+                                                     process="@this"/>
+
+                                    <h:panelGroup id="status">
+
+                                        <h:outputText
+                                            value="Generating... #{excelController.formattedTime}"
+                                            rendered="#{excelController.exportInProgress}" />
+
+                                        <h:outputText
+                                            value="Export Ready"
+                                            rendered="#{excelController.exportReady}" />
+
+                                    </h:panelGroup>
+                                    <p:poll widgetVar="poll"
+                                            interval="5"
+                                            listener="#{excelController.checkExportReady}"
+                                            update="@form"/>
+
+                                    <h:panelGroup id="downloadPanel">
+
+                                        <p:commandButton value="Download Excel"
+                                                         ajax="false"
+                                                         rendered="#{excelController.exportReady}">
+                                            <p:fileDownload value="#{excelController.threadFile}" />
+                                        </p:commandButton>
+
+                                    </h:panelGroup>
+
+                                </div>
+                       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+           
+        </ui:define>
+    </ui:composition>
+</html>
