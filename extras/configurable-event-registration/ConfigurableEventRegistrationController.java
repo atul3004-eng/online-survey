@@ -1209,9 +1209,9 @@ private boolean isValidFile(byte[] bytes) {
             if (current.getEvent_uuid() == null) {
                 invalidLink = true;
                 showOnLoad = false;
-                return "/faces/registeration.xhtml?faces-redirect=true";
+                return "/faces/event-registration.xhtml?faces-redirect=true";
             }
-            return "/faces/registeration.xhtml?faces-redirect=true&uuid=" + current.getEvent_uuid() + "&lang=" + lang;
+            return "/faces/event-registration.xhtml?faces-redirect=true&uuid=" + current.getEvent_uuid() + "&lang=" + lang;
         } catch (Exception e) {
             return null;
         }
@@ -1297,12 +1297,6 @@ private boolean isValidFile(byte[] bytes) {
         if (emailTemplate == null || emailTemplate.trim().isEmpty()) {
             throw new IllegalStateException("Configure a registration email template for this language.");
         }
-        String joinUrl = getRegistrationPage().get("teamsJoinUrl");
-        java.net.URI teamsUri = joinUrl == null ? null : java.net.URI.create(joinUrl);
-        if (teamsUri == null || !"https".equalsIgnoreCase(teamsUri.getScheme())
-                || teamsUri.getHost() == null) {
-            throw new IllegalStateException("Configure a valid HTTPS Teams joining URL.");
-        }
         String qrUrl = generateUrlForApplicant(registrationMaster.getRegisterationId());
         String qrBase64 = JsfUtil.generateQRCodeBase64(qrUrl);
         byte[] qrBytes = Base64.getDecoder().decode(qrBase64);
@@ -1332,7 +1326,9 @@ private boolean isValidFile(byte[] bytes) {
             map.put("attaendanceDateValue", attaendanceDateValue);
             map.put("EventEmail", item.getEmail());
             map.put("registerEmail", email);
-            map.put("registrationPage", getRegistrationPage());
+            map.put("dateTime", getConfiguredDateTime());
+            // Existing day1 data is exposed as a URL for escaped template rendering.
+            map.put("joiningUrl", daterange == null ? "" : daterange.getEventDay1());
             Writer out = new StringWriter();
 
             if (language.isLangEn()) {
@@ -1837,7 +1833,7 @@ private static String escapeIcsText(String input) {
             }
             String resource = "/event-registration/" + uuid + ".properties";
             try (InputStream input = getClass().getResourceAsStream(resource)) {
-                if (input == null) throw new IllegalStateException("Missing " + resource);
+                if (input == null) return registrationPage; // Optional field instructions only.
                 Properties properties = new Properties();
                 properties.load(new java.io.InputStreamReader(input, java.nio.charset.StandardCharsets.UTF_8));
                 for (String key : properties.stringPropertyNames()) {
@@ -1850,6 +1846,21 @@ private static String escapeIcsText(String input) {
         return registrationPage;
     }
 
+    public String getConfiguredDateTime() {
+        if (daterange == null) return "";
+        String start = language.isLangEn() ? daterange.getEventstartDate() : daterange.getEventStartDayAr();
+        String end = language.isLangEn() ? daterange.getEventEndDate() : daterange.getEventenddateAr();
+        if (start == null) start = "";
+        return end == null || end.trim().isEmpty() || end.equals(start)
+            ? start : start + " – " + end;
+    }
+
+    public String getConfiguredPlatform() {
+        // Same configured meeting URL used to build the original FTL day1 value.
+        return daterange == null || daterange.getEventDay1() == null
+            ? "" : daterange.getEventDay1();
+    }
+
     public String getFieldInstruction(EventRegData field) {
         String key = "field." + field.getId().toPlainString() + ".instruction";
         return getRegistrationPage().getOrDefault(key, "");
@@ -1858,6 +1869,7 @@ private static String escapeIcsText(String input) {
     public void loadConfiguredRegistration() {
         if (FacesContext.getCurrentInstance().isPostback()) return;
         getItem();
+        daterange = registrationLimitFacade.getRecordByuuidNType(current.getEvent_uuid());
         eventFieldDetails();
         fieldsDetails.sort(Comparator.comparing(EventRegData::getPositions,
                 Comparator.nullsLast(Comparator.naturalOrder()))
@@ -2024,5 +2036,15 @@ private static String escapeIcsText(String input) {
         return valid;
     }
 
+    public String getRegistrationUrl() {
+        String uuid = current.getEvent_uuid();
+        if (uuid == null || uuid.trim().isEmpty()) return "";
+        try {
+            return JsfUtil.getBaseUrl() + "/faces/event-registration.xhtml?uuid="
+                + java.net.URLEncoder.encode(uuid, "UTF-8")
+                + "&lang=" + (language.isLangEn() ? "en" : "ar");
+        } catch (java.io.UnsupportedEncodingException impossible) {
+            throw new IllegalStateException(impossible);
+        }
+    }
 }
-

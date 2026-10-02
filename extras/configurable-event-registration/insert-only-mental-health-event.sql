@@ -1,0 +1,208 @@
+INSERT INTO ACTION
+    (ID, EVENT_UUID, ACTION_TYPE, ACTION_VALUES, ACTION_VALUES_AR, CURRENT_APPLICANTS, MAX_LIMIT)
+VALUES
+    (ACTIONSEQ.NEXTVAL, 'YOUR_EVENT_UUID', 'NMH_PRACTITIONER', 'Yes', 'نعم', 0, 0);
+
+INSERT INTO ACTION
+    (ID, EVENT_UUID, ACTION_TYPE, ACTION_VALUES, ACTION_VALUES_AR, CURRENT_APPLICANTS, MAX_LIMIT)
+VALUES
+    (ACTIONSEQ.NEXTVAL, 'YOUR_EVENT_UUID', 'NMH_PRACTITIONER', 'No', 'لا', 0, 0);
+
+INSERT INTO ACTION
+    (ID, EVENT_UUID, ACTION_TYPE, ACTION_VALUES, ACTION_VALUES_AR, CURRENT_APPLICANTS, MAX_LIMIT)
+VALUES
+    (ACTIONSEQ.NEXTVAL, 'YOUR_EVENT_UUID', 'NMH_ORGANIZATION', 'Other', 'أخرى', 0, 0);
+
+INSERT INTO ACTION
+    (ID, EVENT_UUID, ACTION_TYPE, ACTION_VALUES, ACTION_VALUES_AR, CURRENT_APPLICANTS, MAX_LIMIT)
+VALUES
+    (ACTIONSEQ.NEXTVAL, 'YOUR_EVENT_UUID', 'NMH_SCOPE', 'Physician', 'طبيب', 0, 0);
+
+INSERT INTO ACTION
+    (ID, EVENT_UUID, ACTION_TYPE, ACTION_VALUES, ACTION_VALUES_AR, CURRENT_APPLICANTS, MAX_LIMIT)
+VALUES
+    (ACTIONSEQ.NEXTVAL, 'YOUR_EVENT_UUID', 'NMH_SCOPE', 'Pharmacist', 'صيدلي', 0, 0);
+
+INSERT INTO ACTION
+    (ID, EVENT_UUID, ACTION_TYPE, ACTION_VALUES, ACTION_VALUES_AR, CURRENT_APPLICANTS, MAX_LIMIT)
+VALUES
+    (ACTIONSEQ.NEXTVAL, 'YOUR_EVENT_UUID', 'NMH_SCOPE', 'Nurse', 'ممرض', 0, 0);
+
+INSERT INTO ACTION
+    (ID, EVENT_UUID, ACTION_TYPE, ACTION_VALUES, ACTION_VALUES_AR, CURRENT_APPLICANTS, MAX_LIMIT)
+VALUES
+    (ACTIONSEQ.NEXTVAL, 'YOUR_EVENT_UUID', 'NMH_SCOPE', 'Dentist', 'طبيب أسنان', 0, 0);
+
+INSERT INTO ACTION
+    (ID, EVENT_UUID, ACTION_TYPE, ACTION_VALUES, ACTION_VALUES_AR, CURRENT_APPLICANTS, MAX_LIMIT)
+VALUES
+    (ACTIONSEQ.NEXTVAL, 'YOUR_EVENT_UUID', 'NMH_SCOPE', 'Allied Health Professional', 'اختصاصي مهن صحية مساندة', 0, 0);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'Full Name', 'textbox', 200,
+     1, NULL, 'Please enter your full name.', '(?s).*\S.*', 'Please enter your full name.',
+     'Full Name', 'Please enter your full name.', 'Please enter your full name.',
+     NULL,
+     NULL, 1);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'Email Address', 'textbox', 254,
+     1, NULL, 'Please enter your email address.', '^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$', 'Enter a valid email address.',
+     'Email Address', 'Please enter your email address.', 'Enter a valid email address.',
+     NULL,
+     NULL, 2);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'QID', 'textbox', 11,
+     1, NULL, 'Please enter your QID.', '^[0-9]{11}$', 'QID must contain exactly 11 digits.',
+     'QID', 'Please enter your QID.', 'QID must contain exactly 11 digits.',
+     NULL,
+     NULL, 3);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'Institution/Organization', 'dropdown', 0,
+     1, 'NMH_ORGANIZATION', 'Please select your institution/organization.', NULL, NULL,
+     'Institution/Organization', 'Please select your institution/organization.', NULL,
+     NULL,
+     NULL, 4);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'Please specify other organization', 'textbox', 200,
+     1, NULL, 'Please specify your organization.', '(?s).*\S.*', 'Please enter your organization.',
+     'Please specify other organization', 'Please specify your organization.', 'Please enter your organization.',
+     (SELECT ID FROM EVENTREGDATA WHERE EVENT_UUID = 'YOUR_EVENT_UUID' AND FIELDNAME = 'Institution/Organization'),
+     (SELECT ID FROM ACTION WHERE EVENT_UUID = 'YOUR_EVENT_UUID' AND ACTION_TYPE = 'NMH_ORGANIZATION' AND ACTION_VALUES = 'Other'), 5);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'Are you a licensed healthcare practitioner in Qatar?', 'radio', 0,
+     1, 'NMH_PRACTITIONER', 'Please select Yes or No.', NULL, NULL,
+     'Are you a licensed healthcare practitioner in Qatar?', 'Please select Yes or No.', NULL,
+     NULL,
+     NULL, 6);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'Scope of Practice', 'dropdown', 0,
+     1, 'NMH_SCOPE', 'Please select your scope of practice.', NULL, NULL,
+     'Scope of Practice', 'Please select your scope of practice.', NULL,
+     (SELECT ID FROM EVENTREGDATA WHERE EVENT_UUID = 'YOUR_EVENT_UUID' AND FIELDNAME = 'Are you a licensed healthcare practitioner in Qatar?'),
+     (SELECT ID FROM ACTION WHERE EVENT_UUID = 'YOUR_EVENT_UUID' AND ACTION_TYPE = 'NMH_PRACTITIONER' AND ACTION_VALUES = 'Yes'), 7);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'License Number', 'textbox', 30,
+     1, NULL, 'Please enter your license number.', '(?i)^(?:PH|P|N|D|A)[0-9]+$', 'Enter your full license number, such as P1234, without spaces.',
+     'License Number', 'Please enter your license number.', 'Enter your full license number, such as P1234, without spaces.',
+     (SELECT ID FROM EVENTREGDATA WHERE EVENT_UUID = 'YOUR_EVENT_UUID' AND FIELDNAME = 'Are you a licensed healthcare practitioner in Qatar?'),
+     (SELECT ID FROM ACTION WHERE EVENT_UUID = 'YOUR_EVENT_UUID' AND ACTION_TYPE = 'NMH_PRACTITIONER' AND ACTION_VALUES = 'Yes'), 8);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'Profession / Role', 'textbox', 200,
+     1, NULL, 'Please enter your profession or role.', '(?s).*\S.*', 'Please enter your profession or role.',
+     'Profession / Role', 'Please enter your profession or role.', 'Please enter your profession or role.',
+     (SELECT ID FROM EVENTREGDATA WHERE EVENT_UUID = 'YOUR_EVENT_UUID' AND FIELDNAME = 'Are you a licensed healthcare practitioner in Qatar?'),
+     (SELECT ID FROM ACTION WHERE EVENT_UUID = 'YOUR_EVENT_UUID' AND ACTION_TYPE = 'NMH_PRACTITIONER' AND ACTION_VALUES = 'No'), 9);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'To ensure your CPD credits are correctly allocated, please review your information carefully. If you notice any error in your License Number, QID, or Email Address, please correct it before submitting.', 'display', 0,
+     0, NULL, NULL, NULL, NULL,
+     'To ensure your CPD credits are correctly allocated, please review your information carefully. If you notice any error in your License Number, QID, or Email Address, please correct it before submitting.', NULL, NULL,
+     NULL,
+     NULL, 10);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'I have verified that my License Number, QID, and Email Address are accurate.', 'booleancheckbox', 0,
+     1, NULL, 'Please confirm that your information is accurate.', NULL, NULL,
+     'I have verified that my License Number, QID, and Email Address are accurate.', 'Please confirm that your information is accurate.', NULL,
+     NULL,
+     NULL, 11);
+
+INSERT INTO EVENTREGDATA
+    (ID, EVENT_ID, EVENT_UUID, FIELDNAME, FIELD_TYPE, FIELD_LENGTH,
+     IS_MANDATORY, ACTION, MANDATORY_MESSAGE, REGEX_PATTERN, VALIDATIONMSG,
+     FIELDNAME_AR, MANDATORY_MESSAGE_AR, VALIDATION_MESSAGE_AR,
+     PARENT_FIELD, SHOW_WHEN_ACTION_ID, POSITION)
+VALUES
+    (EVENTREGPAGESEQ.NEXTVAL,
+     (SELECT EVENT_ID FROM EVENTMASTER WHERE EVENT_UUID = 'YOUR_EVENT_UUID'),
+     'YOUR_EVENT_UUID', 'I understand that for my attendance to be verified, I must sign in to the Teams live session using the same email provided in this form.', 'booleancheckbox', 0,
+     1, NULL, 'Please acknowledge the Teams email requirement.', NULL, NULL,
+     'I understand that for my attendance to be verified, I must sign in to the Teams live session using the same email provided in this form.', 'Please acknowledge the Teams email requirement.', NULL,
+     NULL,
+     NULL, 12);
+

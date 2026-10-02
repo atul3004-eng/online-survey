@@ -3,7 +3,7 @@
 This folder contains a separate JSF.ConfigurableEventRegistrationController,
 not a controller installed in the unrelated survey project. It needs the original
 application's ejb entities, facades, utilities and dependencies to compile.
-The page is configurable-event-registration.xhtml. There are no event ID or
+The page is event-registration.xhtml. There are no event ID or
 answer-label comparisons in its branching rules.
 
 ## Install
@@ -13,10 +13,10 @@ answer-label comparisons in its branching rules.
 2. Add the entity relationship below and its database column/foreign key using
    your actual table names. Generate the entity getter and setter.
 3. Copy the XHTML into your original application's web folder. Open
-   /faces/configurable-event-registration.xhtml?uuid=<actual-event-uuid>&lang=en.
-4. Save event-page.properties.example under the application's classpath as
+   /faces/event-registration.xhtml?uuid=<actual-event-uuid>&lang=en.
+4. Optionally save event-page.properties.example under the application's classpath as
    /event-registration/<actual-event-uuid>.properties. Replace the instruction
-   field ID placeholders and configure the actual Teams URL.
+   field ID placeholders. This file now contains only optional field instructions.
 5. Install mental-health-registration.ftl under /templates on the classpath.
    Set EventMaster.register_email to mental-health-registration.ftl and configure
    its email sender and subject. This sample is English; configure Arabic text and
@@ -132,7 +132,7 @@ JSF rendering and transaction/email tests require the original application.
 The new Java class and bean name are separate. The new converter names are unique
 and are explicitly bound in the new page. No existing Java class or deployed XHTML
 was changed here. The copy includes the supplied controller's existing supporting
-methods so it does not depend on inheritance from EventMasterController. The new mail method requires a configured template and HTTPS joining URL before claiming email success.
+methods so it does not depend on inheritance from EventMasterController. The new mail method requires a configured email template before claiming email success. Joining details use the original configured meeting-link data.
 The EventRegData relationship/database migration is shared and additive: existing
 rows may keep SHOW_WHEN_ACTION_ID null and the old form continues using its old logic.
 The new event's records and classpath properties must be configured separately.
@@ -162,3 +162,23 @@ Oracle ALTER TABLE commits independently of the insert transaction.
 SQL was generated and its option/field counts checked; it has not been executed
 against your database. Event header, Teams link and email template remain in the
 properties/template configuration described above.
+
+## Existing event metadata (updated)
+
+No separate event-header properties file is required. The page title/heading uses
+EventMaster.eventTitle/eventTitleAr. The combined Date & Time uses the same
+RegistrationLimit.eventstartDate/eventEndDate (and Arabic equivalents) already
+used in the supplied page and existing FTL map. It is displayed intact: no date/time
+splitting and no new columns. The loader fetches RegistrationLimit by event UUID.
+
+The original FTL map keys EventName, EventSalutation, startDay, startDayRange,
+webinar and day1/day2/day3 remain available. The example template additionally
+uses dateTime and joiningUrl (the existing RegistrationLimit.eventDay1 URL).
+The separate properties file is optional and contains field instructions only.
+
+Platform uses the existing day1 meeting URL (RegistrationLimit.eventDay1) as
+confirmed. The page and sample email show a Platform joining link from that value.
+No platform name, meeting URL, event date/time or event ID is hard-coded. The
+original HTML-valued day1 FTL parameter remains available for existing templates;
+the sample uses joiningUrl so the URL is escaped by FreeMarker. Additional welcome
+and session-title fields need the actual entity getters if separate from eventTitle.
