@@ -136,3 +136,29 @@ methods so it does not depend on inheritance from EventMasterController. The new
 The EventRegData relationship/database migration is shared and additive: existing
 rows may keep SHOW_WHEN_ACTION_ID null and the old form continues using its old logic.
 The new event's records and classpath properties must be configured separately.
+
+## Oracle SQL scripts
+
+Run 01-add-trigger-column-oracle.sql once, then
+02-seed-mental-health-event-oracle.sql using SQL Developer Run Script (F5) or
+SQL*Plus. Confirm the DEFINE table names (EVENTREGDATA, ACTION, EVENTMASTER) against
+your actual @Table mappings. The script prompts for the existing event UUID and
+looks up EVENT_ID. Sequences ACTIONSEQ and EVENTREGPAGESEQ must already exist and
+be ahead of existing IDs. IS_MANDATORY is assumed NUMBER(1) with 0/1 values.
+
+The seed inserts 8 Action options and 12 fields, linking both Yes children, the No
+profession field, and Other organization using generated IDs. It refuses an event
+that already has fields or these Action groups. No existing field records are
+updated or deleted. Add approved organizations in the marked section; the supplied
+organization group contains only Other until you add those options.
+
+Ensure FIELDNAME and FIELDNAME_AR can hold the notice and acknowledgement text
+(use a sufficient length, such as 1000 characters); adjust column sizes if required. Arabic
+Action labels are included; field labels/messages currently mirror English and
+can be localized. The script prints the generated Email/License instruction keys
+for the event properties file. Review inserts and manually COMMIT or ROLLBACK.
+Oracle ALTER TABLE commits independently of the insert transaction.
+
+SQL was generated and its option/field counts checked; it has not been executed
+against your database. Event header, Teams link and email template remain in the
+properties/template configuration described above.
