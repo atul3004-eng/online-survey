@@ -1,0 +1,13 @@
+# Save as src/java/event-registration/<actual-event-uuid>.properties.
+# UTF-8. The controller loads the file matching the requested uuid.
+welcome=Welcome to the National Mental Health Educational Rounds
+sessionTitle=Risk assessment and management in patients with Mental Health and Behavioral Disorders
+date=08 October 2026
+time=10:00 AM – 12:00 PM
+platform=Microsoft Teams
+confirmation=You have successfully registered for the event. Registration details and Microsoft Teams joining instructions have been sent to your email address.
+# Replace with the real Teams joining URL before using the email template.
+teamsJoinUrl=
+# Replace EMAIL_FIELD_ID and LICENSE_FIELD_ID with your actual field IDs.
+field.EMAIL_FIELD_ID.instruction=Please enter the same email address that will be used to join the Microsoft Teams session
+field.LICENSE_FIELD_ID.instruction=Enter your full license number, including letters (e.g., P1234). Do not include spaces.
