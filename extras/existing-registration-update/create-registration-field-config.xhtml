@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+<p:tabView id="addRegPageField" >
+                <p:tab id="addregistrFields" title="Create Registration Field">
+                    <h:form>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-8 col-xs-12">
+                                <h:panelGroup rendered="#{fileUploadController.checkError(flash.message)}" >                                
+                                    <div id="flashMsg" class="ui-messages ui-widget">
+                                        <div class="ui-messages-info ui-corner-all">
+                                            <a href="#" class="ui-messages-close" onclick="$(this).parent().slideUp();
+                                                    return false;">
+                                                <span class="ui-icon ui-icon-close"></span>
+                                            </a>
+                                            <span class="ui-messages-info-icon"></span>
+                                            <ul>
+                                                <li>
+                                                    <h:messages globalOnly="true" errorStyle="color:red;" infoStyle="color:blue;"/>
+                                                    <br/>
+                                                    <h:outputText style="color:blue" value="#{flash.message.getDetail()}"/>
+                                                </li>
+                                            </ul> 
+                                        </div>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="form-group">
+                                    <span style="font-size: 16px; font-weight:  bold;">#{bundle['Event.EventName']}<span class="required">*</span> &#160;&#160;&#160;</span>
+                                    <div >
+
+
+                                        <h:selectOneMenu  id="roles" value="#{registrationMasterController.event}" 
+                                                          style="#{component.valid ? '' : 'border-color:red;'}"  styleClass="form-control" required="true" requiredMessage="EventName is mandatory"  onchange="selectedItem(this)">
+                                            <p:ajax event="change" listener="#{registrationMasterController.updateValues()}" process="@this"  update="addRegPageField:uploadDocumentForm:classificationIngredients" ></p:ajax>
+                                            <f:selectItems value="#{eventMasterController.itemsAvailableSelectOneEvent}"  />
+                                        </h:selectOneMenu>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h:commandButton class="reset" action="#{registrationMasterController.onSelectOption()}" style="display: none;">            
+                            <p:ajax update=":addRegPageField:uploadDocumentForm:classificationIngredients" />
+                        </h:commandButton>
+                    </h:form>
+                    <h:form  id="uploadDocumentForm">
+                        <h:panelGroup id="classificationIngredients">
+                            <ui:repeat id="configFields" value="#{registrationMasterController.event.eventRegDetails}" var="regDetails" varStatus="status">
+                                <div class="form_group">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+<p:inputText  value="#{regDetails.id}" required="true" style="#{component.valid ? '' : 'border-color:red;'}" requiredMessage="FieldName is required." validatorMessage="FieldName should be alphanumeric." styleClass="form-control" autocomplete="off">
+                                                       
+                                                    </p:inputText>
+                                                <span style="font-size: 16px; font-weight:  bold;">#{bundle['Home.FieldName']}<span class="required">*</span> &#160;&#160;&#160;</span>
+                                                <div >
+
+                                                    <p:inputText  value="#{regDetails.fieldName}" required="true" style="#{component.valid ? '' : 'border-color:red;'}" requiredMessage="FieldName is required." validatorMessage="FieldName should be alphanumeric." styleClass="form-control" autocomplete="off">
+                                                     <!--                <f:validateRegex pattern="^[a-zA-ZÀ-ÿ '-]*[a-zA-ZÀ-ÿ '-][a-zA-ZÀ-ÿ '-]*"/> -->
+                                                    </p:inputText>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <span style="font-size: 16px; font-weight:  bold;">#{bundle['Home.FieldNameAr']} &#160;&#160;&#160;</span>
+                                                <div >
+
+                                                    <p:inputText  value="#{regDetails.fieldname_ar}"  style="#{component.valid ? '' : 'border-color:red;'}"  validatorMessage="FieldName should be in arabic." styleClass="form-control" autocomplete="off">
+
+                                                    </p:inputText>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <span style="font-size: 16px; font-weight:  bold;">#{bundle['Home.FieldType']}<span class="required">*</span> &#160;&#160;&#160;</span>
+                                                <div >
+
+                                                    <h:selectOneMenu  id="fieldtype" value="#{regDetails.fieldType}" 
+                                                                      style="#{component.valid ? '' : 'border-color:red;'}"  styleClass="form-control" required="true" requiredMessage="Field type is mandatory">
+
+                                                        <f:selectItem itemValue="" itemLabel="Select.."/>
+                                                        <f:selectItem itemValue="radio"  itemLabel="Radio"/>
+                                                        <f:selectItem itemValue="dropdown"  itemLabel="Dropdown"/>
+                                                        <f:selectItem itemValue="textbox"  itemLabel="Textbox"/>
+                                                        <f:selectItem itemValue="booleancheckbox" itemLabel="Single Boolean Checkbox"/>
+                                                        <f:selectItem itemValue="listbox" itemLabel="Listbox"/>
+                                                        <f:selectItem itemValue="dropdownOther"  itemLabel="dropdownOther"/>
+                                                        <f:selectItem itemValue="checkboxOther"  itemLabel="checkboxOther"/>
+                                                        <f:selectItem itemValue="textboxMobile"  itemLabel="Textbox Mobile Number"/>
+                                                        <f:selectItem itemValue="calendar"  itemLabel="Calendar"/>
+                                                        <f:selectItem itemValue="uploadDoc" itemLabel="Upload Document"/>
+                                                        <f:selectItem itemValue="uploadDocs" itemLabel="Upload Documents"/>
+                                                         <f:selectItem itemValue="checkBox" itemLabel="CheckBox"/>
+                                                        <f:ajax render="ddlAction fieldtypeValue"></f:ajax>
+                                                    </h:selectOneMenu>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <span style="font-size: 16px; font-weight:  bold;">Options values link Name &#160;&#160;&#160;</span>
+                                                <div >
+
+                                                    <p:inputText id="ddlAction" value="#{regDetails.actionType}" styleClass="form-control" autocomplete="off" style="#{component.valid ? '' : 'border-color:red;'}" ><p:ajax event="change" process="@this" update="@(.configTriggerPanel)" listener="#{registrationMasterController.onConfigOptionGroupChanged}" resetValues="true" /></p:inputText>
+                                                    <span class="required">Note: In case of Countries Name please put Residence2 . For reference of names you can check dropdown list details "Action type"</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <span style="font-size: 16px; font-weight:  bold;">#{bundle['Home.Mandatory']} &#160;&#160;&#160;</span>
+                                                <div >
+
+                                                    <p:selectBooleanCheckbox   value="#{regDetails.mandatory}"  >
+                                                        <f:ajax  render="reqmsg reqmsgAr"></f:ajax>
+                                                    </p:selectBooleanCheckbox>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group" >
+                                                <span style="font-size: 16px; font-weight:  bold;">#{bundle['Home.requiredmsg']} &#160;&#160;&#160;</span>
+                                                <div >
+
+                                                    <p:inputText id="reqmsg" disabled="#{!regDetails.mandatory}" value="#{regDetails.mandatoryMessage}" styleClass="form-control" autocomplete="off"  style="#{component.valid ? '' : 'border-color:red;'}">
+
+                                                    </p:inputText>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <span style="font-size: 16px; font-weight:  bold;">#{bundle['Home.MandatoryMsgAr']} &#160;&#160;&#160;</span>
+                                                <div >
+
+                                                    <p:inputText id="reqmsgAr" disabled="#{!regDetails.mandatory}" value="#{regDetails.mandatory_message_ar}" styleClass="form-control" autocomplete="off" style="#{component.valid ? '' : 'border-color:red;'}">
+
+                                                    </p:inputText>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label style="font-weight: bold">Text type for the field mentioned in Field Type</label>
+                                                <h:selectOneMenu  id="fieldtypeValue" value="#{regDetails.fieldTypePattern}" 
+                                                                  style="#{component.valid ? '' : 'border-color:red;'}"  styleClass="form-control"  requiredMessage="Text type for the field is mandatory if Field type is not dropdown.">
+
+                                                    <f:selectItem itemValue="" itemLabel="Select.."/>
+                                                    <f:selectItem itemValue="String"  itemLabel="English or Arabic only"/>
+                                                    <f:selectItem itemValue="AlphaNumeric"  itemLabel="AlphaNumeric"/>
+                                                    <f:selectItem itemValue="Email"  itemLabel="Email"/>
+                                                    <f:selectItem itemValue="Number"  itemLabel="Number only"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label style="font-weight: bold">#{bundle['Home.validationMsg']}</label>
+                                                <p:inputText  value="#{regDetails.validationmsg}" styleClass="form-control" autocomplete="off" style="#{component.valid ? '' : 'border-color:red;'}">
+
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label style="font-weight: bold">#{bundle['Home.validationMsgAr']}</label>
+                                                <p:inputText  value="#{regDetails.validationMsg_ar}" styleClass="form-control" autocomplete="off" style="#{component.valid ? '' : 'border-color:red;'}">
+
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label style="font-weight: bold">Field Position</label>
+                                                <p:inputText id="position" value="#{regDetails.positions}"  required="true" requiredMessage="Please put position" styleClass="form-control" autocomplete="off" style="#{component.valid ? '' : 'border-color:red;'}">
+
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <p:outputLabel for="parentField" value="Parent Field (optional)" />
+                                                <h:selectOneMenu id="parentField" styleClass="form-control"
+                                                    value="#{regDetails.parentField}" converter="registrationConfigParentConverter">
+                                                    <f:selectItem itemLabel="None - always visible" itemValue="#{null}" noSelectionOption="true" />
+                                                    <f:selectItems value="#{registrationMasterController.getConfigParentItems(regDetails)}" />
+                                                    <p:ajax event="change" process="@this" update="triggerPanel"
+                                                        listener="#{registrationMasterController.onConfigParentChanged(regDetails)}" resetValues="true" />
+                                                </h:selectOneMenu>
+                                                <p:message for="parentField" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <h:panelGroup id="triggerPanel" layout="block" styleClass="form-group configTriggerPanel">
+                                                <p:outputLabel for="showWhenAction" value="Show when parent answer is" />
+                                                <h:selectOneMenu id="showWhenAction" styleClass="form-control"
+                                                    value="#{regDetails.showWhenAction}" disabled="#{empty regDetails.parentField}"
+                                                    required="#{not empty regDetails.parentField}"
+                                                    requiredMessage="Choose the parent answer that displays this field.">
+                                                    <f:selectItem itemLabel="Select parent answer" itemValue="#{null}" noSelectionOption="true" />
+                                                    <f:selectItems value="#{registrationMasterController.getConfigTriggerActions(regDetails)}"
+                                                        var="trigger" itemValue="#{trigger}"
+                                                        itemLabel="#{language.langEn ? trigger.action_values : trigger.action_value_ar}" />
+                                                </h:selectOneMenu>
+                                                <p:message for="showWhenAction" />
+                                                <small>Select a parent first. Options come from its Action group.</small>
+                                            </h:panelGroup>
+                                        </div>
+                                    </div>
+                                    <p:commandLink  id="counter1" styleClass="btn btn-default add_remove_row" 
+                                                    onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" tabindex="20" update="addRegPageField:uploadDocumentForm:classificationIngredients">
+                                        <p:ajax event="click"  listener="#{registrationMasterController.addToEventFields()}"/>
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    </p:commandLink>
+                                    <p:commandLink   id="counterLess" styleClass="btn btn-default add_remove_row" 
+                                                     onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" tabindex="21"  update="addRegPageField:uploadDocumentForm:classificationIngredients">
+                                        <p:ajax event="click"  listener="#{registrationMasterController.removeFromEventFieldDetails(regDetails)}"/>
+                                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                    </p:commandLink>  
+
+
+                                </div>
+                            </ui:repeat>
+
+                        </h:panelGroup>
+
+                        <p:commandButton action="#{registrationMasterController.saveEventFieldData()}"  id="submitCertificate" ajax="true"  value="Submit" styleClass="btn btn-primary" update=":messages"/>
+                    </h:form>   
+                </p:tab>
+                <p:tab id="addregistrFieldsDDL" title="Create Registration Option Values">
+                    <h:form>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-8 col-xs-12">
+                                <h:panelGroup rendered="#{fileUploadController.checkError(flash.message)}" >                                
+                                    <div id="flashMsg" class="ui-messages ui-widget">
+                                        <div class="ui-messages-info ui-corner-all">
+                                            <a href="#" class="ui-messages-close" onclick="$(this).parent().slideUp();
+                                                    return false;">
+                                                <span class="ui-icon ui-icon-close"></span>
+                                            </a>
+                                            <span class="ui-messages-info-icon"></span>
+                                            <ul>
+                                                <li>
+                                                    <h:messages globalOnly="true" errorStyle="color:red;" infoStyle="color:blue;"/>
+                                                    <br/>
+                                                    <h:outputText style="color:blue" value="#{flash.message.getDetail()}"/>
+                                                </li>
+                                            </ul> 
+                                        </div>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="form-group">
+
+                                    <span style="font-size: 16px; font-weight:  bold;">#{bundle['Event.AvailableTypes']}<span class="required">*</span> &#160;&#160;&#160;</span>
+                                    <div >
+
+
+                                  <h:selectOneMenu  id="roles" value="#{registrationMasterController.ddlActionName}" 
+                                                          style="#{component.valid ? '' : 'border-color:red;'}"  styleClass="form-control" required="true" requiredMessage="EventName is mandatory" onchange="selectedOption(this)">
+                                            <p:ajax event="change" listener="#{registrationMasterController.updateOptions()}" process="@this"  update="addRegPageField:optionsAdd:optionsPanel" ></p:ajax>
+                                            <f:selectItems value="#{registrationMasterController.itemsAvailableSelectActionType()}"  />
+                                        </h:selectOneMenu>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <h:commandButton class="resetOption" action="#{registrationMasterController.onSelectValues()}" style="display: none;">            
+                                <p:ajax update="addRegPageField:optionsAdd:optionsPanel" />
+                            </h:commandButton>
+                        </div>
+                    </h:form>
+                    <h:form id="optionsAdd">
+                        <h:panelGroup id="optionsPanel">
+
+                            <ui:repeat value="#{registrationMasterController.actionOptions}" var="optionDetails" varStatus="status">
+                                <div class="form_group">
+ <p:inputText  value="#{optionDetails.id}" required="true" style="#{component.valid ? '' : 'border-color:red;'}" requiredMessage="FieldName is required." validatorMessage="Value in English should be alphanumeric." styleClass="form-control" autocomplete="off">
+
+                                                    </p:inputText>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <span style="font-size: 16px; font-weight:  bold;">Value in English<span class="required">*</span> &#160;&#160;&#160;</span>
+                                                <div >
+
+                                                    <p:inputText  value="#{optionDetails.action_values}" required="true" style="#{component.valid ? '' : 'border-color:red;'}" requiredMessage="FieldName is required." validatorMessage="Value in English should be alphanumeric." styleClass="form-control" autocomplete="off">
+
+                                                    </p:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <span style="font-size: 16px; font-weight:  bold;">Value in Arabic<span class="required">*</span> &#160;&#160;&#160;</span>
+                                                <div >
+
+                                                    <p:inputText  value="#{optionDetails.action_value_ar}" required="true" style="#{component.valid ? '' : 'border-color:red;'}" requiredMessage="FieldName is required." validatorMessage="Value in Arabic should be alphanumeric." styleClass="form-control" autocomplete="off">
+
+                                                    </p:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p:commandLink  id="counter1" styleClass="btn btn-default add_remove_row" 
+                                                    onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" tabindex="20" update="addRegPageField:optionsAdd:optionsPanel">
+                                        <p:ajax event="click"  listener="#{registrationMasterController.addFieldstoAction()}"/>
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    </p:commandLink>
+                                    <p:commandLink   id="counterLess" styleClass="btn btn-default add_remove_row" 
+                                                     onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" tabindex="21"  update="addRegPageField:optionsAdd:optionsPanel">
+                                        <p:ajax event="click" listener="#{registrationMasterController.removeFieldFromAction(optionDetails)}" />
+                                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                    </p:commandLink>  
+                                </div>
+
+                               
+                            </ui:repeat>
+                            <p:commandButton action="#{registrationMasterController.saveFieldOptions()}"  id="submitOptions" ajax="true"  value="Submit" styleClass="btn btn-primary" update=":messages"/>
+                        </h:panelGroup>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+</ui:composition>
