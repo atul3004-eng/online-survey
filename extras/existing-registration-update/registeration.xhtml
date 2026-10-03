@@ -1,0 +1,456 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      dir="ltr" xml:lang="en" lang="#{param['lang'] != null ? param['lang'] : language.langEn ? 'en' : 'ar'}" >
+   
+
+    <h:head>
+
+        <f:facet name="first">
+            #{language.changeLocale(param['lang'])}
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />     
+            <meta http-equiv="Cache-Control" content="max-age=3600, public" />
+            <f:view locale="#{language.locale}"/>
+        </f:facet>
+        <!--        <f:loadBundle basename="Bundle" var="bundle"/>-->
+
+        <title>#{language.langEn ? eventMasterController.item.eventTitle : eventMasterController.item.eventTitleAr}</title>        
+        <h:outputStylesheet library="css" name="theme.css" />  
+
+
+        <script src="/NCGP/faces/javax.faces.resources/js/custom.js" type="text/javascript"></script>
+
+
+        <link href="/NCGP/faces/javax.faces.resources/MophTheam/css/light.css" rel="stylesheet" type="text/css"/>
+
+        <link href="/NCGP/faces/javax.faces.resources/MophTheam/css/primefaces_override.css" rel="stylesheet" type="text/css"/>
+
+
+
+        <f:metadata>
+            <f:viewParam name="uuid" value="#{eventMasterController.current.event_uuid}" />
+            <f:viewParam name="lang" value="#{language.localeCode}" />
+        </f:metadata>
+
+        <script type="text/javascript">
+
+            //<![CDATA[   
+            $ = jQuery;
+            $(window).bind("load", function () {
+
+            });
+
+
+            function ChangeTitle(title) {
+                document.title = title;
+            }
+
+            function trimAllWhiteSpaces() {
+                var inputs = document.getElementsByTagName('input');
+                for (var i = 0; i < inputs.length; i++) {
+                    if (inputs[i] && inputs[i].type === 'text' && inputs[i].value !== null) {
+                        inputs[i].value = inputs[i].value.replace(/^\s+/, '').replace(/\s+$/, '');
+                    }
+                }
+            }
+
+            //]]> 
+
+
+//            function validate() {
+//                var value = getElementByXpath("//form/span/div[2]/div[1]/div[6]/div[1]/select").options[getElementByXpath("//form/span/div[2]/div[1]/div[6]/div[1]/select").selectedIndex].text;
+//                var specifyRole = getElementByXpath("//form/span/div[2]/div[1]/div[7]/div[1]/span/input").innerHTML = "";
+//                if (value === "Others") {
+//                    if(specifyRole === ""){
+//                    return;
+//                }
+//            }
+        </script>
+
+
+
+    </h:head>
+
+    <!--
+      HOW TO USE:
+      data-theme: default (default), dark, light
+      data-layout: fluid (default), boxed
+      data-sidebar-position: left (default), right
+      data-sidebar-behavior: sticky (default), fixed, compact
+    -->
+
+    <h:body >
+        <f:passThroughAttribute name="data-theme" value="light"/>
+        <f:passThroughAttribute name="data-layout" value="fluid"/>
+        <f:passThroughAttribute name="data-sidebar-position" value="#{language.langEn ? 'left' : 'right'}" />
+        <f:passThroughAttribute name="data-sidebar-behavior" value="sticky"/>
+        <div class="wrapper">
+            <div class="main">
+
+                <nav class="navbar navbar-expand navbar-light navbar-bg">
+                    <div id="logo_hld">
+                        <h:graphicImage styleClass="img-fluid" alt="Ministry of Public Health" 
+                                        value="/NCGP/faces/javax.faces.resources/MophTheam/img/Logo_moph_bilingual.svg" />
+                    </div>
+
+
+                    <div class="navbar-collapse collapse">
+                        <ul class="navbar-nav navbar-align">
+
+
+                            <li class="nav-item">
+                                <a class="nav-flag link-primary" href="#">
+                                    <!-- <img src="img/flags/qa.png" alt="English" class="me-1" /> -->
+
+                                </a>
+                                <h:form>                            
+                                    <li>
+                                        <h:commandLink rendered="#{language.langEn}" action="#{eventMasterController.changeLocale('ar')}" styleClass="nav-flag link-primary" hreflang="ar" >
+                                            <span class="text-lg" lang="ar">عربي</span>                                    
+                                        </h:commandLink>
+                                        <h:commandLink rendered="#{!language.langEn}" action="#{eventMasterController.changeLocale('en')}" styleClass="nav-flag link-primary" hreflang="en" >
+                                            <span class="text-lg" lang="en">English</span>
+                                        </h:commandLink> 
+                                    </li>
+                                </h:form>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+
+                <main class="content">
+                    <div class="container-fluid p-0">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-12 col-xl-6">
+                                <c:choose>
+                                    <c:when test="#{eventMasterController.item.eventId == 96}">
+                                        <h1 class="h3 mb-3">
+                                            #{language.langEn ? 'Evaluation Form' : 'استمارة التقييم'}
+                                        </h1>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h1 class="h3 mb-3">
+                                           #{eventMasterController.item.isSurvey ? bundle['surveyForm']: bundle['registrationForm']}
+                                        </h1>
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p:ajaxStatus onstart="trimAllWhiteSpaces();PF('statusDialog').show();" onsuccess="PF('statusDialog').hide()" />
+                                        <p:dialog  widgetVar="statusDialog" modal="true" draggable="false" closable="true" resizable="false" showHeader="false">
+                                            <p:graphicImage url="/NCGP/faces/javax.faces.resources/images/ajaxloadingbar.gif" />
+                                        </p:dialog>
+                                        <div class="simple_panel primary">
+                                            <h4 class="title" ><h:outputText value="#{language.langEn ? 'Event Name' : 'اسم الحدث'}" rendered="#{!eventMasterController.item.isSurvey}" /> <h:outputText value=":" rendered="#{!eventMasterController.item.isSurvey}" /> #{language.langEn ? eventMasterController.item.eventTitle : eventMasterController.item.eventTitleAr} </h4>
+                                              <p>
+                                                        <h:outputText rendered="#{eventMasterController.item.isSurvey}" value="#{bundle['visitor.insurance.welcome']}" />
+                                                    </p>
+                                            <h:outputText value="#{eventMasterController.showOnLoad}" style="display:none;" />
+                                            <c:if test="#{eventMasterController.item.eventId==28}"><p><strong>#{bundle['event28.Titledesc']}</strong></p></c:if>
+
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12"> 
+                                                    <h:panelGroup rendered="#{!eventMasterController.item.isSurvey}">
+                                                    <c:if test="#{eventMasterController.daterange.eventstartDate != null or eventMasterController.daterange.eventstartDate !=' '}">  <p class="mb-0"> 
+                                                            <c:if test="#{eventMasterController.item.eventId!=28 and eventMasterController.item.eventId!=67 and eventMasterController.item.eventId!=65 and eventMasterController.item.eventId!=66 and eventMasterController.item.eventId!=75 }"><strong><h:outputText value="#{bundle['eventDate']}" /> : </strong>  </c:if>   
+                                                            <c:if test="#{eventMasterController.item.eventId!=67 and eventMasterController.item.eventId!=65 and eventMasterController.item.eventId!=66 and eventMasterController.item.eventId!=75 }">
+                                                                <h:panelGroup rendered="#{ eventMasterController.daterange.eventEndDate != null}">
+                                                                    <h:outputText value="#{language.langEn ? eventMasterController.daterange.eventstartDate : eventMasterController.daterange.eventStartDayAr} "/> 
+                                                                </h:panelGroup>
+                                                                <h:panelGroup rendered="#{eventMasterController.daterange.eventEndDate == null}">
+                                                                    <h:outputText value="#{language.langEn ? eventMasterController.daterange.eventstartDate : eventMasterController.daterange.eventStartDayAr}">
+                                                                        <!--                                                        <f:convertDateTime pattern="dd/MM/yyyy"/>-->
+                                                                    </h:outputText>          
+                                                                </h:panelGroup>    
+
+                                                            </c:if> 
+                                                            <c:if test="#{eventMasterController.item.eventId==75}">
+                                                                <strong>
+                                                                    <h:outputText value="#{language.langEn ? 'Venue' : 'المكان'}" />
+                                                                </strong> <h:outputText value="#{language.langEn ? 'Rotana City Center Hotel ' : 'فندق سيتي سنتر روتانا، الدوحة'} "/>    <br></br>  
+                                                                <strong>
+                                                                    <h:outputText value="#{language.langEn ? 'Date' : 'التاريخ'}" />
+                                                                </strong> <h:outputText value="#{language.langEn ? '23rd February 2025' : '23 فبراير 2025'} "/> <br></br>
+                                                                <strong>
+                                                                    <h:outputText value="#{language.langEn ? 'Time' : 'الوقت'}" />
+                                                                </strong>     <h:outputText value="#{language.langEn ? '7:30 am – 2:35 pm' : '7:30 صباحًا – 2:35 ظهرًا'} "/>              </c:if>   
+                                                            <c:if test="#{eventMasterController.item.eventId==65}">
+                                                                <strong>#{bundle['date']} : </strong> <h:outputText value="#{language.langEn ? '29-30 September 2024' : 'التاريخ: 29-30 سب'} "/> <br></br>
+                                                                <strong>#{bundle['time']} : </strong>      <h:outputText value="#{language.langEn ? '10:00 AM – 11:00 AM' : '10 صباحاً - ‎11‏ صباحاً'} "/> <br></br>
+                                                                <strong>#{bundle['language']} : </strong>  <h:outputText value="#{language.langEn ? 'English' : 'إنجليزي'} "/>    <br></br>             
+                                                                <strong>#{bundle['presenter']} : </strong>  <h:outputText value="#{language.langEn ? 'Ms. Kinda Shabana' : ' السيدة كيندا شبانة'} "/>    <br></br>  </c:if>  
+                                                            <c:if test="#{eventMasterController.item.eventId==66}">
+                                                                <strong>#{bundle['date']} : </strong> <h:outputText value="#{language.langEn ? '29-30 September 2024' : 'التاريخ: 29-30 سب'} "/> <br></br>
+                                                                <strong>#{bundle['time']} : </strong>      <h:outputText value="#{language.langEn ? '10:00 AM – 11:00 AM' : '10 صباحاً - ‎11‏ صباحاً'} "/>  <br></br>
+                                                                <strong>#{bundle['language']} : </strong>  <h:outputText value="#{language.langEn ? 'Arabic' : 'عربي'} "/>    <br></br>         
+                                                                <strong>#{bundle['presenter']} : </strong>  <h:outputText value="#{language.langEn ? 'Dr. Marwa Sayed ' : 'د. مروه سيد'} "/>    <br></br>     </c:if>   
+                                                        </p></c:if>  
+                                                        <c:if test="#{not empty eventMasterController.item.webinar}">
+                                                            <h:outputText value="#{bundle['eventNote']}" escape="false" />
+                                                        </c:if>
+                                                    </h:panelGroup>
+                                                  
+
+                                                </div>                    
+                                                <div class="col-md-12 col-sm-12 col-xs-12"> 
+                                                    <h:panelGroup rendered="#{!eventMasterController.item.isSurvey}">
+                                                    <c:if test="#{eventMasterController.daterange.eventstartDate != null}">  <p> <c:if test="#{eventMasterController.item.eventId!=28}"><strong><h:outputText value="#{bundle['eventDate']}" /> : </strong>    </c:if>                                            
+                                                            <h:panelGroup rendered="#{eventMasterController.daterange.eventEndDate != null}">
+                                                                <h:outputText value="#{language.langEn ? eventMasterController.daterange.eventstartDate : eventMasterController.daterange.eventStartDayAr} "/> ,
+                                                                <h:outputText value="#{language.langEn ? eventMasterController.daterange.eventEndDate : eventMasterController.daterange.eventenddateAr}"/>
+                                                            </h:panelGroup>
+                                                            <h:panelGroup rendered="#{eventMasterController.daterange.eventEndDate == null}">
+                                                                <h:outputText value="#{eventMasterController.daterange.eventstartDate}">
+                                                                    <!--                                                        <f:convertDateTime pattern="dd/MM/yyyy"/>-->
+                                                                </h:outputText>          
+                                                            </h:panelGroup>                                   
+                                                        </p></c:if>  
+                                                    </h:panelGroup>
+                                                </div>                                        
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <h:form id="RegisterFrm" class="mpost register" prependId="false" enctype="multipart/form-data">
+                                            <h:panelGroup rendered="#{eventMasterController.showOnreg and !eventMasterController.emailNotPresnt}">
+                                            
+                                                <!-- English version -->
+                                                <h:panelGroup rendered="#{language.langEn}">
+                                                    <div class="hex_intro" style="text-align: center;">
+                                                        <h2 style="font-weight: bold; color: #A30234; font-size: 2em;">
+                                                            You have successfully registered for the event.<br/>
+                                                            The registration details have been sent to your email.
+                                                        </h2>
+                                                    </div>
+                                                </h:panelGroup>
+
+                                                <!-- Arabic version -->
+                                                <h:panelGroup rendered="#{not language.langEn}">
+                                                    <div class="hex_intro" style="text-align: right; direction: rtl;">
+                                                        <h2 style="font-weight: bold; color: #A30234; font-size: 2em;">
+                                                            لقد تم تسجيلك بنجاح في الحدث.<br/>
+                                                            تم إرسال تفاصيل التسجيل إلى بريدك الإلكتروني.
+                                                        </h2>
+                                                    </div>
+                                                </h:panelGroup>
+
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{eventMasterController.showOnreg and eventMasterController.emailNotPresnt}">
+                                                <div class="hex_intro">
+                                                    <h2 align="center" style="font: bold ; color: #A30234 ; font-size: 2em">#{bundle['registrationSuccessEmailNotPresent']}</h2>
+                                                </div>    
+                                            </h:panelGroup>
+                                            <h:panelGroup id="panelOnLoad" rendered="#{eventMasterController.showOnLoad}">
+                                                <div class="row">
+                                                    <p:messages id="message" closable="true"  showDetail="false" showSummary="true" >
+                                                        <p:autoUpdate/>
+                                                    </p:messages>
+                                                    <h:panelGroup rendered="#{fileUploadController.checkError(flash.message)}" id="flashmessage">  
+                                                        <p:autoUpdate/>
+                                                        <div id="flashMsg" class="ui-messages ui-widget">
+                                                            <div class="ui-messages-error ui-corner-all">
+                                                                <a href="#" class="ui-messages-close" onclick="$(this).parent().slideUp();
+                                                                        return false;">
+                                                                    <span class="ui-icon ui-icon-close"></span>
+                                                                </a>
+                                                                <span class="ui-messages-error-icon"></span>
+                                                                <ul>
+                                                                    <li>
+                                                                        <h:messages globalOnly="true" errorStyle="color:red;" infoStyle="color:red;"/>
+                                                                        <br/>
+                                                                        <h:outputText style="color:red; font-style: bold; font-size: large;" value="#{flash.message.getDetail()}"/>
+                                                                    </li>
+                                                                </ul> 
+                                                            </div>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                </div>
+                                                <div >
+                                                    <h:panelGroup class="row" id="rfFields" layout="block">
+                                                        <ui:repeat id="repeatId" var="field" value="#{eventMasterController.fieldsDetails}">
+    <!-- Always rendered: Ajax can reveal hidden children. Classes include every ancestor. -->
+    <h:panelGroup id="fieldWrapper" layout="block"
+                  styleClass="#{eventMasterController.getDependencyClasses(field)}">
+        <h:panelGroup layout="block" styleClass="mb-3 col-md-6"
+                      rendered="#{eventMasterController.isFieldVisible(field)}">
+            <h:outputText value="#{language.langEn ? field.fieldName : field.fieldname_ar}"
+                          rendered="#{field.fieldType eq 'display'}" />
+            <h:panelGroup rendered="#{field.fieldType ne 'display'}">
+                <p:outputLabel styleClass="form-label"
+                               value="#{language.langEn ? field.fieldName : field.fieldname_ar}">
+                    <h:outputText value=" *" styleClass="required" rendered="#{field.mandatory}" />
+                </p:outputLabel>
+
+                <p:inputText id="text" styleClass="form-control"
+                    rendered="#{field.fieldType eq 'textbox' or field.fieldType eq 'textboxOther' or field.fieldType eq 'textboxOther2'}"
+                    value="#{field.fieldValue}" maxlength="#{field.fieldLength}"
+                    required="#{field.mandatory}"
+                    requiredMessage="#{language.langEn ? field.mandatoryMessage : field.mandatory_message_ar}"
+                    validator="#{eventMasterController.validateConfiguredText}"
+                    style="#{component.valid ? '' : 'border-color:red;'}" autocomplete="off">
+                    <f:attribute name="configuredField" value="#{field}" />
+                    <f:validator validatorId="extendedRegexValidator" />
+                    <f:attribute name="pattern" value="#{field.pattern}" />
+                </p:inputText>
+                <p:message for="text" />
+
+                <h:selectOneMenu id="dropdown" styleClass="form-select"
+                    rendered="#{field.fieldType eq 'dropdown' or field.fieldType eq 'dropdownOther' or field.fieldType eq 'dropdownSite'}"
+                    value="#{field.fielddynamicValue}" required="#{field.mandatory}"
+                    requiredMessage="#{language.langEn ? field.mandatoryMessage : field.mandatory_message_ar}"
+                    style="#{component.valid ? '' : 'border-color:red;'}">
+                    <f:selectItems value="#{eventMasterController.getItemsAvailableSelectOne(field.actionType)}" />
+                    <p:ajax event="change" process="@this"
+                        update="#{eventMasterController.getDependentUpdateTargets(field)}"
+                        listener="#{eventMasterController.onConfiguredFieldChange}" resetValues="true" />
+                </h:selectOneMenu>
+                <p:message for="dropdown" />
+
+                <p:selectOneRadio id="radio" rendered="#{field.fieldType eq 'radio'}"
+                    layout="lineDirection" value="#{field.fieldValue}" required="#{field.mandatory}"
+                    requiredMessage="#{language.langEn ? field.mandatoryMessage : field.mandatory_message_ar}"
+                    style="#{component.valid ? '' : 'border-color:red;'}; border:0;">
+                    <f:selectItems value="#{eventMasterController.getradioValue(field.actionType)}" var="option"
+                        itemLabel="#{language.langEn ? option.action_values : option.action_value_ar}" itemValue="#{option.id}" />
+                    <p:ajax event="change" process="@this"
+                        update="#{eventMasterController.getDependentUpdateTargets(field)}"
+                        listener="#{eventMasterController.onConfiguredFieldChange}" resetValues="true" />
+                </p:selectOneRadio>
+                <p:message for="radio" />
+
+                <p:selectOneListbox id="listbox" rendered="#{field.fieldType eq 'listbox'}"
+                    value="#{field.fielddynamicValue}" required="#{field.mandatory}"
+                    requiredMessage="#{language.langEn ? field.mandatoryMessage : field.mandatory_message_ar}">
+                    <f:selectItems value="#{eventMasterController.getItemsAvailableSelectOne(field.actionType)}" />
+                    <p:ajax event="change" process="@this"
+                        update="#{eventMasterController.getDependentUpdateTargets(field)}"
+                        listener="#{eventMasterController.onConfiguredFieldChange}" resetValues="true" />
+                </p:selectOneListbox>
+                <p:message for="listbox" />
+
+                <p:selectBooleanCheckbox id="checkbox" rendered="#{field.fieldType eq 'booleancheckbox'}"
+                    value="#{eventMasterController.acknowledgements[field.id.toPlainString()]}"
+                    validator="#{eventMasterController.validateAcknowledgement}">
+                    <f:attribute name="configuredField" value="#{field}" />
+                </p:selectBooleanCheckbox>
+                <p:message for="checkbox" />
+
+                <p:calendar id="date" rendered="#{field.fieldType eq 'calendar'}"
+                    styleClass="form-control prime_date" value="#{field.fieldDateValue}" required="#{field.mandatory}"
+                    requiredMessage="#{language.langEn ? field.mandatoryMessage : field.mandatory_message_ar}"
+                    style="#{component.valid ? '' : 'border-color:red;'}" pattern="dd/MM/yyyy"
+                    onkeypress="return false;" navigator="true" autocomplete="off" />
+                <p:message for="date" />
+
+                <p:inputTextarea id="textarea" rendered="#{field.fieldType eq 'textarea'}"
+                    styleClass="form-control" value="#{field.fieldValue}" maxlength="#{field.fieldLength}"
+                    required="#{field.mandatory}" requiredMessage="#{field.mandatoryMessage}"
+                    validator="#{eventMasterController.validateConfiguredText}">
+                    <f:attribute name="configuredField" value="#{field}" />
+                </p:inputTextarea>
+                <p:message for="textarea" />
+
+                <h:panelGroup rendered="#{field.fieldType eq 'uploadDoc'}">
+                    <p:fileUpload id="uploadFile" listener="#{eventMasterController.handleFileUpload}"
+                        mode="advanced" required="#{field.mandatory}" requiredMessage="#{field.mandatoryMessage}"
+                        dragDropSupport="true" multiple="false" auto="true" process="@this" update="uploadedFileInfo"
+                        accept=".jpg,.jpeg,.png,.pdf" sizeLimit="5242880" allowTypes="/(\.|\/)(jpg|jpeg|png|pdf)$/"
+                        onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide();" />
+                    <p class="help-block">Allowed files: jpg, jpeg, png, pdf. Maximum size: 5 MB.</p>
+                    <h:panelGroup id="uploadedFileInfo">
+                        <h:outputText value="#{eventMasterController.fileUpload.fileName}"
+                                      rendered="#{not empty eventMasterController.fileUpload}" />
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:panelGroup>
+</ui:repeat>
+
+                                                    </h:panelGroup>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">                                           
+                                                        <p:commandButton value="#{eventMasterController.item.isSurvey ? bundle['button.startSurvey']: bundle['button.submit']}"  action="#{eventMasterController.saveValues()}" ajax="true" update="RegisterFrm" 
+                                                                         styleClass="btn btn-primary"  onclick="PF('statusDialog').show()" >
+                                                        </p:commandButton> 
+                                                    </div>
+                                                </div>
+                                                <p:dialog id="documentDialog" header="Please attach a copy of your passport or ID card"
+                                                          widgetVar="uploadDocumentWidget" closable="true" >
+                                                    <h:panelGroup id="uploadDocumentForm" layout="block"> 
+                                                        <p:fileUpload listener="#{eventMasterController.handleFileUpload}"  required="true" requiredMessage="Please attach a copy of your passport or ID card"
+                                                                      mode="advanced" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide();" dragDropSupport="true" 
+                                                                      multiple="false"  update="uploadDocumentForm" accept=".jpg,.jpeg,.png,.pdf"                     
+                                                                      sizeLimit="5242880"                                
+                                                                      allowTypes="/(\.|\/)(jpg|jpeg|png|pdf)$/"  />
+                                                        <p:messages id="messages"  closable="true"/>
+                                                        <h:panelGroup id="uploadedFileInfo">
+                                                            <h:outputText value="#{eventMasterController.fileUpload.fileName}"   rendered="#{not empty eventMasterController.fileUpload}" />
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                </p:dialog>
+                                                <p:dialog widgetVar="statusDialog" appendTo="@(body)" modal="true" draggable="false" closable="false" resizable="false" 
+                                                          showHeader="false" position="center center" >
+                                                    <p:graphicImage url="/NCGP/faces/javax.faces.resources/images/ajaxloadingbar.gif" />
+                                                </p:dialog>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{eventMasterController.regClosed}">
+                                                <div class="hex_intro">
+                                                    <h2 align="center" style="font-weight: bold; color: #A30234; font-size: 2em">
+                                                        <h:outputText value="Registration Closed" rendered="#{language.langEn}" />
+                                                        <h:outputText value="التسجيل مغلق" rendered="#{!language.langEn}" />
+                                                    </h2>
+                                                </div>    
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{eventMasterController.invalidLink}">
+                                                <div class="hex_intro">
+
+                                                    <h2 align="center" style="font: bold ; color: #A30234 ; font-size: 2em">#{bundle['invalidLink']}</h2>
+
+                                                </div>    
+                                            </h:panelGroup>
+                                        </h:form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row text-muted">
+
+                            <div class="col-12 text-center">
+                                <p class="mb-0">
+                                    &#169; 2026 - <a href="index.html" class="text-muted">Ministry of Public Health</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <h:outputScript library="MophTheam" name="js/app.js"/>
+        <script src="app.js" defer="defer"></script>
+        <script src="/NCGP/faces/javax.faces.resources/MophTheam/js/app.js" type="text/javascript"></script>
+
+
+    </h:body>
+
+</html>
