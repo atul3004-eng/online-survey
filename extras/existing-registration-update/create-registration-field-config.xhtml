@@ -204,7 +204,7 @@
                                             <div class="form-group">
                                                 <p:outputLabel for="parentField" value="Parent Field (optional)" />
                                                 <h:selectOneMenu id="parentField" styleClass="form-control"
-                                                    value="#{regDetails.parentField}" converter="registrationConfigParentConverter">
+                                                    value="#{regDetails.parentField}" converter="#{registrationMasterController.configParentConverter}">
                                                     <f:selectItem itemLabel="None - always visible" itemValue="#{null}" noSelectionOption="true" />
                                                     <f:selectItems value="#{registrationMasterController.getConfigParentItems(regDetails)}" />
                                                     <p:ajax event="change" process="@this" update="triggerPanel"
@@ -217,9 +217,10 @@
                                             <h:panelGroup id="triggerPanel" layout="block" styleClass="form-group configTriggerPanel">
                                                 <p:outputLabel for="showWhenAction" value="Show when parent answer is" />
                                                 <h:selectOneMenu id="showWhenAction" styleClass="form-control"
-                                                    value="#{regDetails.showWhenAction}" disabled="#{empty regDetails.parentField}"
+                                                    value="#{regDetails.showWhenAction}" converter="#{registrationMasterController.configTriggerConverter}" disabled="#{empty regDetails.parentField}"
                                                     required="#{not empty regDetails.parentField}"
                                                     requiredMessage="Choose the parent answer that displays this field.">
+                                                    <f:attribute name="configuredField" value="#{regDetails}" />
                                                     <f:selectItem itemLabel="Select parent answer" itemValue="#{null}" noSelectionOption="true" />
                                                     <f:selectItems value="#{registrationMasterController.getConfigTriggerActions(regDetails)}"
                                                         var="trigger" itemValue="#{trigger}"

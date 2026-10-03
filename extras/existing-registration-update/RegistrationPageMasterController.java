@@ -1231,7 +1231,39 @@ public boolean validateFieldHierarchyConfiguration() {
     return valid;
 }
 
-@javax.faces.convert.FacesConverter("registrationConfigParentConverter")
+public javax.faces.convert.Converter getConfigParentConverter() {
+    return new RegistrationConfigParentConverter();
+}
+
+public javax.faces.convert.Converter getConfigTriggerConverter() {
+    return new RegistrationConfigTriggerConverter();
+}
+
+public static class RegistrationConfigTriggerConverter implements javax.faces.convert.Converter {
+    @Override public Object getAsObject(javax.faces.context.FacesContext context,
+            javax.faces.component.UIComponent component, String value) {
+        if (value == null || value.trim().isEmpty()) return null;
+        Integer id;
+        try { id = Integer.valueOf(value); }
+        catch (NumberFormatException error) {
+            throw new javax.faces.convert.ConverterException("Invalid trigger Action ID.");
+        }
+        Object bean = context.getApplication().evaluateExpressionGet(context,
+            "#{registrationMasterController}", Object.class);
+        RegistrationPageMasterController controller = (RegistrationPageMasterController) bean;
+        ejb.EventRegData child = (ejb.EventRegData) component.getAttributes().get("configuredField");
+        if (child != null) for (ejb.Action action : controller.getConfigTriggerActions(child))
+            if (id.equals(action.getId())) return action;
+        throw new javax.faces.convert.ConverterException("Select an Action option belonging to this parent.");
+    }
+    @Override public String getAsString(javax.faces.context.FacesContext context,
+            javax.faces.component.UIComponent component, Object value) {
+        if (value == null) return "";
+        ejb.Action action = (ejb.Action) value;
+        return action.getId() == null ? "" : action.getId().toString();
+    }
+}
+
 public static class RegistrationConfigParentConverter implements javax.faces.convert.Converter {
     @Override public Object getAsObject(javax.faces.context.FacesContext context,
             javax.faces.component.UIComponent component, String value) {
