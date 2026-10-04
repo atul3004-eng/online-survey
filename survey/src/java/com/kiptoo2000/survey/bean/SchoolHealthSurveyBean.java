@@ -27,7 +27,7 @@ public class SchoolHealthSurveyBean implements Serializable {
     private final Map<String, String> answers = new LinkedHashMap<String, String>();
     private final Map<String, String[]> multiAnswers = new LinkedHashMap<String, String[]>();
     private String resumeToken = java.util.UUID.randomUUID().toString();
-    private static final List<String> MULTI_KEYS = Arrays.asList("humanResources","infrastructureSupport","preparatoryGrades","primaryGrades","secondaryGrades","targetPopulation","targetedTopics");
+    private static final List<String> MULTI_KEYS = Arrays.asList("humanResources","infrastructureSupport","studentLevels","preparatoryGrades","primaryGrades","secondaryGrades","targetPopulation","targetedTopics");
     private String returnCode;
     private String confirmationEmailMessage;
     private String draftEmailMessage;
@@ -88,18 +88,7 @@ public class SchoolHealthSurveyBean implements Serializable {
                 message(FacesMessage.SEVERITY_ERROR, label("schoolHealth.invalidResumeLink"));
                 return null;
             }
-            answers.clear(); multiAnswers.clear();
-            Map<String, List<String>> selections = new LinkedHashMap<String, List<String>>();
-            for (SchoolHealthAnswer answer : response.getAnswers()) {
-                String key = answer.getQuestionKey();
-                if (MULTI_KEYS.contains(key)) {
-                    if (!selections.containsKey(key)) { selections.put(key, new ArrayList<String>()); }
-                    selections.get(key).add(answer.getAnswerValue());
-                } else { answers.put(key, answer.getAnswerValue()); }
-            }
-            for (Map.Entry<String, List<String>> entry : selections.entrySet()) {
-                multiAnswers.put(entry.getKey(), entry.getValue().toArray(new String[0]));
-            }
+            restoreAnswers(response);
             savedResponseId = response.getId(); resumeToken = response.getResumeToken();
             locale = response.getResponseLocale();
             submitted = "SUBMITTED".equals(response.getStatus());
@@ -109,6 +98,20 @@ public class SchoolHealthSurveyBean implements Serializable {
         } catch (RuntimeException ex) {
             message(FacesMessage.SEVERITY_ERROR, "Survey could not be loaded. Please try again.");
             return null;
+        }
+    }
+    void restoreAnswers(SchoolHealthResponse response) {
+        answers.clear(); multiAnswers.clear();
+        Map<String, List<String>> selections = new LinkedHashMap<String, List<String>>();
+        for (SchoolHealthAnswer answer : response.getAnswers()) {
+            String key = answer.getQuestionKey();
+            if (MULTI_KEYS.contains(key)) {
+                if (!selections.containsKey(key)) { selections.put(key, new ArrayList<String>()); }
+                selections.get(key).add(answer.getAnswerValue());
+            } else { answers.put(key, answer.getAnswerValue()); }
+        }
+        for (Map.Entry<String, List<String>> entry : selections.entrySet()) {
+            multiAnswers.put(entry.getKey(), entry.getValue().toArray(new String[0]));
         }
     }
     private void message(FacesMessage.Severity severity, String text) {
