@@ -190,8 +190,8 @@ public class WellnessSurveyRepository implements Serializable {
         add(meta, "industryOther", section, "Other industry / company activities", order++);
         add(meta, "fullTime", section, "Full-time employees", order++);
         add(meta, "partTime", section, "Part-time employees", order++);
-        add(meta, "totalEmployees", section, "Total employees", order++);
-        add(meta, "contracted", section, "Contracted/outsourced employees", order++);
+        add(meta, "totalEmployees", section, "Total number of direct (full-time and part-time) employees", order++);
+        add(meta, "contracted", section, "Total number of contracted / outsourced employees", order++);
         add(meta, "outsourcedServices", section, "Contracted/outsourced service types", order++);
         add(meta, "outsourcedOther", section, "Other outsourced service", order++);
         add(meta, "occupations", section, "Main occupations", order++);
@@ -222,7 +222,7 @@ public class WellnessSurveyRepository implements Serializable {
         add(meta, "riskAssessment", section, "Working environment surveillance / risk assessment", order++);
         add(meta, "hazards", section, "Hazards routinely evaluated", order++);
         add(meta, "hazardOther", section, "Other hazard", order++);
-        add(meta, "riskFrequency", section, "Risk assessment frequency", order++);
+        add(meta, "riskFrequency", section, "What is the frequency of risk assessment?", order++);
         add(meta, "riskProgram", section, "Risk program and control measures", order++);
         add(meta, "riskDocumented", section, "Risk assessments documented", order++);
         add(meta, "hygieneRecords", section, "Hygiene surveillance records", order++);
@@ -238,13 +238,13 @@ public class WellnessSurveyRepository implements Serializable {
         add(meta, "firstAidUnit", section, "First aid unit", order++);
         add(meta, "companyClinic", section, "Company clinic", order++);
         add(meta, "generalPractitioner", section, "General practitioner", order++);
-        add(meta, "occupationalPhysician", section, "Specialist occupational physician", order++);
+        add(meta, "occupationalPhysician", section, "Specialist Occupational Health/Medicine Physician", order++);
         add(meta, "occupationalNurse", section, "Occupational health nurse", order++);
-        add(meta, "preEmploymentExam", section, "Pre-employment health examination", order++);
+        add(meta, "preEmploymentExam", section, "Does your company conduct Pre-employment health examination and assessment before assignment?", order++);
         add(meta, "preEmploymentOther", section, "Other pre-employment detail", order++);
-        add(meta, "periodicExam", section, "Periodic medical examinations", order++);
+        add(meta, "periodicExam", section, "Does your company conduct periodic medical examinations for employees?", order++);
         add(meta, "periodicExamOther", section, "Other periodic examination detail", order++);
-        add(meta, "lifestyleSurveys", section, "Lifestyle and behavior surveys", order++);
+        add(meta, "lifestyleSurveys", section, "Does your company conduct lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing?", order++);
         return order;
     }
 

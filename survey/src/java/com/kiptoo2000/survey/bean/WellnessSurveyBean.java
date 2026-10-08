@@ -137,7 +137,20 @@ public class WellnessSurveyBean implements Serializable {
         return false;
     }
 
+    public boolean isContractedEmployeesPresent() {
+        String count = answers.get("contracted");
+        return count != null && count.matches("[0-9]+") && count.matches(".*[1-9].*");
+    }
+
+    public void onContractedEmployeesChange() {
+        if (!isContractedEmployeesPresent()) {
+            multiAnswers.remove("outsourcedServices");
+            answers.remove("outsourcedOther");
+        }
+    }
+
     public String submit() {
+        onContractedEmployeesChange();
         try {
             savedResponseId = wellnessSurveyRepository.save(answers, multiAnswers);
             submitted = true;

@@ -1183,9 +1183,9 @@
                                 <table class="demographics-table">
                                     <thead><tr><th scope="col">Type of contract</th><th scope="col">Number of employees</th></tr></thead>
                                     <tbody>
-                                    <tr><td><p:outputLabel for="totalEmployees" value="Total number of employees (all types)"/></td><td><p:inputText label="Total number of employees (all types)" styleClass="form-control" id="totalEmployees" placeholder="example" value="#{wellnessSurvey.answers['totalEmployees']}" required="true" requiredMessage="Total number of employees (all types) is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                    <tr><td><p:outputLabel for="totalEmployees" value="Total number of direct (full-time and part-time) employees"/></td><td><p:inputText label="Total number of direct (full-time and part-time) employees" styleClass="form-control" id="totalEmployees" placeholder="example" value="#{wellnessSurvey.answers['totalEmployees']}" required="true" requiredMessage="Total number of direct (full-time and part-time) employees is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
                                         <p:message for="totalEmployees" display="text" styleClass="field-message"/></td></tr>
-                                    <tr><td><p:outputLabel for="contracted" value="Total contracted / outsourced employees"/></td><td><p:inputText label="Total contracted / outsourced employees" styleClass="form-control" id="contracted" placeholder="example" value="#{wellnessSurvey.answers['contracted']}" required="true" requiredMessage="Total contracted / outsourced employees is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                    <tr><td><p:outputLabel for="contracted" value="Total number of contracted / outsourced employees"/></td><td><p:inputText label="Total number of contracted / outsourced employees" styleClass="form-control" id="contracted" placeholder="example" value="#{wellnessSurvey.answers['contracted']}" required="true" requiredMessage="Total number of contracted / outsourced employees is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/><p:ajax event="change" process="@this" listener="#{wellnessSurvey.onContractedEmployeesChange}" update="outsourcedServicesPanel"/></p:inputText>
                                         <p:message for="contracted" display="text" styleClass="field-message"/></td></tr>
                                     </tbody>
                                 </table>
@@ -1194,7 +1194,7 @@
 
                             <!-- OUTSOURCED SERVICES -->
 
-                            <div class="choice-block">
+                            <p:outputPanel id="outsourcedServicesPanel" layout="block"><h:panelGroup layout="block" styleClass="choice-block" rendered="#{wellnessSurvey.contractedEmployeesPresent}">
 
                                 <p:outputLabel
                                         value="Contracted/outsourced service types"/>
@@ -1236,7 +1236,7 @@
 
                                 </p:outputPanel>
 
-                            </div>
+                            </h:panelGroup></p:outputPanel>
 
 
                             <!-- OCCUPATIONS -->
@@ -1681,13 +1681,13 @@
                                     <div class="question-card">
 
                                         <p:outputLabel
-                                                value="Risk assessment frequency"/>
+                                                value="What is the frequency of risk assessment?"/>
 
-                                        <p:selectOneRadio label="Risk assessment frequency" id="riskFrequency"
+                                        <p:selectOneRadio label="What is the frequency of risk assessment?" id="riskFrequency"
                                                           value="#{wellnessSurvey.answers['riskFrequency']}"
                                                           layout="responsive"
                                                           columns="5"
-                                                          required="true" requiredMessage="Risk assessment frequency - please select an option.">
+                                                          required="true" requiredMessage="What is the frequency of risk assessment? - please select an option.">
 
                                             <f:selectItem itemLabel="Monthly" itemValue="Monthly"/>
                                             <f:selectItem itemLabel="Quarterly" itemValue="Quarterly"/>
@@ -2022,11 +2022,11 @@
                                         <h:panelGroup layout="block" styleClass="question-card"
                                                       rendered="#{wellnessSurvey.answers['companyClinic'] eq 'Yes'}">
 
-                                            <p:outputLabel value="Specialist occupational physician"/>
+                                            <p:outputLabel value="Specialist Occupational Health/Medicine Physician"/>
 
-                                            <p:selectOneRadio label="Specialist occupational physician" id="occupationalPhysician"
+                                            <p:selectOneRadio label="Specialist Occupational Health/Medicine Physician" id="occupationalPhysician"
                                                               value="#{wellnessSurvey.answers['occupationalPhysician']}"
-                                                              required="true" requiredMessage="Specialist occupational physician - please select an option.">
+                                                              required="true" requiredMessage="Specialist Occupational Health/Medicine Physician - please select an option.">
 
                                                 <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                                 <f:selectItem itemLabel="No" itemValue="No"/>
@@ -2063,14 +2063,14 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Pre-employment health examination and assessment before assignment"/>
+                                        value="Does your company conduct Pre-employment health examination and assessment before assignment?"/>
 
-                                <p:selectOneRadio label="Pre-employment health examination and assessment before assignment"
+                                <p:selectOneRadio label="Does your company conduct Pre-employment health examination and assessment before assignment?"
                                                   id="preEmploymentExam"
                                                   value="#{wellnessSurvey.answers['preEmploymentExam']}"
                                                   layout="responsive"
                                                   columns="3"
-                                                  required="true" requiredMessage="Pre-employment health examination and assessment before assignment - please select an option.">
+                                                  required="true" requiredMessage="Does your company conduct Pre-employment health examination and assessment before assignment? - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                     <f:selectItem itemLabel="No" itemValue="No"/>
@@ -2109,14 +2109,14 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Periodic medical examinations for employees"/>
+                                        value="Does your company conduct periodic medical examinations for employees?"/>
 
-                                <p:selectOneRadio label="Periodic medical examinations for employees"
+                                <p:selectOneRadio label="Does your company conduct periodic medical examinations for employees?"
                                                   id="periodicExam"
                                                   value="#{wellnessSurvey.answers['periodicExam']}"
                                                   layout="responsive"
                                                   columns="4"
-                                                  required="true" requiredMessage="Periodic medical examinations for employees - please select an option.">
+                                                  required="true" requiredMessage="Does your company conduct periodic medical examinations for employees? - please select an option.">
 
                                     <f:selectItem
                                             itemLabel="Yes, for all employees"
@@ -2167,11 +2167,11 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing"/>
+                                        value="Does your company conduct lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing?"/>
 
-                                <p:selectOneRadio label="Lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing" id="lifestyleSurveys"
+                                <p:selectOneRadio label="Does your company conduct lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing?" id="lifestyleSurveys"
                                                   value="#{wellnessSurvey.answers['lifestyleSurveys']}"
-                                                  required="true" requiredMessage="Lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing - please select an option.">
+                                                  required="true" requiredMessage="Does your company conduct lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing? - please select an option.">
 
                                     <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                                     <f:selectItem itemLabel="No" itemValue="No"/>
