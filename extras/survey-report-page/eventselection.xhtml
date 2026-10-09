@@ -71,28 +71,33 @@
                                   
 
                                     <h:panelGroup id="exportState" layout="block">
-                                        <p:commandButton value="Generate Excel"
-                                                         action="#{excelController.startEventExcelThread}"
-                                                         process="@this roles" update="exportState"
-                                                         disabled="#{excelController.exportInProgress}"
-                                                         oncomplete="PF('applicantExportPoll').start()"/>
-                                        <h:panelGroup layout="block">
+                                        <h:panelGroup id="exportControls" layout="block" style="min-height: 3rem;">
+                                            <p:commandButton value="Generate Excel"
+                                                             action="#{excelController.startEventExcelThread}"
+                                                             process="@this roles" update="exportControls exportStatus" global="false"
+                                                             disabled="#{excelController.exportInProgress}"
+                                                             oncomplete="if (document.querySelector('[id$=&quot;:eventForm:running&quot;], [id=&quot;eventForm:running&quot;]').value === 'true') PF('applicantExportPoll').start()"/>
+                                            <p:commandButton value="Download Excel" ajax="false" immediate="true"
+                                                             action="#{excelController.download}"
+                                                             rendered="#{excelController.exportReady}"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup id="exportStatus" layout="block" style="min-height: 4rem;" aria-live="polite">
                                             <h:outputText value="#{excelController.status}"/>
                                             <h:outputText value=" Elapsed: #{excelController.formattedTime}"
                                                           rendered="#{excelController.generationRequested}"/>
+                                            <h:panelGroup layout="block" style="height: 8px; margin-top: .5rem; background: #e9ecef; overflow: hidden;">
+                                                <h:panelGroup layout="block" style="height: 100%; width: #{excelController.progress}%; background: #0d6efd;"/>
+                                            </h:panelGroup>
+                                            <h:inputHidden id="running" value="#{excelController.exportInProgress}"/>
                                         </h:panelGroup>
-                                        <p:progressBar value="#{excelController.progress}" labelTemplate="{value}%"
-                                                       rendered="#{excelController.exportInProgress or excelController.exportReady}"/>
-                                        <p:commandButton value="Download Excel" ajax="false" immediate="true"
-                                                         action="#{excelController.download}"
-                                                         rendered="#{excelController.exportReady}"/>
-                                        <!-- Read the state after each update, including completion and failure. -->
-                                        <h:inputHidden id="running" value="#{excelController.exportInProgress}"/>
                                     </h:panelGroup>
+                                    <!-- Refresh buttons once when generation finishes, rather than on every poll. -->
+                                    <p:remoteCommand name="refreshApplicantExportControls" process="@this"
+                                                     update="exportControls" global="false"/>
                                     <p:poll widgetVar="applicantExportPoll" interval="2" autoStart="false"
-                                            process="@this" update="exportState" global="false"
+                                            process="@this" update="exportStatus" global="false"
                                             listener="#{excelController.checkExportReady}"
-                                            oncomplete="if (document.querySelector('[id$=&quot;:eventForm:running&quot;], [id=&quot;eventForm:running&quot;]').value !== 'true') PF('applicantExportPoll').stop()"/>
+                                            oncomplete="if (document.querySelector('[id$=&quot;:eventForm:running&quot;], [id=&quot;eventForm:running&quot;]').value !== 'true') { PF('applicantExportPoll').stop(); refreshApplicantExportControls(); }"/>
 
 
                                 </div>
