@@ -3,22 +3,24 @@ package JSF;
 import ejb.EventMaster;
 import ejb.RegisterationMaster;
 import ejb.RegisterationMasterValues;
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.RejectedExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.enterprise.concurrent.ManagedExecutorService;
+import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -39,15 +41,15 @@ public class ExcelController extends EventMasterController implements Serializab
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = Logger.getLogger(ExcelController.class.getName());
 
-    @Resource(lookup = "java:comp/DefaultManagedExecutorService")
-    private transient ManagedExecutorService executor;
+    private transient volatile Thread exportWorker;
 
     @ManagedProperty("#{eventMasterController}")
     private EventMasterController eventMasterController;
 
     private volatile boolean generationRequested;
     private volatile boolean exportInProgress;
-    private volatile byte[] fileBytes;
+    private volatile File exportFile;
+    private volatile boolean destroyed;
     private volatile int progress;
     private volatile long startedAt;
     private volatile long finishedAt;
@@ -59,14 +61,14 @@ public class ExcelController extends EventMasterController implements Serializab
     }
 
     public synchronized void startEventExcelThread() {
-        if (exportInProgress) { return; }
+        if (exportInProgress || destroyed) { return; }
         generationRequested = true;
-        fileBytes = null;
+        deleteExportFile();
         progress = 0;
         startedAt = 0;
         finishedAt = 0;
 
-        // Capture request-dependent state BEFORE submitting background work.
+        // Capture request-dependent state BEFORE starting background work.
         final EventMaster selectedEvent = eventMasterController == null
                 ? null : eventMasterController.getEventid();
         if (selectedEvent == null) {
@@ -74,41 +76,41 @@ public class ExcelController extends EventMasterController implements Serializab
             return;
         }
         final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-        if (executor == null) {
-            status = "The server managed executor is unavailable.";
-            return;
-        }
         exportInProgress = true;
         startedAt = System.currentTimeMillis();
         status = "Loading applicants...";
         try {
-            executor.submit(() -> {
+            Thread worker = new Thread(() -> {
                 try {
                     List<Map<String, String>> rows = loadApplicants(selectedEvent, locale);
                     status = "Writing Excel...";
-                    byte[] generated = generateExcel(rows);
-                    fileBytes = generated;
+                    File generated = generateExcel(rows);
+                    synchronized (ExcelController.this) {
+                        if (destroyed) {
+                            Files.deleteIfExists(generated.toPath());
+                            return;
+                        }
+                        exportFile = generated;
+                    }
                     progress = 100;
                     status = "Excel ready: " + rows.size() + " applicant(s).";
                 } catch (Exception ex) {
-                    fileBytes = null;
                     status = "Export failed. Please try again or check the server log.";
                     LOG.log(Level.SEVERE, "Applicant Excel export failed", ex);
                 } finally {
                     finishedAt = System.currentTimeMillis();
                     exportInProgress = false;
                 }
-            });
-        } catch (RejectedExecutionException ex) {
-            finishedAt = System.currentTimeMillis();
-            exportInProgress = false;
-            status = "Export service is busy. Please try again shortly.";
-            LOG.log(Level.WARNING, "Applicant export rejected", ex);
+            }, "applicant-excel-export");
+            worker.setDaemon(true);
+            exportWorker = worker;
+            worker.start();
         } catch (RuntimeException ex) {
+            exportWorker = null;
             finishedAt = System.currentTimeMillis();
             exportInProgress = false;
             status = "Unable to start the export. Check the server log.";
-            LOG.log(Level.SEVERE, "Unable to submit applicant export", ex);
+            LOG.log(Level.SEVERE, "Unable to start applicant export thread", ex);
         }
     }
 
@@ -121,52 +123,68 @@ public class ExcelController extends EventMasterController implements Serializab
         SimpleDateFormat dates = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         boolean arabic = locale != null && "ar".equals(locale.getLanguage());
         int completed = 0;
-        for (RegisterationMaster registration : registrations) {
+        Map<Integer, String> actionValues = new HashMap<>();
+        // Keep IN lists small (also suitable for Oracle's expression limit).
+        final int batchSize = 250;
+        for (int offset = 0; offset < registrations.size(); offset += batchSize) {
             checkInterrupted();
-            Map<String, String> row = new LinkedHashMap<>();
-            row.put("ApplicantId", String.valueOf(registration.getRegisterationId()));
-            String registeredOn = "";
-            List<RegisterationMasterValues> valuesList =
-                    registerationMasterValuesFacade.getrecordByRegId(registration);
-            for (RegisterationMasterValues values : valuesList) {
+            List<RegisterationMaster> batch = registrations.subList(offset,
+                    Math.min(offset + batchSize, registrations.size()));
+            Map<String, List<RegisterationMasterValues>> valuesByRegistration =
+                    registerationMasterValuesFacade.getValuesForExportBatch(batch);
+            for (RegisterationMaster registration : batch) {
                 checkInterrupted();
-                if (values == null) { continue; }
-                if (registeredOn.isEmpty() && values.getReg_date() != null) {
-                    registeredOn = dates.format(values.getReg_date());
+                Map<String, String> row = new LinkedHashMap<>();
+                row.put("ApplicantId", String.valueOf(registration.getRegisterationId()));
+                String registeredOn = "";
+                List<RegisterationMasterValues> valuesList =
+                        valuesByRegistration.get(String.valueOf(registration.getRegisterationId()));
+                if (valuesList == null) { valuesList = java.util.Collections.emptyList(); }
+                for (RegisterationMasterValues values : valuesList) {
+                    checkInterrupted();
+                    if (values == null) { continue; }
+                    if (registeredOn.isEmpty() && values.getReg_date() != null) {
+                        registeredOn = dates.format(values.getReg_date());
+                    }
+                    if (values.getFieldId() == null) {
+                        throw new IOException("Missing field definition for applicant "
+                                + registration.getRegisterationId());
+                    }
+                    String name = values.getFieldId().getFieldName();
+                    String arabicName = values.getFieldId().getFieldname_ar();
+                    if (arabic && arabicName != null && !arabicName.isEmpty()) { name = arabicName; }
+                    if (name == null || name.trim().isEmpty()) {
+                        throw new IOException("An export field has no name");
+                    }
+                    String value = values.getFieldValues();
+                    if (value == null || value.isEmpty()) { value = ""; }
+                    else if (values.isIsaction()) {
+                        int actionId = Integer.parseInt(value);
+                        if (!actionValues.containsKey(actionId)) {
+                            actionValues.put(actionId, actionFacade.getRecordValueById(actionId));
+                        }
+                        value = actionValues.get(actionId);
+                    }
+                    // Avoid silently overwriting another field with the same label.
+                    if (row.containsKey(name) || "Date to Registration".equals(name)
+                            || "Attended".equals(name) || "Survey Sent".equals(name)) {
+                        throw new IOException("Duplicate or reserved export field label: " + name);
+                    }
+                    row.put(name, value == null ? "" : value);
                 }
-                if (values.getFieldId() == null) {
-                    throw new IOException("Missing field definition for applicant "
-                            + registration.getRegisterationId());
-                }
-                String name = values.getFieldId().getFieldName();
-                String arabicName = values.getFieldId().getFieldname_ar();
-                if (arabic && arabicName != null && !arabicName.isEmpty()) { name = arabicName; }
-                if (name == null || name.trim().isEmpty()) {
-                    throw new IOException("An export field has no name");
-                }
-                String value = values.getFieldValues();
-                if (value == null || value.isEmpty()) { value = ""; }
-                else if (values.isIsaction()) {
-                    value = actionFacade.getRecordValueById(Integer.parseInt(value));
-                }
-                // Avoid silently overwriting another field with the same label.
-                if (row.containsKey(name) || "Date to Registration".equals(name)
-                        || "Attended".equals(name) || "Survey Sent".equals(name)) {
-                    throw new IOException("Duplicate or reserved export field label: " + name);
-                }
-                row.put(name, value == null ? "" : value);
+                row.put("Date to Registration", registeredOn);
+                row.put("Attended", Boolean.TRUE.equals(registration.getAttended()) ? "Yes" : "No");
+                row.put("Survey Sent", Boolean.TRUE.equals(registration.getSurvey_sent()) ? "Yes" : "No");
+                rows.add(row);
+                progress = (int) (60L * ++completed / registrations.size());
+                status = "Loaded " + completed + " of " + registrations.size() + " applicants...";
             }
-            row.put("Date to Registration", registeredOn);
-            row.put("Attended", Boolean.TRUE.equals(registration.getAttended()) ? "Yes" : "No");
-            row.put("Survey Sent", Boolean.TRUE.equals(registration.getSurvey_sent()) ? "Yes" : "No");
-            rows.add(row);
-            progress = (int) (60L * ++completed / registrations.size());
         }
         progress = 60;
         return rows;
     }
 
-    private byte[] generateExcel(List<Map<String, String>> rows) throws IOException {
+    private File generateExcel(List<Map<String, String>> rows) throws IOException {
         Set<String> keys = new LinkedHashSet<>();
         keys.add("ApplicantId");
         for (Map<String, String> row : rows) {
@@ -183,6 +201,8 @@ public class ExcelController extends EventMasterController implements Serializab
         if (keys.size() > 16384) { throw new IOException("Too many columns for Excel"); }
 
         SXSSFWorkbook workbook = new SXSSFWorkbook(100);
+        File generated = null;
+        boolean complete = false;
         try {
             workbook.setCompressTempFiles(true);
             CellStyle headerStyle = workbook.createCellStyle();
@@ -212,13 +232,25 @@ public class ExcelController extends EventMasterController implements Serializab
             }
             progress = 95;
             checkInterrupted();
-            try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+            status = "Finishing Excel file...";
+            generated = Files.createTempFile("applicants-export-", ".xlsx").toFile();
+            try (OutputStream output = new BufferedOutputStream(Files.newOutputStream(generated.toPath()))) {
                 workbook.write(output);
-                return output.toByteArray();
             }
+            // Close and dispose before publishing the completed file.
+            workbook.close();
+            workbook.dispose();
+            complete = true;
+            return generated;
         } finally {
-            try { workbook.close(); }
-            finally { workbook.dispose(); }
+            try {
+                if (!complete) {
+                    try { workbook.close(); }
+                    finally { workbook.dispose(); }
+                }
+            } finally {
+                if (!complete && generated != null) { Files.deleteIfExists(generated.toPath()); }
+            }
         }
     }
 
@@ -241,25 +273,47 @@ public class ExcelController extends EventMasterController implements Serializab
     }
 
     // Called on a normal, non-AJAX JSF request after the worker finishes.
-    public void download() throws IOException {
+    public synchronized void download() throws IOException {
         if (exportInProgress) { return; }
-        byte[] bytes = fileBytes;
-        if (bytes == null) { return; }
+        File file = exportFile;
+        if (file == null || !file.isFile()) {
+            status = "Export file is unavailable. Please generate Excel again.";
+            deleteExportFile();
+            return;
+        }
         FacesContext faces = FacesContext.getCurrentInstance();
         ExternalContext response = faces.getExternalContext();
         response.responseReset();
         response.setResponseContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setResponseHeader("Content-Disposition", "attachment; filename=\"Applicants.xlsx\"");
         response.setResponseHeader("Cache-Control", "no-store");
-        response.setResponseContentLength(bytes.length);
-        response.getResponseOutputStream().write(bytes);
+        response.setResponseHeader("Content-Length", Long.toString(file.length()));
         faces.responseComplete();
+        Files.copy(file.toPath(), response.getResponseOutputStream());
+        response.getResponseOutputStream().flush();
+    }
+
+    private void deleteExportFile() {
+        File previous = exportFile;
+        exportFile = null;
+        if (previous != null) {
+            try { Files.deleteIfExists(previous.toPath()); }
+            catch (IOException ex) { LOG.log(Level.WARNING, "Unable to delete applicant export", ex); }
+        }
+    }
+
+    @PreDestroy
+    public synchronized void cleanup() {
+        destroyed = true;
+        Thread worker = exportWorker;
+        if (worker != null) { worker.interrupt(); }
+        deleteExportFile();
     }
 
     public void checkExportReady() { /* Poll renders the current worker state. */ }
     public boolean isGenerationRequested() { return generationRequested; }
     public boolean isExportInProgress() { return exportInProgress; }
-    public boolean isExportReady() { return !exportInProgress && fileBytes != null; }
+    public boolean isExportReady() { return !exportInProgress && exportFile != null; }
     public int getProgress() { return progress; }
     public String getStatus() { return status; }
     public String getFormattedTime() {

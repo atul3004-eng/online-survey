@@ -1,0 +1,279 @@
+// Paste these methods inside MAHController, replacing methods with the same names.
+// Uses the same /dps/mah root as your existing upload code.
+
+private MarketingCompanyDocument saveUploadedMahDocument(FileUploadEvent event,
+        String documentType) throws IOException {
+    UploadedFile uploadedFile = event.getFile();
+    if (uploadedFile == null) {
+        throw new IOException("No file was uploaded.");
+    }
+
+    String filename = FilenameUtils.getName(uploadedFile.getFileName());
+    if (StringUtils.isBlank(filename)) {
+        throw new IOException("The uploaded file has no filename.");
+    }
+
+    Path directory = Paths.get("/dps/mah/allDocuments");
+    Files.createDirectories(directory);
+    String storedName = UUID.randomUUID().toString() + "_"
+            + filename.replaceAll("[^a-zA-Z0-9._-]", "_");
+    Path destination = directory.resolve(storedName);
+
+    try (java.io.OutputStream stream = Files.newOutputStream(destination,
+            java.nio.file.StandardOpenOption.CREATE_NEW,
+            java.nio.file.StandardOpenOption.WRITE)) {
+        stream.write(uploadedFile.getContents());
+    }
+
+    MarketingCompanyDocument document = new MarketingCompanyDocument();
+    document.setCreatedOn(new Timestamp(new java.util.Date().getTime()));
+    document.setCreatedBy(userController.getUser());
+    document.setDocumentName(filename);
+    document.setDocumentPath(destination.toString().replace('\\', '/'));
+    document.setDocumentType(documentType);
+    return document;
+}
+
+private void addUploadedMahDocument(FileUploadEvent event, String documentType,
+        String updateTarget) throws IOException {
+    MarketingCompanyDocument document = saveUploadedMahDocument(event, documentType);
+    if (documentList == null) {
+        documentList = new ArrayList<>();
+    }
+    documentList.add(document);
+    RequestContext context = RequestContext.getCurrentInstance();
+    context.execute("PF('uploadDocumentWidget').hide();");
+    context.update(updateTarget);
+}
+
+public void handleFileUpload(FileUploadEvent event) throws FileNotFoundException, IOException {
+    addUploadedMahDocument(event, "mah", "mahDocuments");
+}
+
+public void handleFileResubmitUpload(FileUploadEvent event) throws FileNotFoundException, IOException {
+    addUploadedMahDocument(event, "mah", "mahView");
+}
+
+public void handleVariationFileUpload(FileUploadEvent event) throws FileNotFoundException, IOException {
+    addUploadedMahDocument(event, "MAH Variation Document", "mahDocuments");
+}
+
+public void handleReregistrationFileUpload(FileUploadEvent event) throws FileNotFoundException, IOException {
+    addUploadedMahDocument(event, "MAH Reregistration Document", "mahDocuments");
+}
+
+public void handleGlobalFileUpload(FileUploadEvent event) throws FileNotFoundException, IOException {
+    MarketingCompanyDocument document = saveUploadedMahDocument(event, "mah");
+    if (selected.getDocuments() == null) {
+        selected.setDocuments(new ArrayList<MarketingCompanyDocument>());
+    }
+    selected.getDocuments().add(document);
+    ejbFacade.edit(selected);
+    RequestContext context = RequestContext.getCurrentInstance();
+    context.execute("PF('uploadDocumentWidget').hide();");
+    context.update("documents");
+}
+
+public String getDocumentPath(String path) {
+    // Preserve both existing mah/<id>/ paths and new allDocuments paths.
+    return path;
+}
+
+// Replace the old submission relocation methods with these compatibility methods.
+// Existing submit callers can stay; relocation methods do not touch files or DB paths.
+public void moveDocumentToMahDirectory() throws Exception {
+}
+
+public void moveUpdatedDocumentsToMAHDirectory() throws Exception {
+}
+
+private void moveFolder(Integer id) {
+}
+
+private void moveUpdatedFiles() {
+}
+
+private boolean renameMahFolder(Integer id) {
+    return true;
+}
+
+    public void removeDocumentFolder(String mahId) throws Exception {
+        try {
+            String folderPath = "C:/dps/mah/" + mahId;
+            File folder = new File(folderPath);
+            if (folder.exists()) {
+                FileUtils.deleteDirectory(folder);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void removeDocument(MarketingCompanyDocument removeDocument) {
+        try {
+            File file = new File("D:" + removeDocument.getDocumentPath());
+            if (file.delete()) {
+                int index = 0;
+                for (MarketingCompanyDocument document : documentList) {
+                    if (document.getDocumentName().equals(removeDocument.getDocumentName())) {
+                        break;
+                    }
+                    index++;
+                }
+                documentList.remove(index);
+                JsfUtil.addSuccessMessage("Document removed successfully");
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.update("mahDocuments");
+            } else {
+                JsfUtil.addErrorMessageGeneral("Error in removing the document. Please try again later.");
+            }
+        } catch (Exception e) {
+            JsfUtil.addErrorMessageGeneral("Error in removing the document. Please try again later.");
+        }
+    }
+
+    public String deleteDocument(MarketingCompanyDocument document) {
+        try {
+            selected.getDocuments().remove(document);
+            ejbFacade.edit(selected);
+            JsfUtil.addErrorMessageGeneralInFlashScope("Document has been deleted successfully");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessageGeneralInFlashScope("Error in deleting the document.");
+        }
+        return "MAHDocuments?faces-redirect=true";
+    }
+
+    public String deleteNotSubmittedDocument(MarketingCompanyDocument document) {
+        try {
+            selected.getDocuments().remove(document);
+            File file = new File("D:" + document.getDocumentPath());
+            file.delete();
+            ejbFacade.edit(selected);
+            JsfUtil.addSuccessMessage("Document has been deleted successfully");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessageGeneral("Error in deleting the document.");
+        }
+        return null;
+    }
+
+    public void removeSavedDocument(MarketingCompanyDocument removeDocument) {
+        try {
+            selected.getDocuments().remove(removeDocument);
+            File file = new File("D:" + removeDocument.getDocumentPath());
+            file.delete();
+            ejbFacade.edit(selected);
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.update("mahSavedDocuments");
+            JsfUtil.addSuccessMessage("Document has been deleted successfully");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessageGeneral("Error in removing the document. Please try again later.");
+        }
+    }
+
+    public void updateMahFile(MarketingCompanyDocument document) {
+        try {
+            if (document.getDocumentName().contains("+")) {
+                String fileName = document.getDocumentName();
+                String newFileName = fileName.replace("+", "");
+                document.setDocumentName(newFileName);
+
+                File file = new File("C:/dps/mah/" + selected.getId() + "/" + fileName);
+                File file2 = new File("C:/dps/mah/" + selected.getId() + "/" + newFileName);
+                boolean success = file.renameTo(file2);
+                if (success) {
+                    ejbFacade.edit(selected);
+                    JsfUtil.addSuccessMessage("Files renamed successfully.");
+                } else {
+                    JsfUtil.addErrorMessageGeneral("Error in renaming.");
+                }
+            }
+        } catch (Exception e) {
+            JsfUtil.addErrorMessageGeneral("Error in renaming.");
+        }
+    }
+
+
+// Replace your existing submit() with this version too.
+    public String submit() {
+        System.out.println("Submitting MAH");
+        UserMaster currentUser = userController.getUser();
+        java.util.Date date = new java.util.Date();
+        try {
+            selected = ejbFacade.find(selected.getId());
+            if (!allowSubmission() && selected.isHerbal()) {
+                Calendar cal = Calendar.getInstance();
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                if (day > 7) {
+                    JsfUtil.addErrorMessageGeneral("Exceeded the time of Submission for this month. Please submit between 1st - 7th of each month. ");
+                    return null;
+                }
+            }
+            selected.setCreatedOn(new Timestamp(date.getTime()));
+            selected.setCreatedBy(currentUser);
+            ExternalStatus status = extStatusFacade.getRecordById(1);
+            InternalStatus intStatus = intStatusFacade.getRecordById(1);
+            selected.setExternalStatus(status);
+            //List requestFor = null;
+            String requestFor = null;
+            if (request != null) {
+                //requestFor = Arrays.asList(requests);
+                requestFor = request;
+            }
+
+            if (requestFor == null || requestFor.isEmpty()) {
+                //requestFor = new ArrayList();
+                if (selected.isPharmaceutical()) {
+                    //requestFor.add("Pharmaceutical");
+                    requestFor = "Pharmaceutical";
+                }
+                if (selected.isHerbal()) {
+                    //requestFor.add("Herbal");
+                    requestFor = "Herbal";
+                }
+            }
+            if (requestFor.contains("Pharmaceutical") && (selected.getPharmaDecision() == null || (selected.getPharmaDecision() != null && selected.getPharmaDecision().getId() == 5))) {
+                selected.setPharmaceutical(true);
+                selected.setPharmaDecision(status);
+                selected.setPharmaInternalDecision(intStatus);
+            }
+            if (requestFor.contains("Herbal") && (selected.getHerbalDecision() == null || (selected.getHerbalDecision() != null && selected.getHerbalDecision().getId() == 5))) {
+                selected.setHerbal(true);
+                selected.setHerbalDecision(status);
+                selected.setHerbalInternalDecision(intStatus);
+            }
+            MahApproval approval = new MahApproval();
+            approval.setMarketingCompany(selected);
+
+            selected.getApprovals().add(approval);
+            if (documentList != null && !documentList.isEmpty()) {
+                if (selected.getDocuments() == null) {
+                    selected.setDocuments(documentList);
+                } else {
+                    selected.getDocuments().addAll(documentList);
+                }
+            }
+            ejbFacade.edit(selected);
+            JsfUtil.addSuccessMessage("Record has been submitted successfully");
+        } catch (Exception e) {
+            selected = ejbFacade.merger(selected);
+            JsfUtil.addErrorMessageGeneral("Error submitting the MAH Request. Please contact administrator or try again later");
+            return null;
+        }
+        try {
+            JsfUtil.sendSMS(selected.getCreatedBy().getMobile(), "You have successfully submitted the MAH registration request request for Application No.: "
+                    + selected.getId(), "0");
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            Map parametersMap = new HashMap();
+            parametersMap.put("submittedOn", df.format(date));
+            parametersMap.put("inquiryNo", selected.getId());
+            Configuration cfg = new Configuration();
+            cfg.setClassForTemplateLoading(ClassificationMasterController.class, "");
+            Template template = cfg.getTemplate("submitMAHRequest.ftl");
+            String subject = "New MAH Registration request submitted";
+            JsfUtil.sendEmail(parametersMap, "vsingh@sch.gov.qa", subject, template);
+        } catch (Exception e) {
+
+        }
+        return "MAHView";
+    }

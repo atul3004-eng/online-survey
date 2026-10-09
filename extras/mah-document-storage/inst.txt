@@ -1,0 +1,19 @@
+Replace these 7 existing methods:
+1. handleFileUpload
+2. handleFileResubmitUpload
+3. handleGlobalFileUpload
+4. handleVariationFileUpload
+5. handleReregistrationFileUpload
+6. submit
+7. getDocumentPath
+Add these 2 new helper methods:
+- saveUploadedMahDocument
+- addUploadedMahDocument
+Replace these 5 relocation methods with the empty versions provided:
+- moveDocumentToMahDirectory
+- moveUpdatedDocumentsToMAHDirectory
+- moveFolder
+- moveUpdatedFiles
+- renameMahFolder — use the version returning true.
+Leave all Remove/Delete methods and updateMahFile unchanged.
+Use the methods from [this file](C:/projects/online-survey/extras/mah-document-storage/copy-paste-methods.txt).

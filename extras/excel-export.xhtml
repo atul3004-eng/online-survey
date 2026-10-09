@@ -17,7 +17,7 @@
             </h:panelGroup>
             <p:progressBar value="#{excelController.progress}" labelTemplate="{value}%"
                            rendered="#{excelController.exportInProgress or excelController.exportReady}"/>
-            <p:commandButton value="Download Excel" ajax="false"
+            <p:commandButton value="Download Excel" ajax="false" immediate="true"
                              action="#{excelController.download}"
                              rendered="#{excelController.exportReady}"/>
             <!-- Read the state after each update, including completion and failure. -->

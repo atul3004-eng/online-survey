@@ -70,36 +70,30 @@
                                 <div class="row">
                                   
 
-                                    <p:commandButton value="Generate Excel"
-                                                     actionListener="#{excelController.startEventExcelThread}"
-                                                     update="status downloadPanel"
-                                                     process="@this"/>
-
-                                    <h:panelGroup id="status">
-
-                                        <h:outputText
-                                            value="Generating... #{excelController.formattedTime}"
-                                            rendered="#{excelController.exportInProgress}" />
-
-                                        <h:outputText
-                                            value="Export Ready"
-                                            rendered="#{excelController.exportReady}" />
-
+                                    <h:panelGroup id="exportState" layout="block">
+                                        <p:commandButton value="Generate Excel"
+                                                         action="#{excelController.startEventExcelThread}"
+                                                         process="@this roles" update="exportState"
+                                                         disabled="#{excelController.exportInProgress}"
+                                                         oncomplete="PF('applicantExportPoll').start()"/>
+                                        <h:panelGroup layout="block">
+                                            <h:outputText value="#{excelController.status}"/>
+                                            <h:outputText value=" Elapsed: #{excelController.formattedTime}"
+                                                          rendered="#{excelController.generationRequested}"/>
+                                        </h:panelGroup>
+                                        <p:progressBar value="#{excelController.progress}" labelTemplate="{value}%"
+                                                       rendered="#{excelController.exportInProgress or excelController.exportReady}"/>
+                                        <p:commandButton value="Download Excel" ajax="false" immediate="true"
+                                                         action="#{excelController.download}"
+                                                         rendered="#{excelController.exportReady}"/>
+                                        <!-- Read the state after each update, including completion and failure. -->
+                                        <h:inputHidden id="running" value="#{excelController.exportInProgress}"/>
                                     </h:panelGroup>
-                                    <p:poll widgetVar="poll"
-                                            interval="5"
+                                    <p:poll widgetVar="applicantExportPoll" interval="2" autoStart="false"
+                                            process="@this" update="exportState" global="false"
                                             listener="#{excelController.checkExportReady}"
-                                            update="@form"/>
+                                            oncomplete="if (document.querySelector('[id$=&quot;:eventForm:running&quot;], [id=&quot;eventForm:running&quot;]').value !== 'true') PF('applicantExportPoll').stop()"/>
 
-                                    <h:panelGroup id="downloadPanel">
-
-                                        <p:commandButton value="Download Excel"
-                                                         ajax="false"
-                                                         rendered="#{excelController.exportReady}">
-                                            <p:fileDownload value="#{excelController.threadFile}" />
-                                        </p:commandButton>
-
-                                    </h:panelGroup>
 
                                 </div>
                        
