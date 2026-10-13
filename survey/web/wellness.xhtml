@@ -1025,7 +1025,7 @@
 
                             <div class="survey__banner">
                                 <div class="survey__banner-title">Section 1 - Company Profile</div>
-                                <div class="survey__banner-meta">Organizational details, workforce &amp; employment statistics · 11 questions</div>
+                                <div class="survey__banner-meta">Organizational details, workforce &amp; employment statistics · 19 questions</div>
                             </div>
 
 
@@ -1066,7 +1066,7 @@
 
                             <div class="form-grid two">
                             <span class="field">
-                                <p:outputLabel for="focalName" value="Name"/>
+                                <p:outputLabel for="focalName" value="#{wellnessSurvey.questionNumbers['focalName']}. Name"/>
                                 <p:inputText label="Name" id="focalName"
                                              value="#{wellnessSurvey.answers['focalName']}"
                                              placeholder="example"
@@ -1076,7 +1076,7 @@
                             </span>
 
                                 <span class="field">
-                                <p:outputLabel for="jobTitle" value="Job Title"/>
+                                <p:outputLabel for="jobTitle" value="#{wellnessSurvey.questionNumbers['jobTitle']}. Job Title"/>
                                 <p:inputText label="Job Title" styleClass="form-control" id="jobTitle"
                                              value="#{wellnessSurvey.answers['jobTitle']}"
                                              placeholder="example"
@@ -1085,7 +1085,7 @@
                             </span>
 
                                 <span class="field">
-                                <p:outputLabel for="focalEmail" value="Email address"/>
+                                <p:outputLabel for="focalEmail" value="#{wellnessSurvey.questionNumbers['focalEmail']}. Email address"/>
                                 <p:inputText label="Email address" styleClass="form-control" id="focalEmail"
                                              value="#{wellnessSurvey.answers['focalEmail']}"
                                              placeholder="example"
@@ -1097,7 +1097,7 @@
                             </span>
 
                                 <span class="field">
-                                <p:outputLabel for="officePhone" value="Office phone number"/>
+                                <p:outputLabel for="officePhone" value="#{wellnessSurvey.questionNumbers['officePhone']}. Office phone number"/>
                                 <p:inputText label="Office phone number" styleClass="form-control" id="officePhone"
                                              value="#{wellnessSurvey.answers['officePhone']}"
                                              placeholder="example"
@@ -1109,7 +1109,7 @@
                             </span>
 
                                 <span class="field">
-                                <p:outputLabel for="mobilePhone" value="Mobile phone number"/>
+                                <p:outputLabel for="mobilePhone" value="#{wellnessSurvey.questionNumbers['mobilePhone']}. Mobile phone number"/>
                                 <p:inputText label="Mobile phone number" styleClass="form-control" id="mobilePhone"
                                              value="#{wellnessSurvey.answers['mobilePhone']}"
                                              placeholder="example"
@@ -1128,7 +1128,7 @@
 
                                 <p:outputLabel
                                         for="industry"
-                                        value="Type of industry"/>
+                                        value="#{wellnessSurvey.questionNumbers['industry']}. Type of industry"/>
 
                                 <p:selectOneMenu label="Type of industry" styleClass="form-select"
                                                  id="industry"
@@ -1157,7 +1157,7 @@
                                             rendered="#{wellnessSurvey.answers['industry'] eq 'Other'}">
 
                                         <label class="form-label text-muted mt-2">
-                                            Other · specify
+                                            #{wellnessSurvey.questionNumbers['industryOther']}. Other · specify
                                         </label>
 
                                         <p:inputText label="Other - specify" id="industryOther" styleClass="form-control"
@@ -1183,9 +1183,9 @@
                                 <table class="demographics-table">
                                     <thead><tr><th scope="col">Type of contract</th><th scope="col">Number of employees</th></tr></thead>
                                     <tbody>
-                                    <tr><td><p:outputLabel for="totalEmployees" value="Total number of direct (full-time and part-time) employees"/></td><td><p:inputText label="Total number of direct (full-time and part-time) employees" styleClass="form-control" id="totalEmployees" placeholder="example" value="#{wellnessSurvey.answers['totalEmployees']}" required="true" requiredMessage="Total number of direct (full-time and part-time) employees is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                    <tr><td><p:outputLabel for="totalEmployees" value="#{wellnessSurvey.questionNumbers['totalEmployees']}. Total number of direct (full-time and part-time) employees"/></td><td><p:inputText label="Total number of direct (full-time and part-time) employees" styleClass="form-control" id="totalEmployees" placeholder="example" value="#{wellnessSurvey.answers['totalEmployees']}" required="true" requiredMessage="Total number of direct (full-time and part-time) employees is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
                                         <p:message for="totalEmployees" display="text" styleClass="field-message"/></td></tr>
-                                    <tr><td><p:outputLabel for="contracted" value="Total number of contracted / outsourced employees"/></td><td><p:inputText label="Total number of contracted / outsourced employees" styleClass="form-control" id="contracted" placeholder="example" value="#{wellnessSurvey.answers['contracted']}" required="true" requiredMessage="Total number of contracted / outsourced employees is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/><p:ajax event="change" process="@this" listener="#{wellnessSurvey.onContractedEmployeesChange}" update="outsourcedServicesPanel"/></p:inputText>
+                                    <tr><td><p:outputLabel for="contracted" value="#{wellnessSurvey.questionNumbers['contracted']}. Total number of contracted / outsourced employees"/></td><td><p:inputText label="Total number of contracted / outsourced employees" styleClass="form-control" id="contracted" placeholder="example" value="#{wellnessSurvey.answers['contracted']}" required="true" requiredMessage="Total number of contracted / outsourced employees is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/><p:ajax event="change" process="@this" listener="#{wellnessSurvey.onContractedEmployeesChange}" update="outsourcedServicesPanel"/></p:inputText>
                                         <p:message for="contracted" display="text" styleClass="field-message"/></td></tr>
                                     </tbody>
                                 </table>
@@ -1197,7 +1197,7 @@
                             <p:outputPanel id="outsourcedServicesPanel" layout="block"><h:panelGroup layout="block" styleClass="choice-block" rendered="#{wellnessSurvey.contractedEmployeesPresent}">
 
                                 <p:outputLabel
-                                        value="Contracted/outsourced service types"/>
+                                        value="#{wellnessSurvey.questionNumbers['outsourcedServices']}. Contracted/outsourced service types"/>
 
                                 <p:selectManyCheckbox label="Contracted/outsourced service types"
                                                       id="outsourcedServices"
@@ -1223,7 +1223,7 @@
                                             rendered="#{wellnessSurvey.isOtherSelected('outsourcedServices')}">
 
                                         <label class="form-label text-muted mt-2">
-                                            Other · specify
+                                            #{wellnessSurvey.questionNumbers['outsourcedOther']}. Other · specify
                                         </label>
 
                                         <p:inputText label="Other - specify" id="outsourcedOther" styleClass="form-control"
@@ -1244,7 +1244,7 @@
                             <div class="choice-block">
 
                                 <p:outputLabel
-                                        value="Main occupations in the company"/>
+                                        value="#{wellnessSurvey.questionNumbers['occupations']}. Main occupations in the company"/>
 
                                 <p:selectManyCheckbox label="Main occupations in the company"
                                                       id="occupations"
@@ -1270,7 +1270,7 @@
                                             rendered="#{wellnessSurvey.isOtherSelected('occupations')}">
 
                                         <label class="form-label text-muted mt-2">
-                                            Other · specify
+                                            #{wellnessSurvey.questionNumbers['occupationOther']}. Other · specify
                                         </label>
 
                                         <p:inputText label="Other - specify" id="occupationOther" styleClass="form-control"
@@ -1306,13 +1306,13 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr><td><p:outputLabel for="age18" value="18 - 24"/></td><td><p:inputText label="18 - 24" styleClass="form-control" id="age18" placeholder="example" value="#{wellnessSurvey.answers['age18']}" required="true" requiredMessage="18 - 24 is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                        <tr><td><p:outputLabel for="age18" value="#{wellnessSurvey.questionNumbers['age18']}. 18 - 24"/></td><td><p:inputText label="18 - 24" styleClass="form-control" id="age18" placeholder="example" value="#{wellnessSurvey.answers['age18']}" required="true" requiredMessage="18 - 24 is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
                                             <p:message for="age18" display="text" styleClass="field-message"/></td></tr>
-                                        <tr><td><p:outputLabel for="age25" value="25 - 44"/></td><td><p:inputText label="25 - 44" styleClass="form-control" id="age25" placeholder="example" value="#{wellnessSurvey.answers['age25']}" required="true" requiredMessage="25 - 44 is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                        <tr><td><p:outputLabel for="age25" value="#{wellnessSurvey.questionNumbers['age25']}. 25 - 44"/></td><td><p:inputText label="25 - 44" styleClass="form-control" id="age25" placeholder="example" value="#{wellnessSurvey.answers['age25']}" required="true" requiredMessage="25 - 44 is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
                                             <p:message for="age25" display="text" styleClass="field-message"/></td></tr>
-                                        <tr><td><p:outputLabel for="age45" value="45 - 64"/></td><td><p:inputText label="45 - 64" styleClass="form-control" id="age45" placeholder="example" value="#{wellnessSurvey.answers['age45']}" required="true" requiredMessage="45 - 64 is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                        <tr><td><p:outputLabel for="age45" value="#{wellnessSurvey.questionNumbers['age45']}. 45 - 64"/></td><td><p:inputText label="45 - 64" styleClass="form-control" id="age45" placeholder="example" value="#{wellnessSurvey.answers['age45']}" required="true" requiredMessage="45 - 64 is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
                                             <p:message for="age45" display="text" styleClass="field-message"/></td></tr>
-                                        <tr><td><p:outputLabel for="age65" value="65 and older"/></td><td><p:inputText label="65 and older" styleClass="form-control" id="age65" placeholder="example" value="#{wellnessSurvey.answers['age65']}" required="true" requiredMessage="65 and older is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                        <tr><td><p:outputLabel for="age65" value="#{wellnessSurvey.questionNumbers['age65']}. 65 and older"/></td><td><p:inputText label="65 and older" styleClass="form-control" id="age65" placeholder="example" value="#{wellnessSurvey.answers['age65']}" required="true" requiredMessage="65 and older is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
                                             <p:message for="age65" display="text" styleClass="field-message"/></td></tr>
                                         </tbody>
                                     </table>
@@ -1328,9 +1328,9 @@
                                     <table class="demographics-table">
                                         <thead><tr><th scope="col">Gender</th><th scope="col">Number of employees</th></tr></thead>
                                         <tbody>
-                                        <tr><td><p:outputLabel for="male" value="Males"/></td><td><p:inputText label="Males" styleClass="form-control" id="male" placeholder="example" value="#{wellnessSurvey.answers['male']}" required="true" requiredMessage="Males is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                        <tr><td><p:outputLabel for="male" value="#{wellnessSurvey.questionNumbers['male']}. Males"/></td><td><p:inputText label="Males" styleClass="form-control" id="male" placeholder="example" value="#{wellnessSurvey.answers['male']}" required="true" requiredMessage="Males is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
                                             <p:message for="male" display="text" styleClass="field-message"/></td></tr>
-                                        <tr><td><p:outputLabel for="female" value="Females"/></td><td><p:inputText label="Females" styleClass="form-control" id="female" placeholder="example" value="#{wellnessSurvey.answers['female']}" required="true" requiredMessage="Females is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                        <tr><td><p:outputLabel for="female" value="#{wellnessSurvey.questionNumbers['female']}. Females"/></td><td><p:inputText label="Females" styleClass="form-control" id="female" placeholder="example" value="#{wellnessSurvey.answers['female']}" required="true" requiredMessage="Females is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
                                             <p:message for="female" display="text" styleClass="field-message"/></td></tr>
                                         </tbody>
                                     </table>
@@ -1346,9 +1346,9 @@
                                     <table class="demographics-table">
                                         <thead><tr><th scope="col">Nationality</th><th scope="col">Number of employees</th></tr></thead>
                                         <tbody>
-                                        <tr><td><p:outputLabel for="qatari" value="Qatari"/></td><td><p:inputText label="Qatari" styleClass="form-control" id="qatari" placeholder="example" value="#{wellnessSurvey.answers['qatari']}" required="true" requiredMessage="Qatari is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                        <tr><td><p:outputLabel for="qatari" value="#{wellnessSurvey.questionNumbers['qatari']}. Qatari"/></td><td><p:inputText label="Qatari" styleClass="form-control" id="qatari" placeholder="example" value="#{wellnessSurvey.answers['qatari']}" required="true" requiredMessage="Qatari is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
                                             <p:message for="qatari" display="text" styleClass="field-message"/></td></tr>
-                                        <tr><td><p:outputLabel for="nonQatari" value="Non-Qatari"/></td><td><p:inputText label="Non-Qatari" styleClass="form-control" id="nonQatari" placeholder="example" value="#{wellnessSurvey.answers['nonQatari']}" required="true" requiredMessage="Non-Qatari is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
+                                        <tr><td><p:outputLabel for="nonQatari" value="#{wellnessSurvey.questionNumbers['nonQatari']}. Non-Qatari"/></td><td><p:inputText label="Non-Qatari" styleClass="form-control" id="nonQatari" placeholder="example" value="#{wellnessSurvey.answers['nonQatari']}" required="true" requiredMessage="Non-Qatari is required." validatorMessage="Enter a non-negative whole number."><f:validateRegex pattern="^[0-9]+$"/></p:inputText>
                                             <p:message for="nonQatari" display="text" styleClass="field-message"/></td></tr>
                                         </tbody>
                                     </table>
@@ -1359,7 +1359,7 @@
                             <div class="choice-block">
 
                                 <p:outputLabel for="employeeLanguages"
-                                        value="Please specify the most common languages spoken by employees in your workplace."/>
+                                        value="#{wellnessSurvey.questionNumbers['employeeLanguages']}. Please specify the most common languages spoken by employees in your workplace."/>
 
                                 <p:inputText label="Please specify the most common languages spoken by employees in your workplace."
                                              id="employeeLanguages" styleClass="form-control"
@@ -1444,7 +1444,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company have a policy/document for employees' Occupational Health and Safety?"/>
+                                        value="#{wellnessSurvey.questionNumbers['ohsPolicy']}. Does your company have a policy/document for employees' Occupational Health and Safety?"/>
 
                                 <p:selectOneRadio label="Does your company have a policy/document for employees' Occupational Health and Safety?" id="ohsPolicy"
                                                   value="#{wellnessSurvey.answers['ohsPolicy']}"
@@ -1486,7 +1486,7 @@
                                         rendered="#{wellnessSurvey.answers['ohsPolicy'] ne 'No' and not empty wellnessSurvey.answers['ohsPolicy']}">
 
                                     <p:outputLabel
-                                            value="Which of the following areas are covered by your company’s Occupational Health and Safety policy or related documents?"/>
+                                            value="#{wellnessSurvey.questionNumbers['ohsPolicyAspects']}. Which of the following areas are covered by your company’s Occupational Health and Safety policy or related documents?"/>
 
                                     <p:selectManyCheckbox label="Which of the following areas are covered by your company’s Occupational Health and Safety policy or related documents?"
                                                           id="ohsPolicyAspects"
@@ -1512,7 +1512,7 @@
                                                 rendered="#{wellnessSurvey.isOtherSelected('ohsPolicyAspects')}">
 
                                             <label class="form-label text-muted mt-2">
-                                                Other · specify
+                                                #{wellnessSurvey.questionNumbers['ohsPolicyOther']}. Other · specify
                                             </label>
 
                                             <p:inputText label="Other - specify" id="ohsPolicyOther" styleClass="form-control"
@@ -1535,7 +1535,7 @@
                                 <div class="question-card">
 
                                     <p:outputLabel
-                                            value="Is there a designated person or officer responsible for workplace health and safety?"/>
+                                            value="#{wellnessSurvey.questionNumbers['responsibleOfficer']}. Is there a designated person or officer responsible for workplace health and safety?"/>
 
                                     <p:selectOneRadio label="Is there a designated person or officer responsible for workplace health and safety?" id="responsibleOfficer"
                                                       value="#{wellnessSurvey.answers['responsibleOfficer']}"
@@ -1553,7 +1553,7 @@
                                 <div class="question-card">
 
                                     <p:outputLabel
-                                            value="Does your organization have a dedicated department, section, unit, or committee responsible for workplace health and safety?"/>
+                                            value="#{wellnessSurvey.questionNumbers['ohsCommittee']}. Does your organization have a dedicated department, section, unit, or committee responsible for workplace health and safety?"/>
 
                                     <p:selectOneRadio label="Does your organization have a dedicated department, section, unit, or committee responsible for workplace health and safety?" id="ohsCommittee"
                                                       value="#{wellnessSurvey.answers['ohsCommittee']}"
@@ -1583,7 +1583,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="How often is health and safety discussed between employees and management?"/>
+                                        value="#{wellnessSurvey.questionNumbers['discussionFrequency']}. How often is health and safety discussed between employees and management?"/>
 
                                 <p:selectOneRadio label="How often is health and safety discussed between employees and management?" id="discussionFrequency"
                                                   value="#{wellnessSurvey.answers['discussionFrequency']}"
@@ -1607,7 +1607,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company conduct working environment surveillance / risk assessment?"/>
+                                        value="#{wellnessSurvey.questionNumbers['riskAssessment']}. Does your company conduct working environment surveillance / risk assessment?"/>
 
                                 <p:selectOneRadio label="Does your company conduct working environment surveillance / risk assessment?" id="riskAssessment"  layout="lineDirection"
                                                   value="#{wellnessSurvey.answers['riskAssessment']}"
@@ -1636,7 +1636,7 @@
                                     <div class="choice-block">
 
                                         <p:outputLabel
-                                                value="Which of the following workplace hazards are routinely assessed in your company?"/>
+                                                value="#{wellnessSurvey.questionNumbers['hazards']}. Which of the following workplace hazards are routinely assessed in your company?"/>
 
                                         <p:selectManyCheckbox label="Which of the following workplace hazards are routinely assessed in your company?"
                                                               id="hazards"
@@ -1662,7 +1662,7 @@
                                                     rendered="#{wellnessSurvey.isOtherSelected('hazards')}">
 
                                                 <label class="form-label text-muted mt-2">
-                                                    Other · specify
+                                                    #{wellnessSurvey.questionNumbers['hazardOther']}. Other · specify
                                                 </label>
 
                                                 <p:inputText label="Other - specify" id="hazardOther" styleClass="form-control"
@@ -1681,7 +1681,7 @@
                                     <div class="question-card">
 
                                         <p:outputLabel
-                                                value="What is the frequency of risk assessment?"/>
+                                                value="#{wellnessSurvey.questionNumbers['riskFrequency']}. What is the frequency of risk assessment?"/>
 
                                         <p:selectOneRadio label="What is the frequency of risk assessment?" id="riskFrequency"
                                                           value="#{wellnessSurvey.answers['riskFrequency']}"
@@ -1708,7 +1708,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your Company have established program and procedures for identifying, assessing, evaluating risks and determining control measures?"/>
+                                        value="#{wellnessSurvey.questionNumbers['riskProgram']}. Does your Company have established program and procedures for identifying, assessing, evaluating risks and determining control measures?"/>
 
                                 <p:selectOneRadio label="Does your Company have established program and procedures for identifying, assessing, evaluating risks and determining control measures?" id="riskProgram"
                                                   value="#{wellnessSurvey.answers['riskProgram']}"
@@ -1736,7 +1736,7 @@
                                         rendered="#{wellnessSurvey.answers['riskProgram'] eq 'Yes'}">
 
                                     <p:outputLabel
-                                            value="Are the working environment assessments / risk assessments documented in written form?"/>
+                                            value="#{wellnessSurvey.questionNumbers['riskDocumented']}. Are the working environment assessments / risk assessments documented in written form?"/>
 
                                     <p:selectOneRadio label="Are the working environment assessments / risk assessments documented in written form?" id="riskDocumented"
                                                       value="#{wellnessSurvey.answers['riskDocumented']}"
@@ -1756,7 +1756,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company have records of Hygiene surveillance, such as monitoring of noise level or indoor air quality?"/>
+                                        value="#{wellnessSurvey.questionNumbers['hygieneRecords']}. Does your company have records of Hygiene surveillance, such as monitoring of noise level or indoor air quality?"/>
 
                                 <p:selectOneRadio label="Does your company have records of Hygiene surveillance, such as monitoring of noise level or indoor air quality?" id="hygieneRecords"
                                                   value="#{wellnessSurvey.answers['hygieneRecords']}"
@@ -1774,7 +1774,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Has your company developed and implemented Occupational Health and Safety training plan?"/>
+                                        value="#{wellnessSurvey.questionNumbers['trainingPlan']}. Has your company developed and implemented Occupational Health and Safety training plan?"/>
 
                                 <p:selectOneRadio label="Has your company developed and implemented Occupational Health and Safety training plan?" id="trainingPlan"
                                                   value="#{wellnessSurvey.answers['trainingPlan']}"
@@ -1812,7 +1812,7 @@
                                         rendered="#{wellnessSurvey.answers['trainingPlan'] ne 'No' and not empty wellnessSurvey.answers['trainingPlan']}">
 
                                     <p:outputLabel
-                                            value="Which of the following topics are included in your company’s OHS training plan?"/>
+                                            value="#{wellnessSurvey.questionNumbers['ohsTrainingItems']}. Which of the following topics are included in your company’s OHS training plan?"/>
 
                                     <p:selectManyCheckbox label="Which of the following topics are included in your company’s OHS training plan?"
                                                           id="ohsTrainingItems"
@@ -1838,7 +1838,7 @@
                                                 rendered="#{wellnessSurvey.isOtherSelected('ohsTrainingItems')}">
 
                                             <label class="form-label text-muted mt-2">
-                                                Other · specify
+                                                #{wellnessSurvey.questionNumbers['trainingOther']}. Other · specify
                                             </label>
 
                                             <p:inputText label="Other - specify" id="trainingOther" styleClass="form-control"
@@ -1924,7 +1924,7 @@
 
                             <div class="survey__banner">
                                 <div class="survey__banner-title">Section 3 - Health Assessment and Medical Examination</div>
-                                <div class="survey__banner-meta">First aid facilities, health personnel, medical examinations &amp; lifestyle surveys · 5 questions</div>
+                                <div class="survey__banner-meta">First aid facilities, health personnel, medical examinations &amp; lifestyle surveys · 9 questions</div>
                             </div>
 
 
@@ -1934,7 +1934,7 @@
 
                                 <div class="question-card">
 
-                                    <p:outputLabel value="First aid boxes"/>
+                                    <p:outputLabel value="#{wellnessSurvey.questionNumbers['firstAidBoxes']}. First aid boxes"/>
 
                                     <p:selectOneRadio label="First aid boxes" id="firstAidBoxes"
                                                       value="#{wellnessSurvey.answers['firstAidBoxes']}"
@@ -1953,7 +1953,7 @@
 
                                 <div class="question-card">
 
-                                    <p:outputLabel value="First aid unit"/>
+                                    <p:outputLabel value="#{wellnessSurvey.questionNumbers['firstAidUnit']}. First aid unit"/>
 
                                     <p:selectOneRadio label="First aid unit" id="firstAidUnit"
                                                       value="#{wellnessSurvey.answers['firstAidUnit']}"
@@ -1972,7 +1972,7 @@
 
                                 <div class="question-card">
 
-                                    <p:outputLabel value="Company clinic"/>
+                                    <p:outputLabel value="#{wellnessSurvey.questionNumbers['companyClinic']}. Company clinic"/>
 
                                     <p:selectOneRadio label="Company clinic" id="companyClinic"
                                                       value="#{wellnessSurvey.answers['companyClinic']}"
@@ -2004,7 +2004,7 @@
                                         <h:panelGroup layout="block" styleClass="question-card"
                                                       rendered="#{wellnessSurvey.answers['companyClinic'] eq 'Yes'}">
 
-                                            <p:outputLabel value="General practitioner"/>
+                                            <p:outputLabel value="#{wellnessSurvey.questionNumbers['generalPractitioner']}. General practitioner"/>
 
                                             <p:selectOneRadio label="General practitioner" id="generalPractitioner"
                                                               value="#{wellnessSurvey.answers['generalPractitioner']}"
@@ -2022,7 +2022,7 @@
                                         <h:panelGroup layout="block" styleClass="question-card"
                                                       rendered="#{wellnessSurvey.answers['companyClinic'] eq 'Yes'}">
 
-                                            <p:outputLabel value="Specialist Occupational Health/Medicine Physician"/>
+                                            <p:outputLabel value="#{wellnessSurvey.questionNumbers['occupationalPhysician']}. Specialist Occupational Health/Medicine Physician"/>
 
                                             <p:selectOneRadio label="Specialist Occupational Health/Medicine Physician" id="occupationalPhysician"
                                                               value="#{wellnessSurvey.answers['occupationalPhysician']}"
@@ -2039,7 +2039,7 @@
 
                                         <div class="question-card">
 
-                                            <p:outputLabel value="Nurse/Occupational health nurse"/>
+                                            <p:outputLabel value="#{wellnessSurvey.questionNumbers['occupationalNurse']}. Nurse/Occupational health nurse"/>
 
                                             <p:selectOneRadio label="Nurse/Occupational health nurse" id="occupationalNurse"
                                                               value="#{wellnessSurvey.answers['occupationalNurse']}"
@@ -2063,7 +2063,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company conduct Pre-employment health examination and assessment before assignment?"/>
+                                        value="#{wellnessSurvey.questionNumbers['preEmploymentExam']}. Does your company conduct Pre-employment health examination and assessment before assignment?"/>
 
                                 <p:selectOneRadio label="Does your company conduct Pre-employment health examination and assessment before assignment?"
                                                   id="preEmploymentExam"
@@ -2090,7 +2090,7 @@
                                             rendered="#{wellnessSurvey.answers['preEmploymentExam'] eq 'Other'}">
 
                                         <label class="form-label text-muted mt-2">
-                                            Other · specify
+                                            #{wellnessSurvey.questionNumbers['preEmploymentOther']}. Other · specify
                                         </label>
 
                                         <p:inputText label="Other - specify" id="preEmploymentOther" styleClass="form-control"
@@ -2109,7 +2109,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company conduct periodic medical examinations for employees?"/>
+                                        value="#{wellnessSurvey.questionNumbers['periodicExam']}. Does your company conduct periodic medical examinations for employees?"/>
 
                                 <p:selectOneRadio label="Does your company conduct periodic medical examinations for employees?"
                                                   id="periodicExam"
@@ -2148,7 +2148,7 @@
                                             rendered="#{wellnessSurvey.answers['periodicExam'] eq 'Other'}">
 
                                         <label class="form-label text-muted mt-2">
-                                            Other · specify
+                                            #{wellnessSurvey.questionNumbers['periodicExamOther']}. Other · specify
                                         </label>
 
                                         <p:inputText label="Other - specify" id="periodicExamOther" styleClass="form-control"
@@ -2167,7 +2167,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company conduct lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing?"/>
+                                        value="#{wellnessSurvey.questionNumbers['lifestyleSurveys']}. Does your company conduct lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing?"/>
 
                                 <p:selectOneRadio label="Does your company conduct lifestyle and behavior surveys, such as smoking, physical activity, diet and mental wellbeing?" id="lifestyleSurveys"
                                                   value="#{wellnessSurvey.answers['lifestyleSurveys']}"
@@ -2248,7 +2248,7 @@
 
                             <div class="survey__banner">
                                 <div class="survey__banner-title">Section 4 - Health Promotion / Workplace Wellness</div>
-                                <div class="survey__banner-meta">Wellness policies &amp; programs, communication, nutrition, physical activity &amp; tobacco · 13 questions</div>
+                                <div class="survey__banner-meta">Wellness policies &amp; programs, communication, nutrition, physical activity &amp; tobacco · 14 questions</div>
                             </div>
 
 
@@ -2257,7 +2257,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company have workplace health promotion / wellness policy or policies?"/>
+                                        value="#{wellnessSurvey.questionNumbers['wellnessPolicy']}. Does your company have workplace health promotion / wellness policy or policies?"/>
 
                                 <p:selectOneRadio label="Does your company have workplace health promotion / wellness policy or policies?" id="wellnessPolicy"
                                                   value="#{wellnessSurvey.answers['wellnessPolicy']}"
@@ -2291,7 +2291,7 @@
                                         rendered="#{wellnessSurvey.answers['wellnessPolicy'] eq 'Yes'}">
 
                                     <p:outputLabel
-                                            value="Which of the following areas are covered by your workplace health promotion and/or wellness policy?"/>
+                                            value="#{wellnessSurvey.questionNumbers['wellnessPolicyElements']}. Which of the following areas are covered by your workplace health promotion and/or wellness policy?"/>
 
                                     <p:selectManyCheckbox label="Which of the following areas are covered by your workplace health promotion and/or wellness policy?"
                                                           id="wellnessPolicyElements"
@@ -2317,7 +2317,7 @@
                                                 rendered="#{wellnessSurvey.isOtherSelected('wellnessPolicyElements')}">
 
                                             <label class="form-label text-muted mt-2">
-                                                Other · specify
+                                                #{wellnessSurvey.questionNumbers['wellnessPolicyOther']}. Other · specify
                                             </label>
 
                                             <p:inputText label="Other - specify" id="wellnessPolicyOther" styleClass="form-control"
@@ -2340,7 +2340,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company have a workplace health promotion / wellness program?"/>
+                                        value="#{wellnessSurvey.questionNumbers['wellnessProgram']}. Does your company have a workplace health promotion / wellness program?"/>
 
                                 <p:selectOneRadio label="Does your company have a workplace health promotion / wellness program?" id="wellnessProgram"
                                                   value="#{wellnessSurvey.answers['wellnessProgram']}"
@@ -2376,7 +2376,7 @@
                                     <div class="choice-block">
 
                                         <p:outputLabel
-                                                value="Which of the following components/strategies are included in your workplace health promotion/wellness program?"/>
+                                                value="#{wellnessSurvey.questionNumbers['wellnessStrategies']}. Which of the following components/strategies are included in your workplace health promotion/wellness program?"/>
 
                                         <p:selectManyCheckbox label="Which of the following components/strategies are included in your workplace health promotion/wellness program?" id="wellnessStrategies"
                                                               value="#{wellnessSurvey.multiAnswers['wellnessStrategies']}"
@@ -2396,7 +2396,7 @@
                                     <div class="choice-block">
 
                                         <p:outputLabel
-                                                value="Who is responsible for the workplace health promotion/wellness program?"/>
+                                                value="#{wellnessSurvey.questionNumbers['wellnessOwners']}. Who is responsible for the workplace health promotion/wellness program?"/>
 
                                         <p:selectManyCheckbox label="Who is responsible for the workplace health promotion/wellness program?"
                                                               id="wellnessOwners"
@@ -2422,7 +2422,7 @@
                                                     rendered="#{wellnessSurvey.isOtherSelected('wellnessOwners')}">
 
                                                 <label class="form-label text-muted mt-2">
-                                                    Other · specify
+                                                    #{wellnessSurvey.questionNumbers['wellnessOwnerOther']}. Other · specify
                                                 </label>
 
                                                 <p:inputText label="Other - specify" id="wellnessOwnerOther" styleClass="form-control"
@@ -2441,7 +2441,7 @@
                                     <div class="choice-block">
 
                                         <p:outputLabel
-                                                value="Which elements are included in your workplace health promotion/wellness program?"/>
+                                                value="#{wellnessSurvey.questionNumbers['wellnessProgramElements']}. Which elements are included in your workplace health promotion/wellness program?"/>
 
                                         <p:selectManyCheckbox label="Which elements are included in your workplace health promotion/wellness program?"
                                                               id="wellnessProgramElements"
@@ -2467,7 +2467,7 @@
                                                     rendered="#{wellnessSurvey.isOtherSelected('wellnessProgramElements')}">
 
                                                 <label class="form-label text-muted mt-2">
-                                                    Other · specify
+                                                    #{wellnessSurvey.questionNumbers['wellnessProgramOther']}. Other · specify
                                                 </label>
 
                                                 <p:inputText label="Other - specify" id="wellnessProgramOther" styleClass="form-control"
@@ -2493,7 +2493,7 @@
                             <div class="choice-block">
 
                                 <p:outputLabel
-                                        value="Which methods does your company use to communicate healthy behaviors and health promotion messages to employees?"/>
+                                        value="#{wellnessSurvey.questionNumbers['communicationMethods']}. Which methods does your company use to communicate healthy behaviors and health promotion messages to employees?"/>
 
                                 <p:selectManyCheckbox label="Which methods does your company use to communicate healthy behaviors and health promotion messages to employees?"
                                                       id="communicationMethods"
@@ -2519,7 +2519,7 @@
                                             rendered="#{wellnessSurvey.isOtherSelected('communicationMethods')}">
 
                                         <label class="form-label text-muted mt-2">
-                                            Other · specify
+                                            #{wellnessSurvey.questionNumbers['communicationOther']}. Other · specify
                                         </label>
 
                                         <p:inputText label="Other - specify" id="communicationOther" styleClass="form-control"
@@ -2540,7 +2540,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company provide healthy food and beverages for the company employees free of charge?"/>
+                                        value="#{wellnessSurvey.questionNumbers['freeHealthyFood']}. Does your company provide healthy food and beverages for the company employees free of charge?"/>
 
                                 <p:selectOneRadio label="Does your company provide healthy food and beverages for the company employees free of charge?" id="freeHealthyFood"
                                                   value="#{wellnessSurvey.answers['freeHealthyFood']}"
@@ -2570,7 +2570,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company have cafeteria/canteen?"/>
+                                        value="#{wellnessSurvey.questionNumbers['cafeteria']}. Does your company have cafeteria/canteen?"/>
 
                                 <p:selectOneRadio label="Does your company have cafeteria/canteen?" id="cafeteria"
                                                   value="#{wellnessSurvey.answers['cafeteria']}"
@@ -2599,7 +2599,7 @@
                                         rendered="#{wellnessSurvey.answers['cafeteria'] eq 'Yes'}">
 
                                     <p:outputLabel
-                                            value="Does the cafeteria/canteen promote healthy food options?"/>
+                                            value="#{wellnessSurvey.questionNumbers['cafeteriaPromotion']}. Does the cafeteria/canteen promote healthy food options?"/>
 
                                     <p:selectOneRadio label="Does the cafeteria/canteen promote healthy food options?" id="cafeteriaPromotion"
                                                       value="#{wellnessSurvey.answers['cafeteriaPromotion']}"
@@ -2635,7 +2635,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company provide access to on-site physical activity facilities for employees?"/>
+                                        value="#{wellnessSurvey.questionNumbers['physicalActivityFacilities']}. Does your company provide access to on-site physical activity facilities for employees?"/>
 
                                 <p:selectOneRadio label="Does your company provide access to on-site physical activity facilities for employees?" id="physicalActivityFacilities"
                                                   value="#{wellnessSurvey.answers['physicalActivityFacilities']}"
@@ -2662,7 +2662,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company ban tobacco use?"/>
+                                        value="#{wellnessSurvey.questionNumbers['tobaccoBan']}. Does your company ban tobacco use?"/>
 
                                 <p:selectOneRadio label="Does your company ban tobacco use?" id="tobaccoBan"
                                                   value="#{wellnessSurvey.answers['tobaccoBan']}"
@@ -2696,7 +2696,7 @@
                             <div class="question-card">
 
                                 <p:outputLabel
-                                        value="Does your company provide counseling or mental health support to employees?"/>
+                                        value="#{wellnessSurvey.questionNumbers['mentalHealthSupport']}. Does your company provide counseling or mental health support to employees?"/>
 
                                 <p:selectOneRadio label="Does your company provide counseling or mental health support to employees?" id="mentalHealthSupport"
                                                   value="#{wellnessSurvey.answers['mentalHealthSupport']}"
@@ -2712,7 +2712,7 @@
                             <div >
 
                                 <p:outputLabel for="otherComments"
-                                               value="Other Comments / Remarks"/>
+                                               value="#{wellnessSurvey.questionNumbers['otherComments']}. Other Comments / Remarks"/>
 
                                 <p:inputTextarea id="otherComments"
                                                  value="#{wellnessSurvey.answers['otherComments']}"
