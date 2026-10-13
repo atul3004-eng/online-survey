@@ -46,6 +46,10 @@ public class WellnessSurveyBean implements Serializable {
         return answers;
     }
 
+    public Map<String, String> getQuestionNumbers() {
+        return com.kiptoo2000.survey.model.WellnessQuestionNumbers.getNumbers();
+    }
+
     public Map<String, String[]> getMultiAnswers() {
         return multiAnswers;
     }
@@ -296,7 +300,7 @@ public class WellnessSurveyBean implements Serializable {
                 response != null ? response.getEmail() : "",
                 response != null ? response.getPhone() : "",
                 answer.getSectionName(),
-                answer.getQuestionLabel(),
+                answer.getNumberedQuestionLabel(),
                 answer.getAnswerValue()
             });
         }

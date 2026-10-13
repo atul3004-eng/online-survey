@@ -75,6 +75,10 @@ public class WellnessAnswer implements Serializable {
         return questionLabel;
     }
 
+    public String getNumberedQuestionLabel() {
+        return WellnessQuestionNumbers.format(questionKey, questionLabel);
+    }
+
     public void setQuestionLabel(String questionLabel) {
         this.questionLabel = questionLabel;
     }
