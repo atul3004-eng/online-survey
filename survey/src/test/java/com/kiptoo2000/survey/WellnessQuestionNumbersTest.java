@@ -19,7 +19,7 @@ public class WellnessQuestionNumbersTest {
             assertNotNull(keys.group(1), WellnessQuestionNumbers.getNumbers().get(keys.group(1)));
             labels++;
         }
-        assertEquals(67, labels);
+        assertEquals(45, labels);
     }
 
     @Test public void historicalAnswersReceiveNumbersWithoutChangingStoredLabels() {
@@ -29,7 +29,7 @@ public class WellnessQuestionNumbersTest {
         assertEquals("6. Type of industry", answer.getNumberedQuestionLabel());
         assertEquals("Type of industry", answer.getQuestionLabel());
         answer.setQuestionKey("industryOther");
-        assertEquals("6a. Type of industry", answer.getNumberedQuestionLabel());
+        assertEquals("Type of industry", answer.getNumberedQuestionLabel());
     }
 
     @Test public void legacyFieldsRetainTheirLabelsRatherThanInventingNumbers() {
