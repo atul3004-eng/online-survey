@@ -29,6 +29,29 @@
         <h:outputStylesheet library="primefaces" name="primeicons/primeicons.css"/>
         <style type="text/css">
 
+            .school-draft-confirm .ui-dialog-content {
+                display: flex;
+                align-items: flex-start;
+                gap: .75rem;
+            }
+
+            .school-draft-confirm .ui-confirm-dialog-severity.pi {
+                flex: 0 0 1.5rem;
+                width: 1.5rem;
+                height: 1.5rem;
+                font-size: 1.5rem;
+                line-height: 1;
+                margin: 0;
+                overflow: visible;
+                text-indent: 0;
+                background: none;
+            }
+
+            .school-draft-confirm .ui-confirm-dialog-message {
+                min-width: 0;
+                margin: 0;
+            }
+
             .sidebar-brand__single-page {
                 align-items: center;
                 display: flex;
@@ -755,7 +778,7 @@
                             </section>
                         </p:tab>
                     </p:wizard>
-                    <p:confirmDialog global="true" responsive="true" width="420">
+                    <p:confirmDialog global="true" responsive="true" width="420" styleClass="school-draft-confirm">
                         <p:commandButton value="#{msg['schoolHealth.saveConfirmYes']}" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
                         <p:commandButton value="#{msg['schoolHealth.saveConfirmCancel']}" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times"/>
                     </p:confirmDialog>

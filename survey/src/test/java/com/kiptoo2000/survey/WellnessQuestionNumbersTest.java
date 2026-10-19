@@ -19,14 +19,14 @@ public class WellnessQuestionNumbersTest {
             assertNotNull(keys.group(1), WellnessQuestionNumbers.getNumbers().get(keys.group(1)));
             labels++;
         }
-        assertEquals(45, labels);
+        assertEquals(42, labels);
     }
 
     @Test public void historicalAnswersReceiveNumbersWithoutChangingStoredLabels() {
         WellnessAnswer answer = new WellnessAnswer();
         answer.setQuestionKey("industry");
         answer.setQuestionLabel("Type of industry");
-        assertEquals("6. Type of industry", answer.getNumberedQuestionLabel());
+        assertEquals("3. Type of industry", answer.getNumberedQuestionLabel());
         assertEquals("Type of industry", answer.getQuestionLabel());
         answer.setQuestionKey("industryOther");
         assertEquals("Type of industry", answer.getNumberedQuestionLabel());

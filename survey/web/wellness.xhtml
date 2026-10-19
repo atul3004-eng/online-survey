@@ -903,6 +903,20 @@
                 width: 135px;
             }
         }
+        /* Consistent question headings and field prompts across every step. */
+        .survey-page .survey-section .ui-outputlabel,
+        .survey-page .survey-section .field > label,
+        .survey-page .survey-section .question-card > label,
+        .survey-page .survey-section .choice-block > label,
+        .survey-page .survey-section > h3,
+        .survey-page .survey-section .prefill-card h3,
+        .survey-page .survey-section .demographics-matrix__title,
+        .survey-page .survey-section .matrix-question-title {
+            color: #212529 !important;
+            font-size: .95rem !important;
+            font-weight: 600;
+            line-height: 1.45;
+        }
     </style>
 
 </h:head>
@@ -1025,14 +1039,14 @@
 
                             <div class="survey__banner">
                                 <div class="survey__banner-title">Section 1 - Company Profile</div>
-                                <div class="survey__banner-meta">Organizational details, workforce &amp; employment statistics · 13 questions</div>
+                                <div class="survey__banner-meta">Organizational details, workforce &amp; employment statistics · 10 questions</div>
                             </div>
 
 
                             <!-- COMPANY DETAILS -->
 
                             <div class="prefill-card">
-                                <h3>Company details</h3>
+                                <h3>#{wellnessSurvey.questionNumbers['companyDetails']}. Company Details</h3>
 
                                 <div class="prefill-grid">
                                 <span>
@@ -1061,12 +1075,12 @@
                             <!-- FOCAL POINT -->
 
                             <h3>
-                                Focal point contact details <span class="required-mark">*Required</span>
+                                #{wellnessSurvey.questionNumbers['focalPointDetails']}. Focal Point Details <span class="required-mark">*Required</span>
                             </h3>
 
                             <div class="form-grid two">
                             <span class="field">
-                                <p:outputLabel for="focalName" value="#{wellnessSurvey.questionNumbers['focalName']}. Name"/>
+                                <p:outputLabel for="focalName" value="Name"/>
                                 <p:inputText label="Name" id="focalName"
                                              value="#{wellnessSurvey.answers['focalName']}"
                                              placeholder="example"
@@ -1076,7 +1090,7 @@
                             </span>
 
                                 <span class="field">
-                                <p:outputLabel for="jobTitle" value="#{wellnessSurvey.questionNumbers['jobTitle']}. Job Title"/>
+                                <p:outputLabel for="jobTitle" value="Job Title"/>
                                 <p:inputText label="Job Title" styleClass="form-control" id="jobTitle"
                                              value="#{wellnessSurvey.answers['jobTitle']}"
                                              placeholder="example"
@@ -1085,7 +1099,7 @@
                             </span>
 
                                 <span class="field">
-                                <p:outputLabel for="focalEmail" value="#{wellnessSurvey.questionNumbers['focalEmail']}. Email address"/>
+                                <p:outputLabel for="focalEmail" value="Email address"/>
                                 <p:inputText label="Email address" styleClass="form-control" id="focalEmail"
                                              value="#{wellnessSurvey.answers['focalEmail']}"
                                              placeholder="example"
@@ -1097,7 +1111,7 @@
                             </span>
 
                                 <span class="field">
-                                <p:outputLabel for="officePhone" value="#{wellnessSurvey.questionNumbers['officePhone']}. Office phone number"/>
+                                <p:outputLabel for="officePhone" value="Office phone number"/>
                                 <p:inputText label="Office phone number" styleClass="form-control" id="officePhone"
                                              value="#{wellnessSurvey.answers['officePhone']}"
                                              placeholder="example"
@@ -1109,7 +1123,7 @@
                             </span>
 
                                 <span class="field">
-                                <p:outputLabel for="mobilePhone" value="#{wellnessSurvey.questionNumbers['mobilePhone']}. Mobile phone number"/>
+                                <p:outputLabel for="mobilePhone" value="Mobile phone number"/>
                                 <p:inputText label="Mobile phone number" styleClass="form-control" id="mobilePhone"
                                              value="#{wellnessSurvey.answers['mobilePhone']}"
                                              placeholder="example"
@@ -1128,7 +1142,7 @@
 
                                 <p:outputLabel
                                         for="industry"
-                                        value="#{wellnessSurvey.questionNumbers['industry']}. Type of industry"/>
+                                        value="#{wellnessSurvey.questionNumbers['industry']}. Type of Industry"/>
 
                                 <p:selectOneMenu label="Type of industry" styleClass="form-select"
                                                  id="industry"
@@ -1176,7 +1190,7 @@
                             <!-- EMPLOYMENT -->
 
                             <h3>
-                                #{wellnessSurvey.questionNumbers['employmentContracts']}. Employment contracts <span class="required-mark">*Required</span>
+                                #{wellnessSurvey.questionNumbers['employmentContracts']}. Employment Contracts <span class="required-mark">*Required</span>
                             </h3>
 
                             <div class="demographics-table-wrap employment-table-wrap">
@@ -1197,7 +1211,7 @@
                             <p:outputPanel id="outsourcedServicesPanel" layout="block"><h:panelGroup layout="block" styleClass="choice-block" rendered="#{wellnessSurvey.contractedEmployeesPresent}">
 
                                 <p:outputLabel
-                                        value="#{wellnessSurvey.questionNumbers['outsourcedServices']}. Contracted/outsourced service types"/>
+                                        value="#{wellnessSurvey.questionNumbers['outsourcedServices']}. Contracted/Outsourced Service Types"/>
 
                                 <p:selectManyCheckbox label="Contracted/outsourced service types"
                                                       id="outsourcedServices"
@@ -1244,7 +1258,7 @@
                             <div class="choice-block">
 
                                 <p:outputLabel
-                                        value="#{wellnessSurvey.questionNumbers['occupations']}. Main occupations in the company"/>
+                                        value="#{wellnessSurvey.questionNumbers['occupations']}. Main Occupations in the Company"/>
 
                                 <p:selectManyCheckbox label="Main occupations in the company"
                                                       id="occupations"
@@ -1294,7 +1308,7 @@
 
                             <section class="demographics-matrix">
                                 <h4 class="demographics-matrix__title">
-                                    #{wellnessSurvey.questionNumbers['employeeAge']}. Number of employees by age group
+                                    #{wellnessSurvey.questionNumbers['employeeAge']}. Number of Employees by Age Group
                                     <span class="demographics-matrix__required">*Required</span>
                                 </h4>
                                 <div class="demographics-table-wrap">
@@ -1321,7 +1335,7 @@
 
                             <section class="demographics-matrix">
                                 <h4 class="demographics-matrix__title">
-                                    #{wellnessSurvey.questionNumbers['employeeGender']}. Number of employees by gender
+                                    #{wellnessSurvey.questionNumbers['employeeGender']}. Number of Employees by Gender
                                     <span class="demographics-matrix__required">*Required</span>
                                 </h4>
                                 <div class="demographics-table-wrap">
@@ -1339,7 +1353,7 @@
 
                             <section class="demographics-matrix">
                                 <h4 class="demographics-matrix__title">
-                                    #{wellnessSurvey.questionNumbers['employeeNationality']}. Number of employees by nationality
+                                    #{wellnessSurvey.questionNumbers['employeeNationality']}. Number of Employees by Nationality
                                     <span class="demographics-matrix__required">*Required</span>
                                 </h4>
                                 <div class="demographics-table-wrap">
@@ -1359,7 +1373,7 @@
                             <div class="choice-block">
 
                                 <p:outputLabel for="employeeLanguages"
-                                        value="#{wellnessSurvey.questionNumbers['employeeLanguages']}. Please specify the most common languages spoken by employees in your workplace."/>
+                                        value="#{wellnessSurvey.questionNumbers['employeeLanguages']}. Please Specify the Most Common Languages Spoken by Employees in Your Workplace"/>
 
                                 <p:inputText label="Please specify the most common languages spoken by employees in your workplace."
                                              id="employeeLanguages" styleClass="form-control"

@@ -481,3 +481,18 @@
         padding: 1rem;
     }
 }
+
+        /* Consistent question headings and field prompts across every step. */
+        .survey-page .survey-section .ui-outputlabel,
+        .survey-page .survey-section .field > label,
+        .survey-page .survey-section .question-card > label,
+        .survey-page .survey-section .choice-block > label,
+        .survey-page .survey-section > h3,
+        .survey-page .survey-section .prefill-card h3,
+        .survey-page .survey-section .demographics-matrix__title,
+        .survey-page .survey-section .matrix-question-title {
+            color: #212529 !important;
+            font-size: .95rem !important;
+            font-weight: 600;
+            line-height: 1.45;
+        }

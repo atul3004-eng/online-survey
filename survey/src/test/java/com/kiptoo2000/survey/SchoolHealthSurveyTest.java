@@ -11,6 +11,45 @@ import com.kiptoo2000.survey.pdf.*;
 import com.lowagie.text.pdf.PdfReader;
 
 public class SchoolHealthSurveyTest {
+    @Test public void completedPdfOmitsUnansweredQuestionsAndEmptySections() throws Exception {
+        SchoolHealthResponse response = new SchoolHealthResponse();
+        java.util.List<SchoolHealthAnswer> questions = new ArrayList<SchoolHealthAnswer>();
+        String[] keys = {"missing", "blank", "nullValue", "schoolsCovered", "partnersInvolved", "targetedTopics"};
+        String[] labels = {"Missing question", "Blank question", "Null question", "School count", "Partners question", "Topics question"};
+        for (int i = 0; i < keys.length; i++) {
+            SchoolHealthAnswer question = new SchoolHealthAnswer();
+            question.setQuestionKey(keys[i]);
+            question.setQuestionLabel(labels[i]);
+            question.setSectionName(i < 3 ? "Unanswered section" : "Answered section");
+            questions.add(question);
+        }
+        String[][] saved = {{"blank", " \t "}, {"nullValue", null}, {"schoolsCovered", "0"},
+            {"partnersInvolved", "no"}, {"targetedTopics", ""}, {"targetedTopics", "nutrition"}, {"targetedTopics", "mental_health"}};
+        for (String[] entry : saved) {
+            SchoolHealthAnswer answer = new SchoolHealthAnswer();
+            answer.setQuestionKey(entry[0]); answer.setAnswerValue(entry[1]); response.addAnswer(answer);
+        }
+        byte[] pdf = new SchoolHealthPdf().generate(response, questions, new SchoolHealthSurveyBean() {
+            @Override public java.util.List<javax.faces.model.SelectItem> options(String group) {
+                return Arrays.asList(new javax.faces.model.SelectItem("no", "No"),
+                    new javax.faces.model.SelectItem("nutrition", "Nutrition"),
+                    new javax.faces.model.SelectItem("mental_health", "Mental health"));
+            }
+        });
+        PdfReader reader = new PdfReader(pdf);
+        StringBuilder text = new StringBuilder();
+        com.lowagie.text.pdf.parser.PdfTextExtractor extractor = new com.lowagie.text.pdf.parser.PdfTextExtractor(reader);
+        for (int page = 1; page <= reader.getNumberOfPages(); page++) { text.append(extractor.getTextFromPage(page)); }
+        reader.close();
+        String content = text.toString();
+        for (String omitted : new String[]{"Missing question", "Blank question", "Null question", "Unanswered section", "Not answered"}) {
+            assertFalse(omitted, content.contains(omitted));
+        }
+        for (String included : new String[]{"Answered section", "School count", "0", "Partners question", "No", "Topics question", "Nutrition; Mental health"}) {
+            assertTrue(included, content.contains(included));
+        }
+    }
+
     @Test public void infrastructureChoicesAndOtherSelectionInBothLanguages() {
         SchoolHealthSurveyBean bean = new SchoolHealthSurveyBean();
         for (String locale : Arrays.asList("en", "ar")) {

@@ -54,14 +54,11 @@ public class SchoolHealthPdf {
         }
         String section = null;
         for (SchoolHealthAnswer question : questions) {
-            if (!question.getSectionName().equals(section)) {
-                section = question.getSectionName();
-                addBlock(document, section, bold);
-            }
             java.util.List<String> saved = values.get(question.getQuestionKey());
             StringBuilder answer = new StringBuilder();
             if (saved != null) {
                 for (String value : saved) {
+                    if (value == null || value.trim().isEmpty()) { continue; }
                     String label = value;
                     String group = GROUPS.get(question.getQuestionKey());
                     if (group != null) {
@@ -73,10 +70,15 @@ public class SchoolHealthPdf {
                     answer.append(label);
                 }
             }
+            if (answer.length() == 0) { continue; }
+            if (!question.getSectionName().equals(section)) {
+                section = question.getSectionName();
+                addBlock(document, section, bold);
+            }
             PdfPTable pair = new PdfPTable(1);
             pair.setWidthPercentage(100); pair.setSpacingBefore(7); pair.setKeepTogether(true); pair.setSplitLate(false);
             pair.addCell(cell(question.getQuestionLabel(), bold));
-            pair.addCell(cell(answer.length() == 0 ? "Not answered" : answer.toString(), normal));
+            pair.addCell(cell(answer.toString(), normal));
             document.add(pair);
         }
         document.close();
