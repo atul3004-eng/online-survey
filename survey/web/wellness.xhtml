@@ -917,6 +917,27 @@
             font-weight: 600;
             line-height: 1.45;
         }
+
+        /* Reuse the project's Lusail font when available, including PrimeFaces controls. */
+        @font-face {
+            font-family: "Wellness Lusail";
+            src: local("Lusail"), local("Lusail Regular"), local("Lusail-Regular");
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+        }
+        .survey-page {
+            --bs-body-font-family: "Lusail", "Wellness Lusail", Arial, sans-serif;
+            font-family: var(--bs-body-font-family);
+        }
+        .survey-page .survey,
+        .survey-page .survey .ui-widget,
+        .survey-page .survey input,
+        .survey-page .survey select,
+        .survey-page .survey textarea,
+        .survey-page .survey button {
+            font-family: var(--bs-body-font-family);
+        }
     </style>
 
 </h:head>
@@ -1046,7 +1067,7 @@
                             <!-- COMPANY DETAILS -->
 
                             <div class="prefill-card">
-                                <h3>#{wellnessSurvey.questionNumbers['companyDetails']}. Company Details</h3>
+                                <h3>1. Company Details</h3>
 
                                 <div class="prefill-grid">
                                 <span>
@@ -1075,7 +1096,7 @@
                             <!-- FOCAL POINT -->
 
                             <h3>
-                                #{wellnessSurvey.questionNumbers['focalPointDetails']}. Focal Point Details <span class="required-mark">*Required</span>
+                                2. Focal Point Details <span class="required-mark">*Required</span>
                             </h3>
 
                             <div class="form-grid two">
